@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package authpb;
+
+option go_package = "/.";
+
+service AuthService {
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+  rpc GetCandidateDetails(CandidateRequest) returns (CandidateResponse);
+  rpc GetEmployerDetails(EmployerRequest) returns (EmployerResponse);
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  string user_id = 1;
+  string role = 2;
+}
+
+message CandidateRequest {
+  string candidate_id = 1;
+}
+
+message CandidateResponse {
+  string candidate_id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  string resume_url = 5;
+}
+
+message EmployerRequest {
+  string employer_id = 1;
+}
+
+message EmployerResponse {
+  string employer_id = 1;
+  string name = 2;
+  string email = 3;
+  string company_name = 4;
+}
