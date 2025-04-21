@@ -27,8 +27,33 @@ message CandidateResponse {
   string candidate_id = 1;
   string name = 2;
   string email = 3;
-  string phone = 4;
-  string resume_url = 5;
+  int64 phone = 4;
+  int64 experience = 5;
+  string resume_url = 6;
+  string current_location = 7;
+  string preferred_location = 8;
+  string linkedin = 9;
+  string github = 10;
+  string profile_picture = 11;
+  repeated Skill skills = 12;
+  repeated Education education = 13;
+}
+
+message Skill {
+    string candidate_id=1;
+  string skill = 2;
+  string level=3;
+
+}
+
+message Education {
+  string candidate_id = 1;
+  string university = 2;
+  string location = 3;
+  string major = 4;
+  string start_date = 5;
+  string end_date = 6;
+  string grade = 7;
 }
 
 message EmployerRequest {
@@ -40,4 +65,8 @@ message EmployerResponse {
   string name = 2;
   string email = 3;
   string company_name = 4;
+  int64 phone = 5;
+  string industry = 6;
+  string location = 7;
+  string website = 8;
 }

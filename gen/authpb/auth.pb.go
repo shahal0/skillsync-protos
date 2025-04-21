@@ -162,14 +162,22 @@ func (x *CandidateRequest) GetCandidateId() string {
 }
 
 type CandidateResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CandidateId   string                 `protobuf:"bytes,1,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Phone         string                 `protobuf:"bytes,4,opt,name=phone,proto3" json:"phone,omitempty"`
-	ResumeUrl     string                 `protobuf:"bytes,5,opt,name=resume_url,json=resumeUrl,proto3" json:"resume_url,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	CandidateId       string                 `protobuf:"bytes,1,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
+	Name              string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Email             string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Phone             int64                  `protobuf:"varint,4,opt,name=phone,proto3" json:"phone,omitempty"`
+	Experience        int64                  `protobuf:"varint,5,opt,name=experience,proto3" json:"experience,omitempty"`
+	ResumeUrl         string                 `protobuf:"bytes,6,opt,name=resume_url,json=resumeUrl,proto3" json:"resume_url,omitempty"`
+	CurrentLocation   string                 `protobuf:"bytes,7,opt,name=current_location,json=currentLocation,proto3" json:"current_location,omitempty"`
+	PreferredLocation string                 `protobuf:"bytes,8,opt,name=preferred_location,json=preferredLocation,proto3" json:"preferred_location,omitempty"`
+	Linkedin          string                 `protobuf:"bytes,9,opt,name=linkedin,proto3" json:"linkedin,omitempty"`
+	Github            string                 `protobuf:"bytes,10,opt,name=github,proto3" json:"github,omitempty"`
+	ProfilePicture    string                 `protobuf:"bytes,11,opt,name=profile_picture,json=profilePicture,proto3" json:"profile_picture,omitempty"`
+	Skills            []*Skill               `protobuf:"bytes,12,rep,name=skills,proto3" json:"skills,omitempty"`
+	Education         []*Education           `protobuf:"bytes,13,rep,name=education,proto3" json:"education,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CandidateResponse) Reset() {
@@ -223,16 +231,224 @@ func (x *CandidateResponse) GetEmail() string {
 	return ""
 }
 
-func (x *CandidateResponse) GetPhone() string {
+func (x *CandidateResponse) GetPhone() int64 {
 	if x != nil {
 		return x.Phone
 	}
-	return ""
+	return 0
+}
+
+func (x *CandidateResponse) GetExperience() int64 {
+	if x != nil {
+		return x.Experience
+	}
+	return 0
 }
 
 func (x *CandidateResponse) GetResumeUrl() string {
 	if x != nil {
 		return x.ResumeUrl
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetCurrentLocation() string {
+	if x != nil {
+		return x.CurrentLocation
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetPreferredLocation() string {
+	if x != nil {
+		return x.PreferredLocation
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetLinkedin() string {
+	if x != nil {
+		return x.Linkedin
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetGithub() string {
+	if x != nil {
+		return x.Github
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetProfilePicture() string {
+	if x != nil {
+		return x.ProfilePicture
+	}
+	return ""
+}
+
+func (x *CandidateResponse) GetSkills() []*Skill {
+	if x != nil {
+		return x.Skills
+	}
+	return nil
+}
+
+func (x *CandidateResponse) GetEducation() []*Education {
+	if x != nil {
+		return x.Education
+	}
+	return nil
+}
+
+type Skill struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CandidateId   string                 `protobuf:"bytes,1,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
+	Skill         string                 `protobuf:"bytes,2,opt,name=skill,proto3" json:"skill,omitempty"`
+	Level         string                 `protobuf:"bytes,3,opt,name=level,proto3" json:"level,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Skill) Reset() {
+	*x = Skill{}
+	mi := &file_auth_auth_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Skill) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Skill) ProtoMessage() {}
+
+func (x *Skill) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Skill.ProtoReflect.Descriptor instead.
+func (*Skill) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Skill) GetCandidateId() string {
+	if x != nil {
+		return x.CandidateId
+	}
+	return ""
+}
+
+func (x *Skill) GetSkill() string {
+	if x != nil {
+		return x.Skill
+	}
+	return ""
+}
+
+func (x *Skill) GetLevel() string {
+	if x != nil {
+		return x.Level
+	}
+	return ""
+}
+
+type Education struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CandidateId   string                 `protobuf:"bytes,1,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
+	University    string                 `protobuf:"bytes,2,opt,name=university,proto3" json:"university,omitempty"`
+	Location      string                 `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
+	Major         string                 `protobuf:"bytes,4,opt,name=major,proto3" json:"major,omitempty"`
+	StartDate     string                 `protobuf:"bytes,5,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	EndDate       string                 `protobuf:"bytes,6,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	Grade         string                 `protobuf:"bytes,7,opt,name=grade,proto3" json:"grade,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Education) Reset() {
+	*x = Education{}
+	mi := &file_auth_auth_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Education) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Education) ProtoMessage() {}
+
+func (x *Education) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Education.ProtoReflect.Descriptor instead.
+func (*Education) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Education) GetCandidateId() string {
+	if x != nil {
+		return x.CandidateId
+	}
+	return ""
+}
+
+func (x *Education) GetUniversity() string {
+	if x != nil {
+		return x.University
+	}
+	return ""
+}
+
+func (x *Education) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *Education) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *Education) GetStartDate() string {
+	if x != nil {
+		return x.StartDate
+	}
+	return ""
+}
+
+func (x *Education) GetEndDate() string {
+	if x != nil {
+		return x.EndDate
+	}
+	return ""
+}
+
+func (x *Education) GetGrade() string {
+	if x != nil {
+		return x.Grade
 	}
 	return ""
 }
@@ -246,7 +462,7 @@ type EmployerRequest struct {
 
 func (x *EmployerRequest) Reset() {
 	*x = EmployerRequest{}
-	mi := &file_auth_auth_proto_msgTypes[4]
+	mi := &file_auth_auth_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -258,7 +474,7 @@ func (x *EmployerRequest) String() string {
 func (*EmployerRequest) ProtoMessage() {}
 
 func (x *EmployerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[4]
+	mi := &file_auth_auth_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -271,7 +487,7 @@ func (x *EmployerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmployerRequest.ProtoReflect.Descriptor instead.
 func (*EmployerRequest) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{4}
+	return file_auth_auth_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *EmployerRequest) GetEmployerId() string {
@@ -287,13 +503,17 @@ type EmployerResponse struct {
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	CompanyName   string                 `protobuf:"bytes,4,opt,name=company_name,json=companyName,proto3" json:"company_name,omitempty"`
+	Phone         int64                  `protobuf:"varint,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	Industry      string                 `protobuf:"bytes,6,opt,name=industry,proto3" json:"industry,omitempty"`
+	Location      string                 `protobuf:"bytes,7,opt,name=location,proto3" json:"location,omitempty"`
+	Website       string                 `protobuf:"bytes,8,opt,name=website,proto3" json:"website,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *EmployerResponse) Reset() {
 	*x = EmployerResponse{}
-	mi := &file_auth_auth_proto_msgTypes[5]
+	mi := &file_auth_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -305,7 +525,7 @@ func (x *EmployerResponse) String() string {
 func (*EmployerResponse) ProtoMessage() {}
 
 func (x *EmployerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[5]
+	mi := &file_auth_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -318,7 +538,7 @@ func (x *EmployerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmployerResponse.ProtoReflect.Descriptor instead.
 func (*EmployerResponse) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{5}
+	return file_auth_auth_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *EmployerResponse) GetEmployerId() string {
@@ -349,6 +569,34 @@ func (x *EmployerResponse) GetCompanyName() string {
 	return ""
 }
 
+func (x *EmployerResponse) GetPhone() int64 {
+	if x != nil {
+		return x.Phone
+	}
+	return 0
+}
+
+func (x *EmployerResponse) GetIndustry() string {
+	if x != nil {
+		return x.Industry
+	}
+	return ""
+}
+
+func (x *EmployerResponse) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *EmployerResponse) GetWebsite() string {
+	if x != nil {
+		return x.Website
+	}
+	return ""
+}
+
 var File_auth_auth_proto protoreflect.FileDescriptor
 
 const file_auth_auth_proto_rawDesc = "" +
@@ -360,23 +608,53 @@ const file_auth_auth_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04role\x18\x02 \x01(\tR\x04role\"5\n" +
 	"\x10CandidateRequest\x12!\n" +
-	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\"\x95\x01\n" +
+	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\"\xc4\x03\n" +
 	"\x11CandidateResponse\x12!\n" +
 	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x14\n" +
-	"\x05phone\x18\x04 \x01(\tR\x05phone\x12\x1d\n" +
+	"\x05phone\x18\x04 \x01(\x03R\x05phone\x12\x1e\n" +
 	"\n" +
-	"resume_url\x18\x05 \x01(\tR\tresumeUrl\"2\n" +
+	"experience\x18\x05 \x01(\x03R\n" +
+	"experience\x12\x1d\n" +
+	"\n" +
+	"resume_url\x18\x06 \x01(\tR\tresumeUrl\x12)\n" +
+	"\x10current_location\x18\a \x01(\tR\x0fcurrentLocation\x12-\n" +
+	"\x12preferred_location\x18\b \x01(\tR\x11preferredLocation\x12\x1a\n" +
+	"\blinkedin\x18\t \x01(\tR\blinkedin\x12\x16\n" +
+	"\x06github\x18\n" +
+	" \x01(\tR\x06github\x12'\n" +
+	"\x0fprofile_picture\x18\v \x01(\tR\x0eprofilePicture\x12%\n" +
+	"\x06skills\x18\f \x03(\v2\r.authpb.SkillR\x06skills\x12/\n" +
+	"\teducation\x18\r \x03(\v2\x11.authpb.EducationR\teducation\"V\n" +
+	"\x05Skill\x12!\n" +
+	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\x12\x14\n" +
+	"\x05skill\x18\x02 \x01(\tR\x05skill\x12\x14\n" +
+	"\x05level\x18\x03 \x01(\tR\x05level\"\xd0\x01\n" +
+	"\tEducation\x12!\n" +
+	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\x12\x1e\n" +
+	"\n" +
+	"university\x18\x02 \x01(\tR\n" +
+	"university\x12\x1a\n" +
+	"\blocation\x18\x03 \x01(\tR\blocation\x12\x14\n" +
+	"\x05major\x18\x04 \x01(\tR\x05major\x12\x1d\n" +
+	"\n" +
+	"start_date\x18\x05 \x01(\tR\tstartDate\x12\x19\n" +
+	"\bend_date\x18\x06 \x01(\tR\aendDate\x12\x14\n" +
+	"\x05grade\x18\a \x01(\tR\x05grade\"2\n" +
 	"\x0fEmployerRequest\x12\x1f\n" +
 	"\vemployer_id\x18\x01 \x01(\tR\n" +
-	"employerId\"\x80\x01\n" +
+	"employerId\"\xe8\x01\n" +
 	"\x10EmployerResponse\x12\x1f\n" +
 	"\vemployer_id\x18\x01 \x01(\tR\n" +
 	"employerId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12!\n" +
-	"\fcompany_name\x18\x04 \x01(\tR\vcompanyName2\xea\x01\n" +
+	"\fcompany_name\x18\x04 \x01(\tR\vcompanyName\x12\x14\n" +
+	"\x05phone\x18\x05 \x01(\x03R\x05phone\x12\x1a\n" +
+	"\bindustry\x18\x06 \x01(\tR\bindustry\x12\x1a\n" +
+	"\blocation\x18\a \x01(\tR\blocation\x12\x18\n" +
+	"\awebsite\x18\b \x01(\tR\awebsite2\xea\x01\n" +
 	"\vAuthService\x12F\n" +
 	"\vVerifyToken\x12\x1a.authpb.VerifyTokenRequest\x1a\x1b.authpb.VerifyTokenResponse\x12J\n" +
 	"\x13GetCandidateDetails\x12\x18.authpb.CandidateRequest\x1a\x19.authpb.CandidateResponse\x12G\n" +
@@ -394,27 +672,31 @@ func file_auth_auth_proto_rawDescGZIP() []byte {
 	return file_auth_auth_proto_rawDescData
 }
 
-var file_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_auth_auth_proto_goTypes = []any{
 	(*VerifyTokenRequest)(nil),  // 0: authpb.VerifyTokenRequest
 	(*VerifyTokenResponse)(nil), // 1: authpb.VerifyTokenResponse
 	(*CandidateRequest)(nil),    // 2: authpb.CandidateRequest
 	(*CandidateResponse)(nil),   // 3: authpb.CandidateResponse
-	(*EmployerRequest)(nil),     // 4: authpb.EmployerRequest
-	(*EmployerResponse)(nil),    // 5: authpb.EmployerResponse
+	(*Skill)(nil),               // 4: authpb.Skill
+	(*Education)(nil),           // 5: authpb.Education
+	(*EmployerRequest)(nil),     // 6: authpb.EmployerRequest
+	(*EmployerResponse)(nil),    // 7: authpb.EmployerResponse
 }
 var file_auth_auth_proto_depIdxs = []int32{
-	0, // 0: authpb.AuthService.VerifyToken:input_type -> authpb.VerifyTokenRequest
-	2, // 1: authpb.AuthService.GetCandidateDetails:input_type -> authpb.CandidateRequest
-	4, // 2: authpb.AuthService.GetEmployerDetails:input_type -> authpb.EmployerRequest
-	1, // 3: authpb.AuthService.VerifyToken:output_type -> authpb.VerifyTokenResponse
-	3, // 4: authpb.AuthService.GetCandidateDetails:output_type -> authpb.CandidateResponse
-	5, // 5: authpb.AuthService.GetEmployerDetails:output_type -> authpb.EmployerResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: authpb.CandidateResponse.skills:type_name -> authpb.Skill
+	5, // 1: authpb.CandidateResponse.education:type_name -> authpb.Education
+	0, // 2: authpb.AuthService.VerifyToken:input_type -> authpb.VerifyTokenRequest
+	2, // 3: authpb.AuthService.GetCandidateDetails:input_type -> authpb.CandidateRequest
+	6, // 4: authpb.AuthService.GetEmployerDetails:input_type -> authpb.EmployerRequest
+	1, // 5: authpb.AuthService.VerifyToken:output_type -> authpb.VerifyTokenResponse
+	3, // 6: authpb.AuthService.GetCandidateDetails:output_type -> authpb.CandidateResponse
+	7, // 7: authpb.AuthService.GetEmployerDetails:output_type -> authpb.EmployerResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_auth_auth_proto_init() }
@@ -428,7 +710,7 @@ func file_auth_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_auth_proto_rawDesc), len(file_auth_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
