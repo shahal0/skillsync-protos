@@ -2,71 +2,132 @@ syntax = "proto3";
 
 package authpb;
 
-option go_package = "/.";
+option go_package = "skillsync-protos/gen/authpb";
 
 service AuthService {
-  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
-  rpc GetCandidateDetails(CandidateRequest) returns (CandidateResponse);
-  rpc GetEmployerDetails(EmployerRequest) returns (EmployerResponse);
+  // Candidate endpoints
+  rpc CandidateSignup(CandidateSignupRequest) returns (AuthResponse);
+  rpc CandidateLogin(CandidateLoginRequest) returns (AuthResponse);
+  rpc CandidateVerifyEmail(VerifyEmailRequest) returns (GenericResponse);
+  rpc CandidateResendOtp(ResendOtpRequest) returns (GenericResponse);
+  rpc CandidateForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
+  rpc CandidateResetPassword(ResetPasswordRequest) returns (GenericResponse);
+  rpc CandidateChangePassword(ChangePasswordRequest) returns (GenericResponse);
+  rpc CandidateProfile(ProfileRequest) returns (ProfileResponse);
+  rpc CandidateProfileUpdate(ProfileUpdateRequest) returns (GenericResponse);
+  rpc CandidateSkillsUpdate(SkillsUpdateRequest) returns (GenericResponse);
+  rpc CandidateEducationUpdate(EducationUpdateRequest) returns (GenericResponse);
+  rpc CandidateUploadResume(UploadResumeRequest) returns (GenericResponse);
+  rpc CandidateGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
+  rpc CandidateGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
+
+  // Employer endpoints
+  rpc EmployerSignup(EmployerSignupRequest) returns (AuthResponse);
+  rpc EmployerLogin(EmployerLoginRequest) returns (AuthResponse);
+  rpc EmployerVerifyEmail(VerifyEmailRequest) returns (GenericResponse);
+  rpc EmployerResendOtp(ResendOtpRequest) returns (GenericResponse);
+  rpc EmployerForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
+  rpc EmployerResetPassword(ResetPasswordRequest) returns (GenericResponse);
+  rpc EmployerChangePassword(ChangePasswordRequest) returns (GenericResponse);
+  rpc EmployerProfile(ProfileRequest) returns (ProfileResponse);
+  rpc EmployerProfileUpdate(ProfileUpdateRequest) returns (GenericResponse);
+  rpc EmployerGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
+  rpc EmployerGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
 }
 
-message VerifyTokenRequest {
+// Example request/response messages (expand as needed)
+message CandidateSignupRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+}
+
+message CandidateLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message EmployerSignupRequest {
+  string email = 1;
+  string password = 2;
+  string company_name = 3;
+}
+
+message EmployerLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message VerifyEmailRequest {
+  string email = 1;
+  string otp = 2;
+}
+
+message ResendOtpRequest {
+  string email = 1;
+}
+
+message ForgotPasswordRequest {
+  string email = 1;
+}
+
+message ResetPasswordRequest {
+  string email = 1;
+  string new_password = 2;
+  string otp = 3;
+}
+
+message ChangePasswordRequest {
+  string email = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+message ProfileRequest {
+  string email = 1;
+}
+
+message ProfileUpdateRequest {
+  string email = 1;
+  string name = 2;
+  // Add more fields as needed
+}
+
+message SkillsUpdateRequest {
+  string email = 1;
+  repeated string skills = 2;
+}
+
+message EducationUpdateRequest {
+  string email = 1;
+  string education = 2;
+}
+
+message UploadResumeRequest {
+  string email = 1;
+  bytes resume = 2;
+}
+
+message GoogleLoginRequest {
+  string redirect_url = 1;
+}
+
+message GoogleCallbackRequest {
+  string code = 1;
+}
+
+message AuthResponse {
   string token = 1;
+  string message = 2;
 }
 
-message VerifyTokenResponse {
-  string user_id = 1;
-  string role = 2;
+message GenericResponse {
+  string message = 1;
+  bool success = 2;
 }
 
-message CandidateRequest {
-  string candidate_id = 1;
-}
-
-message CandidateResponse {
-  string candidate_id = 1;
+message ProfileResponse {
+  string email = 1;
   string name = 2;
-  string email = 3;
-  int64 phone = 4;
-  int64 experience = 5;
-  string resume_url = 6;
-  string current_location = 7;
-  string preferred_location = 8;
-  string linkedin = 9;
-  string github = 10;
-  string profile_picture = 11;
-  repeated Skill skills = 12;
-  repeated Education education = 13;
-}
-
-message Skill {
-    string candidate_id=1;
-  string skill = 2;
-  string level=3;
-
-}
-
-message Education {
-  string candidate_id = 1;
-  string university = 2;
-  string location = 3;
-  string major = 4;
-  string start_date = 5;
-  string end_date = 6;
-  string grade = 7;
-}
-
-message EmployerRequest {
-  string employer_id = 1;
-}
-
-message EmployerResponse {
-  string employer_id = 1;
-  string name = 2;
-  string email = 3;
-  string company_name = 4;
-  int64 phone = 5;
-  string industry = 6;
-  string location = 7;
-  string website = 8;
+  // Add more fields as needed
 }
