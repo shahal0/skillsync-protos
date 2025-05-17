@@ -131,6 +131,7 @@ message AuthResponse {
   string token = 1;
   string message = 2;
   string id = 3;
+  string role = 4;
 }
 
 message GenericResponse {
