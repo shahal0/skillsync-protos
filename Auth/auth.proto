@@ -103,7 +103,8 @@ message EmployerLoginRequest {
 
 message EmployerLoginResponse {
   int64 id = 1;
-  string message = 2;
+  string token = 2;
+  string message = 3;
 }
 
 message EmployerProfileRequest {
