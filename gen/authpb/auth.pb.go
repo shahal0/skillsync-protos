@@ -2067,7 +2067,7 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\x0fEmployerProfile\x12\x1e.authpb.EmployerProfileRequest\x1a\x1f.authpb.EmployerProfileResponse\x12V\n" +
 	"\x15EmployerProfileUpdate\x12$.authpb.EmployerProfileUpdateRequest\x1a\x17.authpb.GenericResponse\x12G\n" +
 	"\x13EmployerGoogleLogin\x12\x1a.authpb.GoogleLoginRequest\x1a\x14.authpb.AuthResponse\x12M\n" +
-	"\x16EmployerGoogleCallback\x12\x1d.authpb.GoogleCallbackRequest\x1a\x14.authpb.AuthResponseB\x1dZ\x1bskillsync-protos/gen/authpbb\x06proto3"
+	"\x16EmployerGoogleCallback\x12\x1d.authpb.GoogleCallbackRequest\x1a\x14.authpb.AuthResponseB\rZ\v/gen/authpbb\x06proto3"
 
 var (
 	file_Auth_auth_proto_rawDescOnce sync.Once
