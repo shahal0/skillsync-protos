@@ -6,15 +6,15 @@ option go_package = "skillsync-protos/gen/authpb";
 
 service AuthService {
   // Candidate endpoints
-  rpc CandidateSignup(CandidateSignupRequest) returns (AuthResponse);
-  rpc CandidateLogin(CandidateLoginRequest) returns (AuthResponse);
+  rpc CandidateSignup(CandidateSignupRequest) returns (CandidateSignupResponse);
+  rpc CandidateLogin(CandidateLoginRequest) returns (CandidateLoginResponse);
   rpc CandidateVerifyEmail(VerifyEmailRequest) returns (GenericResponse);
   rpc CandidateResendOtp(ResendOtpRequest) returns (GenericResponse);
   rpc CandidateForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
   rpc CandidateResetPassword(ResetPasswordRequest) returns (GenericResponse);
   rpc CandidateChangePassword(ChangePasswordRequest) returns (GenericResponse);
-  rpc CandidateProfile(ProfileRequest) returns (ProfileResponse);
-  rpc CandidateProfileUpdate(ProfileUpdateRequest) returns (GenericResponse);
+  rpc CandidateProfile(CandidateProfileRequest) returns (CandidateProfileResponse);
+  rpc CandidateProfileUpdate(CandidateProfileUpdateRequest) returns (GenericResponse);
   rpc CandidateSkillsUpdate(SkillsUpdateRequest) returns (GenericResponse);
   rpc CandidateEducationUpdate(EducationUpdateRequest) returns (GenericResponse);
   rpc CandidateUploadResume(UploadResumeRequest) returns (GenericResponse);
@@ -22,24 +22,30 @@ service AuthService {
   rpc CandidateGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
 
   // Employer endpoints
-  rpc EmployerSignup(EmployerSignupRequest) returns (AuthResponse);
-  rpc EmployerLogin(EmployerLoginRequest) returns (AuthResponse);
+  rpc EmployerSignup(EmployerSignupRequest) returns (EmployerSignupResponse);
+  rpc EmployerLogin(EmployerLoginRequest) returns (EmployerLoginResponse);
   rpc EmployerVerifyEmail(VerifyEmailRequest) returns (GenericResponse);
   rpc EmployerResendOtp(ResendOtpRequest) returns (GenericResponse);
   rpc EmployerForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
   rpc EmployerResetPassword(ResetPasswordRequest) returns (GenericResponse);
   rpc EmployerChangePassword(ChangePasswordRequest) returns (GenericResponse);
-  rpc EmployerProfile(ProfileRequest) returns (ProfileResponse);
-  rpc EmployerProfileUpdate(ProfileUpdateRequest) returns (GenericResponse);
+  rpc EmployerProfile(EmployerProfileRequest) returns (EmployerProfileResponse);
+  rpc EmployerProfileUpdate(EmployerProfileUpdateRequest) returns (GenericResponse);
   rpc EmployerGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
   rpc EmployerGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
 }
 
-// Example request/response messages (expand as needed)
+// Candidate messages
 message CandidateSignupRequest {
   string email = 1;
   string password = 2;
   string name = 3;
+}
+
+message CandidateSignupResponse {
+  string id = 1;
+  string token = 2;
+  string message = 3;
 }
 
 message CandidateLoginRequest {
@@ -47,10 +53,49 @@ message CandidateLoginRequest {
   string password = 2;
 }
 
+message CandidateLoginResponse {
+  string id = 1;
+  string token = 2;
+  string message = 3;
+}
+
+message CandidateProfileRequest {
+  string email = 1;
+  string token = 2;
+}
+
+message CandidateProfileResponse {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  int64 phone = 4;
+  int64 experience = 5;
+  repeated Skill skills = 6;
+  string resume = 7;
+  repeated Education education = 8;
+  string current_location = 9;
+  string preferred_location = 10;
+  string linkedin = 11;
+  string github = 12;
+  string profile_picture = 13;
+  bool is_verified = 14;
+}
+
+// Employer messages
 message EmployerSignupRequest {
   string email = 1;
   string password = 2;
   string company_name = 3;
+  int64 phone = 4;
+  string industry = 5;
+  string location = 6;
+  string website = 7;
+}
+
+message EmployerSignupResponse {
+  int64 id = 1;
+  string token = 2;
+  string message = 3;
 }
 
 message EmployerLoginRequest {
@@ -58,58 +103,84 @@ message EmployerLoginRequest {
   string password = 2;
 }
 
-message VerifyEmailRequest {
-  string email = 1;
-  string otp = 2;
+message EmployerLoginResponse {
+  int64 id = 1;
+  string token = 2;
+  string message = 3;
 }
 
-message ResendOtpRequest {
-  string email = 1;
-}
-
-message ForgotPasswordRequest {
-  string email = 1;
-}
-
-message ResetPasswordRequest {
-  string email = 1;
-  string new_password = 2;
-  string otp = 3;
-}
-
-message ChangePasswordRequest {
-  string email = 1;
-  string old_password = 2;
-  string new_password = 3;
-}
-
-message ProfileRequest {
+message EmployerProfileRequest {
   string email = 1;
   string token = 2;
 }
 
-message ProfileUpdateRequest {
-  string email = 1;
-  string name = 2;
-  int64 phone = 3;
-  int64 experience = 4;
-  string current_location = 5;
-  string preferred_location = 6;
-  string linkedin = 7;
-  string github = 8;
-  string profile_picture = 9;
-  string token = 10;
+message EmployerProfileResponse {
+  int64 id = 1;
+  string email = 2;
+  string company_name = 3;
+  int64 phone = 4;
+  string industry = 5;
+  string location = 6;
+  string website = 7;
+  bool is_verified = 8;
+  bool is_trusted = 9;
 }
 
+// Profile update messages
+message CandidateProfileUpdateRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  int64 phone = 4;
+  int64 experience = 5;
+  repeated Skill skills = 6;
+  repeated Education education = 7;
+  string current_location = 8;
+  string linkedin = 9;
+  string github = 10;
+  string profile_picture = 11;
+  string preferred_location = 12;
+  string token = 13;
+}
+
+message EmployerProfileUpdateRequest {
+  int64 id = 1;
+  string company_name = 2;
+  string email = 3;
+  int64 phone = 4;
+  string industry = 5;
+  string location = 6;
+  string website = 7;
+  string token = 8;
+}
+
+// Skills and Education
+message Skill {
+  string candidate_id = 1;
+  string skill = 2;
+  string level = 3;
+}
+
+message Education {
+  string candidate_id = 1;
+  string university = 2;
+  string location = 3;
+  string major = 4;
+  string start_date = 5;
+  string end_date = 6;
+  string grade = 7;
+}
+
+// Other requests
 message SkillsUpdateRequest {
   string email = 1;
-  repeated string skills = 2;
+  repeated Skill skills = 2;
   string token = 3;
 }
 
 message EducationUpdateRequest {
   string email = 1;
-  string education = 2;
+  repeated Education education = 2;
   string token = 3;
 }
 
@@ -139,31 +210,27 @@ message GenericResponse {
   bool success = 2;
 }
 
-message ProfileResponse {
+message VerifyEmailRequest {
   string email = 1;
-  string name = 2;
-  int64 phone = 3;
-  int64 experience = 4;
-  string current_location = 5;
-  string preferred_location = 6;
-  string linkedin = 7;
-  string github = 8;
-  string profile_picture = 9;
-  string resume = 10;
-  repeated Skill skills = 11;
-  repeated Education education = 12;
+  string otp = 2;
 }
 
-message Skill {
-  string skill = 1;
-  string level = 2;
+message ResendOtpRequest {
+  string email = 1;
 }
 
-message Education {
-  string university = 1;
-  string location = 2;
-  string major = 3;
-  string start_date = 4;
-  string end_date = 5;
-  string grade = 6;
+message ForgotPasswordRequest {
+  string email = 1;
+}
+
+message ResetPasswordRequest {
+  string email = 1;
+  string new_password = 2;
+  string otp = 3;
+}
+
+message ChangePasswordRequest {
+  string email = 1;
+  string old_password = 2;
+  string new_password = 3;
 }
