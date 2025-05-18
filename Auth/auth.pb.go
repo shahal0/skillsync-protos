@@ -542,8 +542,7 @@ func (x *EmployerSignupRequest) GetWebsite() string {
 type EmployerSignupResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
-	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -583,13 +582,6 @@ func (x *EmployerSignupResponse) GetId() int64 {
 		return x.Id
 	}
 	return 0
-}
-
-func (x *EmployerSignupResponse) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
 }
 
 func (x *EmployerSignupResponse) GetMessage() string {
@@ -654,8 +646,7 @@ func (x *EmployerLoginRequest) GetPassword() string {
 type EmployerLoginResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
-	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -697,13 +688,6 @@ func (x *EmployerLoginResponse) GetId() int64 {
 	return 0
 }
 
-func (x *EmployerLoginResponse) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
-}
-
 func (x *EmployerLoginResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
@@ -713,8 +697,7 @@ func (x *EmployerLoginResponse) GetMessage() string {
 
 type EmployerProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -747,13 +730,6 @@ func (x *EmployerProfileRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use EmployerProfileRequest.ProtoReflect.Descriptor instead.
 func (*EmployerProfileRequest) Descriptor() ([]byte, []int) {
 	return file_Auth_auth_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *EmployerProfileRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
 }
 
 func (x *EmployerProfileRequest) GetToken() string {
@@ -1962,21 +1938,18 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\x05phone\x18\x04 \x01(\x03R\x05phone\x12\x1a\n" +
 	"\bindustry\x18\x05 \x01(\tR\bindustry\x12\x1a\n" +
 	"\blocation\x18\x06 \x01(\tR\blocation\x12\x18\n" +
-	"\awebsite\x18\a \x01(\tR\awebsite\"X\n" +
+	"\awebsite\x18\a \x01(\tR\awebsite\"B\n" +
 	"\x16EmployerSignupResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\"H\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"H\n" +
 	"\x14EmployerLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"W\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"A\n" +
 	"\x15EmployerLoginResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\"D\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\".\n" +
 	"\x16EmployerProfileRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"\x8a\x02\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\x8a\x02\n" +
 	"\x17EmployerProfileResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12!\n" +

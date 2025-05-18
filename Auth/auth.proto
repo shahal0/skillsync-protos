@@ -93,8 +93,7 @@ message EmployerSignupRequest {
 
 message EmployerSignupResponse {
   int64 id = 1;
-  string token = 2;
-  string message = 3;
+  string message = 2;
 }
 
 message EmployerLoginRequest {
@@ -104,13 +103,11 @@ message EmployerLoginRequest {
 
 message EmployerLoginResponse {
   int64 id = 1;
-  string token = 2;
-  string message = 3;
+  string message = 2;
 }
 
 message EmployerProfileRequest {
-  string email = 1;
-  string token = 2;
+  string token = 1;
 }
 
 message EmployerProfileResponse {
