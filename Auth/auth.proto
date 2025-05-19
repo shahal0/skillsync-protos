@@ -5,6 +5,9 @@ package authpb;
 option go_package = "/gen/authpb";
 
 service AuthService {
+  // Token verification
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+  
   // Candidate endpoints
   rpc CandidateSignup(CandidateSignupRequest) returns (CandidateSignupResponse);
   rpc CandidateLogin(CandidateLoginRequest) returns (CandidateLoginResponse);
@@ -226,4 +229,14 @@ message ChangePasswordRequest {
   string email = 1;
   string old_password = 2;
   string new_password = 3;
+}
+
+// Token verification messages
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  string user_id = 1;
+  string role = 2;
 }
