@@ -59,8 +59,7 @@ message CandidateLoginResponse {
 }
 
 message CandidateProfileRequest {
-  string email = 1;
-  string token = 2;
+  string token = 1;
 }
 
 message CandidateProfileResponse {
@@ -170,21 +169,18 @@ message Education {
 
 // Other requests
 message SkillsUpdateRequest {
-  string email = 1;
-  repeated Skill skills = 2;
-  string token = 3;
+  repeated Skill skills = 1;
+  string token = 2;
 }
 
 message EducationUpdateRequest {
-  string email = 1;
-  repeated Education education = 2;
-  string token = 3;
+  repeated Education education = 1;
+  string token = 2;
 }
 
 message UploadResumeRequest {
-  string email = 1;
-  bytes resume = 2;
-  string token = 3;
+  bytes resume = 1;
+  string token = 2;
 }
 
 message GoogleLoginRequest {

@@ -248,8 +248,7 @@ func (x *CandidateLoginResponse) GetMessage() string {
 
 type CandidateProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -282,13 +281,6 @@ func (x *CandidateProfileRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CandidateProfileRequest.ProtoReflect.Descriptor instead.
 func (*CandidateProfileRequest) Descriptor() ([]byte, []int) {
 	return file_Auth_auth_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *CandidateProfileRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
 }
 
 func (x *CandidateProfileRequest) GetToken() string {
@@ -1252,9 +1244,8 @@ func (x *Education) GetGrade() string {
 // Other requests
 type SkillsUpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Skills        []*Skill               `protobuf:"bytes,2,rep,name=skills,proto3" json:"skills,omitempty"`
-	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
+	Skills        []*Skill               `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1289,13 +1280,6 @@ func (*SkillsUpdateRequest) Descriptor() ([]byte, []int) {
 	return file_Auth_auth_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *SkillsUpdateRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
 func (x *SkillsUpdateRequest) GetSkills() []*Skill {
 	if x != nil {
 		return x.Skills
@@ -1312,9 +1296,8 @@ func (x *SkillsUpdateRequest) GetToken() string {
 
 type EducationUpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Education     []*Education           `protobuf:"bytes,2,rep,name=education,proto3" json:"education,omitempty"`
-	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
+	Education     []*Education           `protobuf:"bytes,1,rep,name=education,proto3" json:"education,omitempty"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1349,13 +1332,6 @@ func (*EducationUpdateRequest) Descriptor() ([]byte, []int) {
 	return file_Auth_auth_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *EducationUpdateRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
 func (x *EducationUpdateRequest) GetEducation() []*Education {
 	if x != nil {
 		return x.Education
@@ -1372,9 +1348,8 @@ func (x *EducationUpdateRequest) GetToken() string {
 
 type UploadResumeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Resume        []byte                 `protobuf:"bytes,2,opt,name=resume,proto3" json:"resume,omitempty"`
-	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
+	Resume        []byte                 `protobuf:"bytes,1,opt,name=resume,proto3" json:"resume,omitempty"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1407,13 +1382,6 @@ func (x *UploadResumeRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UploadResumeRequest.ProtoReflect.Descriptor instead.
 func (*UploadResumeRequest) Descriptor() ([]byte, []int) {
 	return file_Auth_auth_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *UploadResumeRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
 }
 
 func (x *UploadResumeRequest) GetResume() []byte {
@@ -1916,10 +1884,9 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\x16CandidateLoginResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\"E\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\"/\n" +
 	"\x17CandidateProfileRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"\xd2\x03\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\xd2\x03\n" +
 	"\x18CandidateProfileResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x12\n" +
@@ -2011,19 +1978,16 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\n" +
 	"start_date\x18\x05 \x01(\tR\tstartDate\x12\x19\n" +
 	"\bend_date\x18\x06 \x01(\tR\aendDate\x12\x14\n" +
-	"\x05grade\x18\a \x01(\tR\x05grade\"h\n" +
-	"\x13SkillsUpdateRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12%\n" +
-	"\x06skills\x18\x02 \x03(\v2\r.authpb.SkillR\x06skills\x12\x14\n" +
-	"\x05token\x18\x03 \x01(\tR\x05token\"u\n" +
-	"\x16EducationUpdateRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12/\n" +
-	"\teducation\x18\x02 \x03(\v2\x11.authpb.EducationR\teducation\x12\x14\n" +
-	"\x05token\x18\x03 \x01(\tR\x05token\"Y\n" +
-	"\x13UploadResumeRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x16\n" +
-	"\x06resume\x18\x02 \x01(\fR\x06resume\x12\x14\n" +
-	"\x05token\x18\x03 \x01(\tR\x05token\"7\n" +
+	"\x05grade\x18\a \x01(\tR\x05grade\"R\n" +
+	"\x13SkillsUpdateRequest\x12%\n" +
+	"\x06skills\x18\x01 \x03(\v2\r.authpb.SkillR\x06skills\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\"_\n" +
+	"\x16EducationUpdateRequest\x12/\n" +
+	"\teducation\x18\x01 \x03(\v2\x11.authpb.EducationR\teducation\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\"C\n" +
+	"\x13UploadResumeRequest\x12\x16\n" +
+	"\x06resume\x18\x01 \x01(\fR\x06resume\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\"7\n" +
 	"\x12GoogleLoginRequest\x12!\n" +
 	"\fredirect_url\x18\x01 \x01(\tR\vredirectUrl\"+\n" +
 	"\x15GoogleCallbackRequest\x12\x12\n" +
