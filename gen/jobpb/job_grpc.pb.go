@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: skillsync-protos/Job/job.proto
+// source: Job/job.proto
 
-package __
+package jobpb
 
 import (
 	context "context"
@@ -19,9 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	JobService_PostJob_FullMethodName    = "/jobservice.JobService/PostJob"
-	JobService_GetJobs_FullMethodName    = "/jobservice.JobService/GetJobs"
-	JobService_ApplyToJob_FullMethodName = "/jobservice.JobService/ApplyToJob"
+	JobService_PostJob_FullMethodName                 = "/jobservice.JobService/PostJob"
+	JobService_GetJobs_FullMethodName                 = "/jobservice.JobService/GetJobs"
+	JobService_GetJobById_FullMethodName              = "/jobservice.JobService/GetJobById"
+	JobService_ApplyToJob_FullMethodName              = "/jobservice.JobService/ApplyToJob"
+	JobService_GetApplications_FullMethodName         = "/jobservice.JobService/GetApplications"
+	JobService_UpdateApplicationStatus_FullMethodName = "/jobservice.JobService/UpdateApplicationStatus"
+	JobService_AddJobSkills_FullMethodName            = "/jobservice.JobService/AddJobSkills"
 )
 
 // JobServiceClient is the client API for JobService service.
@@ -30,9 +34,16 @@ const (
 //
 // Service definition
 type JobServiceClient interface {
+	// Core job operations
 	PostJob(ctx context.Context, in *PostJobRequest, opts ...grpc.CallOption) (*PostJobResponse, error)
 	GetJobs(ctx context.Context, in *GetJobsRequest, opts ...grpc.CallOption) (*GetJobsResponse, error)
+	GetJobById(ctx context.Context, in *GetJobByIdRequest, opts ...grpc.CallOption) (*GetJobByIdResponse, error)
+	// Application operations
 	ApplyToJob(ctx context.Context, in *ApplyToJobRequest, opts ...grpc.CallOption) (*ApplyToJobResponse, error)
+	GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*GetApplicationsResponse, error)
+	UpdateApplicationStatus(ctx context.Context, in *UpdateApplicationStatusRequest, opts ...grpc.CallOption) (*UpdateApplicationStatusResponse, error)
+	// Skills operations
+	AddJobSkills(ctx context.Context, in *AddJobSkillsRequest, opts ...grpc.CallOption) (*AddJobSkillsResponse, error)
 }
 
 type jobServiceClient struct {
@@ -63,10 +74,50 @@ func (c *jobServiceClient) GetJobs(ctx context.Context, in *GetJobsRequest, opts
 	return out, nil
 }
 
+func (c *jobServiceClient) GetJobById(ctx context.Context, in *GetJobByIdRequest, opts ...grpc.CallOption) (*GetJobByIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetJobByIdResponse)
+	err := c.cc.Invoke(ctx, JobService_GetJobById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *jobServiceClient) ApplyToJob(ctx context.Context, in *ApplyToJobRequest, opts ...grpc.CallOption) (*ApplyToJobResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ApplyToJobResponse)
 	err := c.cc.Invoke(ctx, JobService_ApplyToJob_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobServiceClient) GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*GetApplicationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetApplicationsResponse)
+	err := c.cc.Invoke(ctx, JobService_GetApplications_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobServiceClient) UpdateApplicationStatus(ctx context.Context, in *UpdateApplicationStatusRequest, opts ...grpc.CallOption) (*UpdateApplicationStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateApplicationStatusResponse)
+	err := c.cc.Invoke(ctx, JobService_UpdateApplicationStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobServiceClient) AddJobSkills(ctx context.Context, in *AddJobSkillsRequest, opts ...grpc.CallOption) (*AddJobSkillsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddJobSkillsResponse)
+	err := c.cc.Invoke(ctx, JobService_AddJobSkills_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,9 +130,16 @@ func (c *jobServiceClient) ApplyToJob(ctx context.Context, in *ApplyToJobRequest
 //
 // Service definition
 type JobServiceServer interface {
+	// Core job operations
 	PostJob(context.Context, *PostJobRequest) (*PostJobResponse, error)
 	GetJobs(context.Context, *GetJobsRequest) (*GetJobsResponse, error)
+	GetJobById(context.Context, *GetJobByIdRequest) (*GetJobByIdResponse, error)
+	// Application operations
 	ApplyToJob(context.Context, *ApplyToJobRequest) (*ApplyToJobResponse, error)
+	GetApplications(context.Context, *GetApplicationsRequest) (*GetApplicationsResponse, error)
+	UpdateApplicationStatus(context.Context, *UpdateApplicationStatusRequest) (*UpdateApplicationStatusResponse, error)
+	// Skills operations
+	AddJobSkills(context.Context, *AddJobSkillsRequest) (*AddJobSkillsResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -98,8 +156,20 @@ func (UnimplementedJobServiceServer) PostJob(context.Context, *PostJobRequest) (
 func (UnimplementedJobServiceServer) GetJobs(context.Context, *GetJobsRequest) (*GetJobsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJobs not implemented")
 }
+func (UnimplementedJobServiceServer) GetJobById(context.Context, *GetJobByIdRequest) (*GetJobByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJobById not implemented")
+}
 func (UnimplementedJobServiceServer) ApplyToJob(context.Context, *ApplyToJobRequest) (*ApplyToJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyToJob not implemented")
+}
+func (UnimplementedJobServiceServer) GetApplications(context.Context, *GetApplicationsRequest) (*GetApplicationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApplications not implemented")
+}
+func (UnimplementedJobServiceServer) UpdateApplicationStatus(context.Context, *UpdateApplicationStatusRequest) (*UpdateApplicationStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateApplicationStatus not implemented")
+}
+func (UnimplementedJobServiceServer) AddJobSkills(context.Context, *AddJobSkillsRequest) (*AddJobSkillsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddJobSkills not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 func (UnimplementedJobServiceServer) testEmbeddedByValue()                    {}
@@ -158,6 +228,24 @@ func _JobService_GetJobs_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_GetJobById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJobByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetJobById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_GetJobById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetJobById(ctx, req.(*GetJobByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _JobService_ApplyToJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyToJobRequest)
 	if err := dec(in); err != nil {
@@ -172,6 +260,60 @@ func _JobService_ApplyToJob_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).ApplyToJob(ctx, req.(*ApplyToJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobService_GetApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetApplicationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetApplications(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_GetApplications_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetApplications(ctx, req.(*GetApplicationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobService_UpdateApplicationStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateApplicationStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).UpdateApplicationStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_UpdateApplicationStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).UpdateApplicationStatus(ctx, req.(*UpdateApplicationStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobService_AddJobSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddJobSkillsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).AddJobSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_AddJobSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).AddJobSkills(ctx, req.(*AddJobSkillsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,10 +334,26 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _JobService_GetJobs_Handler,
 		},
 		{
+			MethodName: "GetJobById",
+			Handler:    _JobService_GetJobById_Handler,
+		},
+		{
 			MethodName: "ApplyToJob",
 			Handler:    _JobService_ApplyToJob_Handler,
 		},
+		{
+			MethodName: "GetApplications",
+			Handler:    _JobService_GetApplications_Handler,
+		},
+		{
+			MethodName: "UpdateApplicationStatus",
+			Handler:    _JobService_UpdateApplicationStatus_Handler,
+		},
+		{
+			MethodName: "AddJobSkills",
+			Handler:    _JobService_AddJobSkills_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "skillsync-protos/Job/job.proto",
+	Metadata: "Job/job.proto",
 }

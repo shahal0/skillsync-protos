@@ -2,55 +2,149 @@ syntax = "proto3";
 
 package jobservice;
 
-option go_package = "/.";
+option go_package = "github.com/shahal0/skillsync-protos/gen/jobpb";
 
-// Job message
+import "google/protobuf/timestamp.proto";
+
+// Job message - comprehensive definition matching your model
 message Job {
   string id = 1;
-  string title = 2;
-  string description = 3;
-  string category = 4;
-  string employer_id = 5;
-  repeated JobSkill skills = 6;
+  string employer_id = 2;
+  string title = 3;
+  string description = 4;
+  string category = 5;
+  repeated JobSkill required_skills = 6;
+  int64 salary_min = 7;
+  int64 salary_max = 8;
+  string location = 9;
+  int32 experience_required = 10;
+  string status = 11;
+  google.protobuf.Timestamp created_at = 12;
 }
 
-// JobSkill message
+// JobSkill message - matching your model
 message JobSkill {
+  string job_id = 1;
+  string skill = 2;
+  string proficiency = 3; // e.g., Beginner, Intermediate, Expert
+}
+
+// Application message - matching your model
+message Application {
   string id = 1;
   string job_id = 2;
-  string skill_name = 3;
+  string candidate_id = 3;
+  string status = 4; // Applied, Viewed, Shortlisted, Rejected
+  google.protobuf.Timestamp applied_at = 5;
+  string resume_url = 6; // Optional field for resume URL
 }
 
 // PostJob request/response
 message PostJobRequest {
-  Job job = 1;
-  string employer_id = 2;
-}
-message PostJobResponse {
-  string message = 1;
+  string title = 1;
+  string description = 2;
+  string category = 3;
+  repeated JobSkill required_skills = 4;
+  int64 salary_min = 5;
+  int64 salary_max = 6;
+  string location = 7;
+  int32 experience_required = 8;
+  string employer_id = 9; // Will be extracted from token in implementation
 }
 
-// GetJobs request/response
+message PostJobResponse {
+  string job_id = 1;
+  string message = 2;
+}
+
+// GetJobs request/response with filters
 message GetJobsRequest {
   string category = 1;
   string keyword = 2;
+  string location = 3;
+  int64 min_salary = 4;
+  int64 max_salary = 5;
+  int32 experience = 6;
+  repeated string skills = 7;
+  int32 page = 8;
+  int32 limit = 9;
 }
+
 message GetJobsResponse {
   repeated Job jobs = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 total_pages = 4;
+}
+
+// GetJobById request/response
+message GetJobByIdRequest {
+  string job_id = 1;
+}
+
+message GetJobByIdResponse {
+  Job job = 1;
 }
 
 // ApplyToJob request/response
 message ApplyToJobRequest {
-  string candidate_id = 1;
-  string job_id = 2;
+  string job_id = 1;
+  string candidate_id = 2; // Will be extracted from token in implementation
+  string resume_url = 3; // Optional - can be retrieved from candidate profile
 }
+
 message ApplyToJobResponse {
+  string application_id = 1;
+  string message = 2;
+}
+
+// GetApplications request/response
+message GetApplicationsRequest {
+  string job_id = 1; // For employer to view applications for a job
+  string candidate_id = 2; // For candidate to view their applications
+  string status = 3; // Filter by status
+  int32 page = 4;
+  int32 limit = 5;
+}
+
+message GetApplicationsResponse {
+  repeated Application applications = 1;
+  int32 total_count = 2;
+}
+
+// UpdateApplicationStatus request/response
+message UpdateApplicationStatusRequest {
+  string application_id = 1;
+  string status = 2; // New status: Viewed, Shortlisted, Rejected
+  string employer_id = 3; // Will be extracted from token in implementation
+}
+
+message UpdateApplicationStatusResponse {
+  string message = 1;
+}
+
+// AddJobSkills request/response
+message AddJobSkillsRequest {
+  string job_id = 1;
+  repeated JobSkill skills = 2;
+}
+
+message AddJobSkillsResponse {
   string message = 1;
 }
 
 // Service definition
 service JobService {
+  // Core job operations
   rpc PostJob(PostJobRequest) returns (PostJobResponse);
   rpc GetJobs(GetJobsRequest) returns (GetJobsResponse);
+  rpc GetJobById(GetJobByIdRequest) returns (GetJobByIdResponse);
+  
+  // Application operations
   rpc ApplyToJob(ApplyToJobRequest) returns (ApplyToJobResponse);
+  rpc GetApplications(GetApplicationsRequest) returns (GetApplicationsResponse);
+  rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (UpdateApplicationStatusResponse);
+  
+  // Skills operations
+  rpc AddJobSkills(AddJobSkillsRequest) returns (AddJobSkillsResponse);
 }
