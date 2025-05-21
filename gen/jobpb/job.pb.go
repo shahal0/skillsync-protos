@@ -158,7 +158,7 @@ func (x *Job) GetCreatedAt() *timestamppb.Timestamp {
 // JobSkill message - matching your model
 type JobSkill struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
+	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Using string to match Go implementation
 	Skill         string                 `protobuf:"bytes,2,opt,name=skill,proto3" json:"skill,omitempty"`
 	Proficiency   string                 `protobuf:"bytes,3,opt,name=proficiency,proto3" json:"proficiency,omitempty"` // e.g., Beginner, Intermediate, Expert
 	unknownFields protoimpl.UnknownFields
@@ -195,11 +195,11 @@ func (*JobSkill) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *JobSkill) GetJobId() uint64 {
+func (x *JobSkill) GetJobId() string {
 	if x != nil {
 		return x.JobId
 	}
-	return 0
+	return ""
 }
 
 func (x *JobSkill) GetSkill() string {
@@ -1022,7 +1022,7 @@ func (x *UpdateApplicationStatusResponse) GetMessage() string {
 // AddJobSkills request/response
 type AddJobSkillsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
+	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Using string to match Go implementation
 	Skills        []*JobSkill            `protobuf:"bytes,2,rep,name=skills,proto3" json:"skills,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1058,11 +1058,11 @@ func (*AddJobSkillsRequest) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *AddJobSkillsRequest) GetJobId() uint64 {
+func (x *AddJobSkillsRequest) GetJobId() string {
 	if x != nil {
 		return x.JobId
 	}
-	return 0
+	return ""
 }
 
 func (x *AddJobSkillsRequest) GetSkills() []*JobSkill {
@@ -1141,7 +1141,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"Y\n" +
 	"\bJobSkill\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x14\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x14\n" +
 	"\x05skill\x18\x02 \x01(\tR\x05skill\x12 \n" +
 	"\vproficiency\x18\x03 \x01(\tR\vproficiency\"\xc9\x01\n" +
 	"\vApplication\x12\x0e\n" +
@@ -1209,7 +1209,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\x1fUpdateApplicationStatusResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"Z\n" +
 	"\x13AddJobSkillsRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12,\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12,\n" +
 	"\x06skills\x18\x02 \x03(\v2\x14.jobservice.JobSkillR\x06skills\"0\n" +
 	"\x14AddJobSkillsResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xd1\x04\n" +

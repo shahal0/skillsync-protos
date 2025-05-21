@@ -24,7 +24,7 @@ message Job {
 
 // JobSkill message - matching your model
 message JobSkill {
-  uint64 job_id = 1; // Changed from string to uint64
+  string job_id = 1; // Using string to match Go implementation
   string skill = 2;
   string proficiency = 3; // e.g., Beginner, Intermediate, Expert
 }
@@ -119,7 +119,7 @@ message UpdateApplicationStatusResponse {
 
 // AddJobSkills request/response
 message AddJobSkillsRequest {
-  uint64 job_id = 1; // Changed from string to uint64
+  string job_id = 1; // Using string to match Go implementation
   repeated JobSkill skills = 2;
 }
 
