@@ -25,7 +25,7 @@ const (
 // Job message - comprehensive definition matching your model
 type Job struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id                 uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"` // Changed from string to uint64 to match Go uint type
 	EmployerId         string                 `protobuf:"bytes,2,opt,name=employer_id,json=employerId,proto3" json:"employer_id,omitempty"`
 	Title              string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
 	Description        string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
@@ -71,11 +71,11 @@ func (*Job) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Job) GetId() string {
+func (x *Job) GetId() uint64 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
 func (x *Job) GetEmployerId() string {
@@ -158,7 +158,7 @@ func (x *Job) GetCreatedAt() *timestamppb.Timestamp {
 // JobSkill message - matching your model
 type JobSkill struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
 	Skill         string                 `protobuf:"bytes,2,opt,name=skill,proto3" json:"skill,omitempty"`
 	Proficiency   string                 `protobuf:"bytes,3,opt,name=proficiency,proto3" json:"proficiency,omitempty"` // e.g., Beginner, Intermediate, Expert
 	unknownFields protoimpl.UnknownFields
@@ -195,11 +195,11 @@ func (*JobSkill) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *JobSkill) GetJobId() string {
+func (x *JobSkill) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *JobSkill) GetSkill() string {
@@ -219,8 +219,8 @@ func (x *JobSkill) GetProficiency() string {
 // Application message - matching your model
 type Application struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	JobId         string                 `protobuf:"bytes,2,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                    // Changed from string to uint64
+	JobId         uint64                 `protobuf:"varint,2,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
 	CandidateId   string                 `protobuf:"bytes,3,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
 	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"` // Applied, Viewed, Shortlisted, Rejected
 	AppliedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=applied_at,json=appliedAt,proto3" json:"applied_at,omitempty"`
@@ -259,18 +259,18 @@ func (*Application) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Application) GetId() string {
+func (x *Application) GetId() uint64 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
-func (x *Application) GetJobId() string {
+func (x *Application) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *Application) GetCandidateId() string {
@@ -412,7 +412,7 @@ func (x *PostJobRequest) GetEmployerId() string {
 
 type PostJobResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -448,11 +448,11 @@ func (*PostJobResponse) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *PostJobResponse) GetJobId() string {
+func (x *PostJobResponse) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *PostJobResponse) GetMessage() string {
@@ -465,15 +465,8 @@ func (x *PostJobResponse) GetMessage() string {
 // GetJobs request/response with filters
 type GetJobsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	Keyword       string                 `protobuf:"bytes,2,opt,name=keyword,proto3" json:"keyword,omitempty"`
-	Location      string                 `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
-	MinSalary     int64                  `protobuf:"varint,4,opt,name=min_salary,json=minSalary,proto3" json:"min_salary,omitempty"`
-	MaxSalary     int64                  `protobuf:"varint,5,opt,name=max_salary,json=maxSalary,proto3" json:"max_salary,omitempty"`
-	Experience    int32                  `protobuf:"varint,6,opt,name=experience,proto3" json:"experience,omitempty"`
-	Skills        []string               `protobuf:"bytes,7,rep,name=skills,proto3" json:"skills,omitempty"`
-	Page          int32                  `protobuf:"varint,8,opt,name=page,proto3" json:"page,omitempty"`
-	Limit         int32                  `protobuf:"varint,9,opt,name=limit,proto3" json:"limit,omitempty"`
+	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"` // Optional category filter
+	Keyword       string                 `protobuf:"bytes,2,opt,name=keyword,proto3" json:"keyword,omitempty"`   // Optional keyword search
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -520,55 +513,6 @@ func (x *GetJobsRequest) GetKeyword() string {
 		return x.Keyword
 	}
 	return ""
-}
-
-func (x *GetJobsRequest) GetLocation() string {
-	if x != nil {
-		return x.Location
-	}
-	return ""
-}
-
-func (x *GetJobsRequest) GetMinSalary() int64 {
-	if x != nil {
-		return x.MinSalary
-	}
-	return 0
-}
-
-func (x *GetJobsRequest) GetMaxSalary() int64 {
-	if x != nil {
-		return x.MaxSalary
-	}
-	return 0
-}
-
-func (x *GetJobsRequest) GetExperience() int32 {
-	if x != nil {
-		return x.Experience
-	}
-	return 0
-}
-
-func (x *GetJobsRequest) GetSkills() []string {
-	if x != nil {
-		return x.Skills
-	}
-	return nil
-}
-
-func (x *GetJobsRequest) GetPage() int32 {
-	if x != nil {
-		return x.Page
-	}
-	return 0
-}
-
-func (x *GetJobsRequest) GetLimit() int32 {
-	if x != nil {
-		return x.Limit
-	}
-	return 0
 }
 
 type GetJobsResponse struct {
@@ -642,7 +586,7 @@ func (x *GetJobsResponse) GetTotalPages() int32 {
 // GetJobById request/response
 type GetJobByIdRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -677,11 +621,11 @@ func (*GetJobByIdRequest) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetJobByIdRequest) GetJobId() string {
+func (x *GetJobByIdRequest) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 type GetJobByIdResponse struct {
@@ -731,7 +675,7 @@ func (x *GetJobByIdResponse) GetJob() *Job {
 // ApplyToJob request/response
 type ApplyToJobRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                  // Changed from string to uint64
 	CandidateId   string                 `protobuf:"bytes,2,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"` // Will be extracted from token in implementation
 	ResumeUrl     string                 `protobuf:"bytes,3,opt,name=resume_url,json=resumeUrl,proto3" json:"resume_url,omitempty"`       // Optional - can be retrieved from candidate profile
 	unknownFields protoimpl.UnknownFields
@@ -768,11 +712,11 @@ func (*ApplyToJobRequest) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ApplyToJobRequest) GetJobId() string {
+func (x *ApplyToJobRequest) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *ApplyToJobRequest) GetCandidateId() string {
@@ -791,7 +735,7 @@ func (x *ApplyToJobRequest) GetResumeUrl() string {
 
 type ApplyToJobResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ApplicationId string                 `protobuf:"bytes,1,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
+	ApplicationId uint64                 `protobuf:"varint,1,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"` // Changed from string to uint64
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -827,11 +771,11 @@ func (*ApplyToJobResponse) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *ApplyToJobResponse) GetApplicationId() string {
+func (x *ApplyToJobResponse) GetApplicationId() uint64 {
 	if x != nil {
 		return x.ApplicationId
 	}
-	return ""
+	return 0
 }
 
 func (x *ApplyToJobResponse) GetMessage() string {
@@ -844,7 +788,7 @@ func (x *ApplyToJobResponse) GetMessage() string {
 // GetApplications request/response
 type GetApplicationsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                   // For employer to view applications for a job
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                  // Changed from string to uint64 - For employer to view applications for a job
 	CandidateId   string                 `protobuf:"bytes,2,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"` // For candidate to view their applications
 	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`                              // Filter by status
 	Page          int32                  `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
@@ -883,11 +827,11 @@ func (*GetApplicationsRequest) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GetApplicationsRequest) GetJobId() string {
+func (x *GetApplicationsRequest) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *GetApplicationsRequest) GetCandidateId() string {
@@ -1078,7 +1022,7 @@ func (x *UpdateApplicationStatusResponse) GetMessage() string {
 // AddJobSkills request/response
 type AddJobSkillsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed from string to uint64
 	Skills        []*JobSkill            `protobuf:"bytes,2,rep,name=skills,proto3" json:"skills,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1114,11 +1058,11 @@ func (*AddJobSkillsRequest) Descriptor() ([]byte, []int) {
 	return file_Job_job_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *AddJobSkillsRequest) GetJobId() string {
+func (x *AddJobSkillsRequest) GetJobId() uint64 {
 	if x != nil {
 		return x.JobId
 	}
-	return ""
+	return 0
 }
 
 func (x *AddJobSkillsRequest) GetSkills() []*JobSkill {
@@ -1179,7 +1123,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\rJob/job.proto\x12\n" +
 	"jobservice\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa7\x03\n" +
 	"\x03Job\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1f\n" +
 	"\vemployer_id\x18\x02 \x01(\tR\n" +
 	"employerId\x12\x14\n" +
 	"\x05title\x18\x03 \x01(\tR\x05title\x12 \n" +
@@ -1197,12 +1141,12 @@ const file_Job_job_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"Y\n" +
 	"\bJobSkill\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x14\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x14\n" +
 	"\x05skill\x18\x02 \x01(\tR\x05skill\x12 \n" +
 	"\vproficiency\x18\x03 \x01(\tR\vproficiency\"\xc9\x01\n" +
 	"\vApplication\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
-	"\x06job_id\x18\x02 \x01(\tR\x05jobId\x12!\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x15\n" +
+	"\x06job_id\x18\x02 \x01(\x04R\x05jobId\x12!\n" +
 	"\fcandidate_id\x18\x03 \x01(\tR\vcandidateId\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\tR\x06status\x129\n" +
 	"\n" +
@@ -1223,22 +1167,11 @@ const file_Job_job_proto_rawDesc = "" +
 	"\vemployer_id\x18\t \x01(\tR\n" +
 	"employerId\"B\n" +
 	"\x0fPostJobResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\x82\x02\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"F\n" +
 	"\x0eGetJobsRequest\x12\x1a\n" +
 	"\bcategory\x18\x01 \x01(\tR\bcategory\x12\x18\n" +
-	"\akeyword\x18\x02 \x01(\tR\akeyword\x12\x1a\n" +
-	"\blocation\x18\x03 \x01(\tR\blocation\x12\x1d\n" +
-	"\n" +
-	"min_salary\x18\x04 \x01(\x03R\tminSalary\x12\x1d\n" +
-	"\n" +
-	"max_salary\x18\x05 \x01(\x03R\tmaxSalary\x12\x1e\n" +
-	"\n" +
-	"experience\x18\x06 \x01(\x05R\n" +
-	"experience\x12\x16\n" +
-	"\x06skills\x18\a \x03(\tR\x06skills\x12\x12\n" +
-	"\x04page\x18\b \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\t \x01(\x05R\x05limit\"\x8c\x01\n" +
+	"\akeyword\x18\x02 \x01(\tR\akeyword\"\x8c\x01\n" +
 	"\x0fGetJobsResponse\x12#\n" +
 	"\x04jobs\x18\x01 \x03(\v2\x0f.jobservice.JobR\x04jobs\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
@@ -1247,19 +1180,19 @@ const file_Job_job_proto_rawDesc = "" +
 	"\vtotal_pages\x18\x04 \x01(\x05R\n" +
 	"totalPages\"*\n" +
 	"\x11GetJobByIdRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"7\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\"7\n" +
 	"\x12GetJobByIdResponse\x12!\n" +
 	"\x03job\x18\x01 \x01(\v2\x0f.jobservice.JobR\x03job\"l\n" +
 	"\x11ApplyToJobRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12!\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12!\n" +
 	"\fcandidate_id\x18\x02 \x01(\tR\vcandidateId\x12\x1d\n" +
 	"\n" +
 	"resume_url\x18\x03 \x01(\tR\tresumeUrl\"U\n" +
 	"\x12ApplyToJobResponse\x12%\n" +
-	"\x0eapplication_id\x18\x01 \x01(\tR\rapplicationId\x12\x18\n" +
+	"\x0eapplication_id\x18\x01 \x01(\x04R\rapplicationId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\x94\x01\n" +
 	"\x16GetApplicationsRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12!\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12!\n" +
 	"\fcandidate_id\x18\x02 \x01(\tR\vcandidateId\x12\x16\n" +
 	"\x06status\x18\x03 \x01(\tR\x06status\x12\x12\n" +
 	"\x04page\x18\x04 \x01(\x05R\x04page\x12\x14\n" +
@@ -1276,7 +1209,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\x1fUpdateApplicationStatusResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"Z\n" +
 	"\x13AddJobSkillsRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12,\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12,\n" +
 	"\x06skills\x18\x02 \x03(\v2\x14.jobservice.JobSkillR\x06skills\"0\n" +
 	"\x14AddJobSkillsResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xd1\x04\n" +

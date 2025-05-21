@@ -8,7 +8,7 @@ import "google/protobuf/timestamp.proto";
 
 // Job message - comprehensive definition matching your model
 message Job {
-  string id = 1;
+  uint64 id = 1; // Changed from string to uint64 to match Go uint type
   string employer_id = 2;
   string title = 3;
   string description = 4;
@@ -24,15 +24,15 @@ message Job {
 
 // JobSkill message - matching your model
 message JobSkill {
-  string job_id = 1;
+  uint64 job_id = 1; // Changed from string to uint64
   string skill = 2;
   string proficiency = 3; // e.g., Beginner, Intermediate, Expert
 }
 
 // Application message - matching your model
 message Application {
-  string id = 1;
-  string job_id = 2;
+  uint64 id = 1; // Changed from string to uint64
+  uint64 job_id = 2; // Changed from string to uint64
   string candidate_id = 3;
   string status = 4; // Applied, Viewed, Shortlisted, Rejected
   google.protobuf.Timestamp applied_at = 5;
@@ -53,21 +53,14 @@ message PostJobRequest {
 }
 
 message PostJobResponse {
-  string job_id = 1;
+  uint64 job_id = 1; // Changed from string to uint64
   string message = 2;
 }
 
 // GetJobs request/response with filters
 message GetJobsRequest {
-  string category = 1;
-  string keyword = 2;
-  string location = 3;
-  int64 min_salary = 4;
-  int64 max_salary = 5;
-  int32 experience = 6;
-  repeated string skills = 7;
-  int32 page = 8;
-  int32 limit = 9;
+  string category = 1; // Optional category filter
+  string keyword = 2;  // Optional keyword search
 }
 
 message GetJobsResponse {
@@ -79,28 +72,29 @@ message GetJobsResponse {
 
 // GetJobById request/response
 message GetJobByIdRequest {
-  string job_id = 1;
+  uint64 job_id = 1; // Changed from string to uint64
 }
 
 message GetJobByIdResponse {
   Job job = 1;
+
 }
 
 // ApplyToJob request/response
 message ApplyToJobRequest {
-  string job_id = 1;
+  uint64 job_id = 1; // Changed from string to uint64
   string candidate_id = 2; // Will be extracted from token in implementation
   string resume_url = 3; // Optional - can be retrieved from candidate profile
 }
 
 message ApplyToJobResponse {
-  string application_id = 1;
+  uint64 application_id = 1; // Changed from string to uint64
   string message = 2;
 }
 
 // GetApplications request/response
 message GetApplicationsRequest {
-  string job_id = 1; // For employer to view applications for a job
+  uint64 job_id = 1; // Changed from string to uint64 - For employer to view applications for a job
   string candidate_id = 2; // For candidate to view their applications
   string status = 3; // Filter by status
   int32 page = 4;
@@ -125,7 +119,7 @@ message UpdateApplicationStatusResponse {
 
 // AddJobSkills request/response
 message AddJobSkillsRequest {
-  string job_id = 1;
+  uint64 job_id = 1; // Changed from string to uint64
   repeated JobSkill skills = 2;
 }
 
