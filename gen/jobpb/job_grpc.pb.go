@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: Job/job.proto
+// source: skillsync-protos/Job/job.proto
 
 package jobpb
 
@@ -393,5 +393,5 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "Job/job.proto",
+	Metadata: "skillsync-protos/Job/job.proto",
 }
