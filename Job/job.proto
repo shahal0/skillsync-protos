@@ -13,10 +13,19 @@ message EmployerDetail {
   string value = 2;  // The actual value of the detail
 }
 
-// EmployerProfile contains basic employer information as an array of details
+// CompanyDetails represents a collection of employer details
+message CompanyDetails {
+  repeated EmployerDetail details = 1;
+}
+
+// EmployerProfile contains basic employer information
 message EmployerProfile {
-  string employer_id = 1;
-  repeated EmployerDetail details = 2;
+  string company_name = 1;
+  string industry = 2;
+  string website = 3;
+  string location = 4;
+  bool is_verified = 5;
+  bool is_trusted = 6;
 }
 
 // Job message - comprehensive definition matching your model
@@ -32,7 +41,8 @@ message Job {
   string location = 9;
   int32 experience_required = 10;
   string status = 11; // Possible values: OPEN, CLOSED, DRAFT
-  EmployerProfile employer_profile = 12; // Employer details
+  EmployerProfile employer_profile = 12; // Standard employer details
+  CompanyDetails company_details = 13; // Company details as an array of key-value pairs
 }
 
 // JobSkill message - matching your model
