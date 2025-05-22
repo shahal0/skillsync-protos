@@ -808,7 +808,7 @@ func (x *ApplyToJobResponse) GetMessage() string {
 // GetApplications request/response
 type GetApplicationsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                  // Changed from string to uint64 - For employer to view applications for a job
+	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                  // For employer to view applications for a job
 	CandidateId   string                 `protobuf:"bytes,2,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"` // For candidate to view their applications
 	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`                              // Filter by status
 	unknownFields protoimpl.UnknownFields
