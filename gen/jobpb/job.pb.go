@@ -1019,7 +1019,8 @@ func (x *UpdateApplicationStatusResponse) GetMessage() string {
 type AddJobSkillsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	JobId         uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // Changed to uint64 to match Job ID type
-	Skills        []*JobSkill            `protobuf:"bytes,2,rep,name=skills,proto3" json:"skills,omitempty"`             // Multiple skills can be added at once
+	Skill         string                 `protobuf:"bytes,2,opt,name=skill,proto3" json:"skill,omitempty"`
+	Proficiency   string                 `protobuf:"bytes,3,opt,name=proficiency,proto3" json:"proficiency,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1061,11 +1062,18 @@ func (x *AddJobSkillsRequest) GetJobId() uint64 {
 	return 0
 }
 
-func (x *AddJobSkillsRequest) GetSkills() []*JobSkill {
+func (x *AddJobSkillsRequest) GetSkill() string {
 	if x != nil {
-		return x.Skills
+		return x.Skill
 	}
-	return nil
+	return ""
+}
+
+func (x *AddJobSkillsRequest) GetProficiency() string {
+	if x != nil {
+		return x.Proficiency
+	}
+	return ""
 }
 
 type AddJobSkillsResponse struct {
@@ -1299,10 +1307,11 @@ const file_Job_job_proto_rawDesc = "" +
 	"\vemployer_id\x18\x03 \x01(\tR\n" +
 	"employerId\";\n" +
 	"\x1fUpdateApplicationStatusResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"Z\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"d\n" +
 	"\x13AddJobSkillsRequest\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12,\n" +
-	"\x06skills\x18\x02 \x03(\v2\x14.jobservice.JobSkillR\x06skills\"0\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x14\n" +
+	"\x05skill\x18\x02 \x01(\tR\x05skill\x12 \n" +
+	"\vproficiency\x18\x03 \x01(\tR\vproficiency\"0\n" +
 	"\x14AddJobSkillsResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"h\n" +
 	"\x16UpdateJobStatusRequest\x12\x15\n" +
@@ -1367,28 +1376,27 @@ var file_Job_job_proto_depIdxs = []int32{
 	0,  // 3: jobservice.GetJobsResponse.jobs:type_name -> jobservice.Job
 	0,  // 4: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
 	3,  // 5: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.Application
-	1,  // 6: jobservice.AddJobSkillsRequest.skills:type_name -> jobservice.JobSkill
-	4,  // 7: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
-	6,  // 8: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
-	8,  // 9: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
-	18, // 10: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
-	10, // 11: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
-	12, // 12: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
-	14, // 13: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
-	16, // 14: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
-	5,  // 15: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
-	7,  // 16: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
-	9,  // 17: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
-	19, // 18: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
-	11, // 19: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
-	13, // 20: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
-	15, // 21: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
-	17, // 22: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
-	15, // [15:23] is the sub-list for method output_type
-	7,  // [7:15] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	4,  // 6: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
+	6,  // 7: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
+	8,  // 8: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
+	18, // 9: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
+	10, // 10: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
+	12, // 11: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
+	14, // 12: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
+	16, // 13: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
+	5,  // 14: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
+	7,  // 15: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
+	9,  // 16: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
+	19, // 17: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
+	11, // 18: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
+	13, // 19: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
+	15, // 20: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
+	17, // 21: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
+	14, // [14:22] is the sub-list for method output_type
+	6,  // [6:14] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_Job_job_proto_init() }

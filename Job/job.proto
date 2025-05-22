@@ -119,7 +119,8 @@ message UpdateApplicationStatusResponse {
 // AddJobSkills request/response
 message AddJobSkillsRequest {
   uint64 job_id = 1; // Changed to uint64 to match Job ID type
-  repeated JobSkill skills = 2; // Multiple skills can be added at once
+  string skill = 2;
+  string proficiency = 3;
 }
 
 message AddJobSkillsResponse {
