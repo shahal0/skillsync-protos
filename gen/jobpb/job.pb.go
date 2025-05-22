@@ -123,11 +123,12 @@ func (x *CompanyDetails) GetDetails() []*EmployerDetail {
 type EmployerProfile struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CompanyName   string                 `protobuf:"bytes,1,opt,name=company_name,json=companyName,proto3" json:"company_name,omitempty"`
-	Industry      string                 `protobuf:"bytes,2,opt,name=industry,proto3" json:"industry,omitempty"`
-	Website       string                 `protobuf:"bytes,3,opt,name=website,proto3" json:"website,omitempty"`
-	Location      string                 `protobuf:"bytes,4,opt,name=location,proto3" json:"location,omitempty"`
-	IsVerified    bool                   `protobuf:"varint,5,opt,name=is_verified,json=isVerified,proto3" json:"is_verified,omitempty"`
-	IsTrusted     bool                   `protobuf:"varint,6,opt,name=is_trusted,json=isTrusted,proto3" json:"is_trusted,omitempty"`
+	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Industry      string                 `protobuf:"bytes,3,opt,name=industry,proto3" json:"industry,omitempty"`
+	Website       string                 `protobuf:"bytes,4,opt,name=website,proto3" json:"website,omitempty"`
+	Location      string                 `protobuf:"bytes,5,opt,name=location,proto3" json:"location,omitempty"`
+	IsVerified    bool                   `protobuf:"varint,6,opt,name=is_verified,json=isVerified,proto3" json:"is_verified,omitempty"`
+	IsTrusted     bool                   `protobuf:"varint,7,opt,name=is_trusted,json=isTrusted,proto3" json:"is_trusted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -165,6 +166,13 @@ func (*EmployerProfile) Descriptor() ([]byte, []int) {
 func (x *EmployerProfile) GetCompanyName() string {
 	if x != nil {
 		return x.CompanyName
+	}
+	return ""
+}
+
+func (x *EmployerProfile) GetEmail() string {
+	if x != nil {
+		return x.Email
 	}
 	return ""
 }
@@ -1530,16 +1538,17 @@ const file_Job_job_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\"F\n" +
 	"\x0eCompanyDetails\x124\n" +
-	"\adetails\x18\x01 \x03(\v2\x1a.jobservice.EmployerDetailR\adetails\"\xc6\x01\n" +
+	"\adetails\x18\x01 \x03(\v2\x1a.jobservice.EmployerDetailR\adetails\"\xdc\x01\n" +
 	"\x0fEmployerProfile\x12!\n" +
-	"\fcompany_name\x18\x01 \x01(\tR\vcompanyName\x12\x1a\n" +
-	"\bindustry\x18\x02 \x01(\tR\bindustry\x12\x18\n" +
-	"\awebsite\x18\x03 \x01(\tR\awebsite\x12\x1a\n" +
-	"\blocation\x18\x04 \x01(\tR\blocation\x12\x1f\n" +
-	"\vis_verified\x18\x05 \x01(\bR\n" +
+	"\fcompany_name\x18\x01 \x01(\tR\vcompanyName\x12\x14\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
+	"\bindustry\x18\x03 \x01(\tR\bindustry\x12\x18\n" +
+	"\awebsite\x18\x04 \x01(\tR\awebsite\x12\x1a\n" +
+	"\blocation\x18\x05 \x01(\tR\blocation\x12\x1f\n" +
+	"\vis_verified\x18\x06 \x01(\bR\n" +
 	"isVerified\x12\x1d\n" +
 	"\n" +
-	"is_trusted\x18\x06 \x01(\bR\tisTrusted\"\xf9\x03\n" +
+	"is_trusted\x18\a \x01(\bR\tisTrusted\"\xf9\x03\n" +
 	"\x03Job\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1f\n" +
 	"\vemployer_id\x18\x02 \x01(\tR\n" +
