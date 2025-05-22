@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: skillsync-protos/Job/job.proto
+// source: Job/job.proto
 
 package jobpb
 
@@ -19,6 +19,114 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	EmployerService_GetEmployerProfile_FullMethodName = "/jobservice.EmployerService/GetEmployerProfile"
+)
+
+// EmployerServiceClient is the client API for EmployerService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Service definition
+// EmployerService defines the RPC methods for employer operations
+type EmployerServiceClient interface {
+	GetEmployerProfile(ctx context.Context, in *GetEmployerProfileRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error)
+}
+
+type employerServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewEmployerServiceClient(cc grpc.ClientConnInterface) EmployerServiceClient {
+	return &employerServiceClient{cc}
+}
+
+func (c *employerServiceClient) GetEmployerProfile(ctx context.Context, in *GetEmployerProfileRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerProfileResponse)
+	err := c.cc.Invoke(ctx, EmployerService_GetEmployerProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// EmployerServiceServer is the server API for EmployerService service.
+// All implementations must embed UnimplementedEmployerServiceServer
+// for forward compatibility.
+//
+// Service definition
+// EmployerService defines the RPC methods for employer operations
+type EmployerServiceServer interface {
+	GetEmployerProfile(context.Context, *GetEmployerProfileRequest) (*EmployerProfileResponse, error)
+	mustEmbedUnimplementedEmployerServiceServer()
+}
+
+// UnimplementedEmployerServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedEmployerServiceServer struct{}
+
+func (UnimplementedEmployerServiceServer) GetEmployerProfile(context.Context, *GetEmployerProfileRequest) (*EmployerProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEmployerProfile not implemented")
+}
+func (UnimplementedEmployerServiceServer) mustEmbedUnimplementedEmployerServiceServer() {}
+func (UnimplementedEmployerServiceServer) testEmbeddedByValue()                         {}
+
+// UnsafeEmployerServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to EmployerServiceServer will
+// result in compilation errors.
+type UnsafeEmployerServiceServer interface {
+	mustEmbedUnimplementedEmployerServiceServer()
+}
+
+func RegisterEmployerServiceServer(s grpc.ServiceRegistrar, srv EmployerServiceServer) {
+	// If the following call pancis, it indicates UnimplementedEmployerServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&EmployerService_ServiceDesc, srv)
+}
+
+func _EmployerService_GetEmployerProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEmployerProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmployerServiceServer).GetEmployerProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EmployerService_GetEmployerProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmployerServiceServer).GetEmployerProfile(ctx, req.(*GetEmployerProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// EmployerService_ServiceDesc is the grpc.ServiceDesc for EmployerService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var EmployerService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "jobservice.EmployerService",
+	HandlerType: (*EmployerServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetEmployerProfile",
+			Handler:    _EmployerService_GetEmployerProfile_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "Job/job.proto",
+}
+
+const (
 	JobService_PostJob_FullMethodName                 = "/jobservice.JobService/PostJob"
 	JobService_GetJobs_FullMethodName                 = "/jobservice.JobService/GetJobs"
 	JobService_GetJobById_FullMethodName              = "/jobservice.JobService/GetJobById"
@@ -32,8 +140,6 @@ const (
 // JobServiceClient is the client API for JobService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Service definition
 type JobServiceClient interface {
 	// Core job operations
 	PostJob(ctx context.Context, in *PostJobRequest, opts ...grpc.CallOption) (*PostJobResponse, error)
@@ -139,8 +245,6 @@ func (c *jobServiceClient) AddJobSkills(ctx context.Context, in *AddJobSkillsReq
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility.
-//
-// Service definition
 type JobServiceServer interface {
 	// Core job operations
 	PostJob(context.Context, *PostJobRequest) (*PostJobResponse, error)
@@ -393,5 +497,5 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "skillsync-protos/Job/job.proto",
+	Metadata: "Job/job.proto",
 }

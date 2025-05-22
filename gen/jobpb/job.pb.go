@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: skillsync-protos/Job/job.proto
+// source: Job/job.proto
 
 package jobpb
 
@@ -21,6 +21,91 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// EmployerProfile contains basic employer information
+type EmployerProfile struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CompanyName   string                 `protobuf:"bytes,1,opt,name=company_name,json=companyName,proto3" json:"company_name,omitempty"`
+	Industry      string                 `protobuf:"bytes,2,opt,name=industry,proto3" json:"industry,omitempty"`
+	Website       string                 `protobuf:"bytes,3,opt,name=website,proto3" json:"website,omitempty"`
+	Location      string                 `protobuf:"bytes,4,opt,name=location,proto3" json:"location,omitempty"`
+	IsVerified    bool                   `protobuf:"varint,5,opt,name=is_verified,json=isVerified,proto3" json:"is_verified,omitempty"`
+	IsTrusted     bool                   `protobuf:"varint,6,opt,name=is_trusted,json=isTrusted,proto3" json:"is_trusted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmployerProfile) Reset() {
+	*x = EmployerProfile{}
+	mi := &file_Job_job_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmployerProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmployerProfile) ProtoMessage() {}
+
+func (x *EmployerProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmployerProfile.ProtoReflect.Descriptor instead.
+func (*EmployerProfile) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *EmployerProfile) GetCompanyName() string {
+	if x != nil {
+		return x.CompanyName
+	}
+	return ""
+}
+
+func (x *EmployerProfile) GetIndustry() string {
+	if x != nil {
+		return x.Industry
+	}
+	return ""
+}
+
+func (x *EmployerProfile) GetWebsite() string {
+	if x != nil {
+		return x.Website
+	}
+	return ""
+}
+
+func (x *EmployerProfile) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *EmployerProfile) GetIsVerified() bool {
+	if x != nil {
+		return x.IsVerified
+	}
+	return false
+}
+
+func (x *EmployerProfile) GetIsTrusted() bool {
+	if x != nil {
+		return x.IsTrusted
+	}
+	return false
+}
+
 // Job message - comprehensive definition matching your model
 type Job struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
@@ -34,14 +119,15 @@ type Job struct {
 	SalaryMax          int64                  `protobuf:"varint,8,opt,name=salary_max,json=salaryMax,proto3" json:"salary_max,omitempty"`
 	Location           string                 `protobuf:"bytes,9,opt,name=location,proto3" json:"location,omitempty"`
 	ExperienceRequired int32                  `protobuf:"varint,10,opt,name=experience_required,json=experienceRequired,proto3" json:"experience_required,omitempty"`
-	Status             string                 `protobuf:"bytes,11,opt,name=status,proto3" json:"status,omitempty"` // Possible values: OPEN, CLOSED, DRAFT
+	Status             string                 `protobuf:"bytes,11,opt,name=status,proto3" json:"status,omitempty"`                                          // Possible values: OPEN, CLOSED, DRAFT
+	EmployerProfile    *EmployerProfile       `protobuf:"bytes,12,opt,name=employer_profile,json=employerProfile,proto3" json:"employer_profile,omitempty"` // Employer details
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Job) Reset() {
 	*x = Job{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[0]
+	mi := &file_Job_job_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53,7 +139,7 @@ func (x *Job) String() string {
 func (*Job) ProtoMessage() {}
 
 func (x *Job) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[0]
+	mi := &file_Job_job_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -66,7 +152,7 @@ func (x *Job) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Job.ProtoReflect.Descriptor instead.
 func (*Job) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{0}
+	return file_Job_job_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Job) GetId() uint64 {
@@ -146,6 +232,13 @@ func (x *Job) GetStatus() string {
 	return ""
 }
 
+func (x *Job) GetEmployerProfile() *EmployerProfile {
+	if x != nil {
+		return x.EmployerProfile
+	}
+	return nil
+}
+
 // JobSkill message - matching your model
 type JobSkill struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -158,7 +251,7 @@ type JobSkill struct {
 
 func (x *JobSkill) Reset() {
 	*x = JobSkill{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[1]
+	mi := &file_Job_job_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -170,7 +263,7 @@ func (x *JobSkill) String() string {
 func (*JobSkill) ProtoMessage() {}
 
 func (x *JobSkill) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[1]
+	mi := &file_Job_job_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -183,7 +276,7 @@ func (x *JobSkill) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobSkill.ProtoReflect.Descriptor instead.
 func (*JobSkill) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{1}
+	return file_Job_job_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *JobSkill) GetJobId() string {
@@ -217,7 +310,7 @@ type JobSkills struct {
 
 func (x *JobSkills) Reset() {
 	*x = JobSkills{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[2]
+	mi := &file_Job_job_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -229,7 +322,7 @@ func (x *JobSkills) String() string {
 func (*JobSkills) ProtoMessage() {}
 
 func (x *JobSkills) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[2]
+	mi := &file_Job_job_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -242,7 +335,7 @@ func (x *JobSkills) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobSkills.ProtoReflect.Descriptor instead.
 func (*JobSkills) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{2}
+	return file_Job_job_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *JobSkills) GetSkills() []*JobSkill {
@@ -266,7 +359,7 @@ type Application struct {
 
 func (x *Application) Reset() {
 	*x = Application{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[3]
+	mi := &file_Job_job_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -278,7 +371,7 @@ func (x *Application) String() string {
 func (*Application) ProtoMessage() {}
 
 func (x *Application) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[3]
+	mi := &file_Job_job_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -291,7 +384,7 @@ func (x *Application) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Application.ProtoReflect.Descriptor instead.
 func (*Application) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{3}
+	return file_Job_job_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Application) GetId() uint64 {
@@ -347,7 +440,7 @@ type PostJobRequest struct {
 
 func (x *PostJobRequest) Reset() {
 	*x = PostJobRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[4]
+	mi := &file_Job_job_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +452,7 @@ func (x *PostJobRequest) String() string {
 func (*PostJobRequest) ProtoMessage() {}
 
 func (x *PostJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[4]
+	mi := &file_Job_job_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +465,7 @@ func (x *PostJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostJobRequest.ProtoReflect.Descriptor instead.
 func (*PostJobRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{4}
+	return file_Job_job_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *PostJobRequest) GetTitle() string {
@@ -448,7 +541,7 @@ type PostJobResponse struct {
 
 func (x *PostJobResponse) Reset() {
 	*x = PostJobResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[5]
+	mi := &file_Job_job_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -460,7 +553,7 @@ func (x *PostJobResponse) String() string {
 func (*PostJobResponse) ProtoMessage() {}
 
 func (x *PostJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[5]
+	mi := &file_Job_job_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -473,7 +566,7 @@ func (x *PostJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostJobResponse.ProtoReflect.Descriptor instead.
 func (*PostJobResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{5}
+	return file_Job_job_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *PostJobResponse) GetJobId() uint64 {
@@ -503,7 +596,7 @@ type GetJobsRequest struct {
 
 func (x *GetJobsRequest) Reset() {
 	*x = GetJobsRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[6]
+	mi := &file_Job_job_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -515,7 +608,7 @@ func (x *GetJobsRequest) String() string {
 func (*GetJobsRequest) ProtoMessage() {}
 
 func (x *GetJobsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[6]
+	mi := &file_Job_job_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -528,7 +621,7 @@ func (x *GetJobsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobsRequest.ProtoReflect.Descriptor instead.
 func (*GetJobsRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{6}
+	return file_Job_job_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetJobsRequest) GetCategory() string {
@@ -568,7 +661,7 @@ type GetJobsResponse struct {
 
 func (x *GetJobsResponse) Reset() {
 	*x = GetJobsResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[7]
+	mi := &file_Job_job_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -580,7 +673,7 @@ func (x *GetJobsResponse) String() string {
 func (*GetJobsResponse) ProtoMessage() {}
 
 func (x *GetJobsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[7]
+	mi := &file_Job_job_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -593,7 +686,7 @@ func (x *GetJobsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobsResponse.ProtoReflect.Descriptor instead.
 func (*GetJobsResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{7}
+	return file_Job_job_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetJobsResponse) GetJobs() []*Job {
@@ -613,7 +706,7 @@ type GetJobByIdRequest struct {
 
 func (x *GetJobByIdRequest) Reset() {
 	*x = GetJobByIdRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[8]
+	mi := &file_Job_job_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -625,7 +718,7 @@ func (x *GetJobByIdRequest) String() string {
 func (*GetJobByIdRequest) ProtoMessage() {}
 
 func (x *GetJobByIdRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[8]
+	mi := &file_Job_job_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -638,7 +731,7 @@ func (x *GetJobByIdRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobByIdRequest.ProtoReflect.Descriptor instead.
 func (*GetJobByIdRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{8}
+	return file_Job_job_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetJobByIdRequest) GetJobId() uint64 {
@@ -657,7 +750,7 @@ type GetJobByIdResponse struct {
 
 func (x *GetJobByIdResponse) Reset() {
 	*x = GetJobByIdResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[9]
+	mi := &file_Job_job_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -669,7 +762,7 @@ func (x *GetJobByIdResponse) String() string {
 func (*GetJobByIdResponse) ProtoMessage() {}
 
 func (x *GetJobByIdResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[9]
+	mi := &file_Job_job_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -682,7 +775,7 @@ func (x *GetJobByIdResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobByIdResponse.ProtoReflect.Descriptor instead.
 func (*GetJobByIdResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{9}
+	return file_Job_job_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetJobByIdResponse) GetJob() *Job {
@@ -704,7 +797,7 @@ type ApplyToJobRequest struct {
 
 func (x *ApplyToJobRequest) Reset() {
 	*x = ApplyToJobRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[10]
+	mi := &file_Job_job_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -716,7 +809,7 @@ func (x *ApplyToJobRequest) String() string {
 func (*ApplyToJobRequest) ProtoMessage() {}
 
 func (x *ApplyToJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[10]
+	mi := &file_Job_job_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,7 +822,7 @@ func (x *ApplyToJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyToJobRequest.ProtoReflect.Descriptor instead.
 func (*ApplyToJobRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{10}
+	return file_Job_job_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ApplyToJobRequest) GetJobId() uint64 {
@@ -763,7 +856,7 @@ type ApplyToJobResponse struct {
 
 func (x *ApplyToJobResponse) Reset() {
 	*x = ApplyToJobResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[11]
+	mi := &file_Job_job_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -775,7 +868,7 @@ func (x *ApplyToJobResponse) String() string {
 func (*ApplyToJobResponse) ProtoMessage() {}
 
 func (x *ApplyToJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[11]
+	mi := &file_Job_job_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -788,7 +881,7 @@ func (x *ApplyToJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyToJobResponse.ProtoReflect.Descriptor instead.
 func (*ApplyToJobResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{11}
+	return file_Job_job_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ApplyToJobResponse) GetApplicationId() uint64 {
@@ -817,7 +910,7 @@ type GetApplicationsRequest struct {
 
 func (x *GetApplicationsRequest) Reset() {
 	*x = GetApplicationsRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[12]
+	mi := &file_Job_job_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -829,7 +922,7 @@ func (x *GetApplicationsRequest) String() string {
 func (*GetApplicationsRequest) ProtoMessage() {}
 
 func (x *GetApplicationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[12]
+	mi := &file_Job_job_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -842,7 +935,7 @@ func (x *GetApplicationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetApplicationsRequest.ProtoReflect.Descriptor instead.
 func (*GetApplicationsRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{12}
+	return file_Job_job_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetApplicationsRequest) GetJobId() uint64 {
@@ -875,7 +968,7 @@ type GetApplicationsResponse struct {
 
 func (x *GetApplicationsResponse) Reset() {
 	*x = GetApplicationsResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[13]
+	mi := &file_Job_job_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -887,7 +980,7 @@ func (x *GetApplicationsResponse) String() string {
 func (*GetApplicationsResponse) ProtoMessage() {}
 
 func (x *GetApplicationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[13]
+	mi := &file_Job_job_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -900,7 +993,7 @@ func (x *GetApplicationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetApplicationsResponse.ProtoReflect.Descriptor instead.
 func (*GetApplicationsResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{13}
+	return file_Job_job_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetApplicationsResponse) GetApplications() []*Application {
@@ -922,7 +1015,7 @@ type UpdateApplicationStatusRequest struct {
 
 func (x *UpdateApplicationStatusRequest) Reset() {
 	*x = UpdateApplicationStatusRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[14]
+	mi := &file_Job_job_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -934,7 +1027,7 @@ func (x *UpdateApplicationStatusRequest) String() string {
 func (*UpdateApplicationStatusRequest) ProtoMessage() {}
 
 func (x *UpdateApplicationStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[14]
+	mi := &file_Job_job_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -947,7 +1040,7 @@ func (x *UpdateApplicationStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateApplicationStatusRequest.ProtoReflect.Descriptor instead.
 func (*UpdateApplicationStatusRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{14}
+	return file_Job_job_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *UpdateApplicationStatusRequest) GetApplicationId() string {
@@ -980,7 +1073,7 @@ type UpdateApplicationStatusResponse struct {
 
 func (x *UpdateApplicationStatusResponse) Reset() {
 	*x = UpdateApplicationStatusResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[15]
+	mi := &file_Job_job_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -992,7 +1085,7 @@ func (x *UpdateApplicationStatusResponse) String() string {
 func (*UpdateApplicationStatusResponse) ProtoMessage() {}
 
 func (x *UpdateApplicationStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[15]
+	mi := &file_Job_job_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1005,7 +1098,7 @@ func (x *UpdateApplicationStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateApplicationStatusResponse.ProtoReflect.Descriptor instead.
 func (*UpdateApplicationStatusResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{15}
+	return file_Job_job_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *UpdateApplicationStatusResponse) GetMessage() string {
@@ -1027,7 +1120,7 @@ type AddJobSkillsRequest struct {
 
 func (x *AddJobSkillsRequest) Reset() {
 	*x = AddJobSkillsRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[16]
+	mi := &file_Job_job_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1039,7 +1132,7 @@ func (x *AddJobSkillsRequest) String() string {
 func (*AddJobSkillsRequest) ProtoMessage() {}
 
 func (x *AddJobSkillsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[16]
+	mi := &file_Job_job_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1052,7 +1145,7 @@ func (x *AddJobSkillsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJobSkillsRequest.ProtoReflect.Descriptor instead.
 func (*AddJobSkillsRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{16}
+	return file_Job_job_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *AddJobSkillsRequest) GetJobId() uint64 {
@@ -1085,7 +1178,7 @@ type AddJobSkillsResponse struct {
 
 func (x *AddJobSkillsResponse) Reset() {
 	*x = AddJobSkillsResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[17]
+	mi := &file_Job_job_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1097,7 +1190,7 @@ func (x *AddJobSkillsResponse) String() string {
 func (*AddJobSkillsResponse) ProtoMessage() {}
 
 func (x *AddJobSkillsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[17]
+	mi := &file_Job_job_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1110,7 +1203,7 @@ func (x *AddJobSkillsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJobSkillsResponse.ProtoReflect.Descriptor instead.
 func (*AddJobSkillsResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{17}
+	return file_Job_job_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *AddJobSkillsResponse) GetMessage() string {
@@ -1132,7 +1225,7 @@ type UpdateJobStatusRequest struct {
 
 func (x *UpdateJobStatusRequest) Reset() {
 	*x = UpdateJobStatusRequest{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[18]
+	mi := &file_Job_job_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1144,7 +1237,7 @@ func (x *UpdateJobStatusRequest) String() string {
 func (*UpdateJobStatusRequest) ProtoMessage() {}
 
 func (x *UpdateJobStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[18]
+	mi := &file_Job_job_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1157,7 +1250,7 @@ func (x *UpdateJobStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJobStatusRequest.ProtoReflect.Descriptor instead.
 func (*UpdateJobStatusRequest) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{18}
+	return file_Job_job_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UpdateJobStatusRequest) GetJobId() string {
@@ -1190,7 +1283,7 @@ type UpdateJobStatusResponse struct {
 
 func (x *UpdateJobStatusResponse) Reset() {
 	*x = UpdateJobStatusResponse{}
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[19]
+	mi := &file_Job_job_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1202,7 +1295,7 @@ func (x *UpdateJobStatusResponse) String() string {
 func (*UpdateJobStatusResponse) ProtoMessage() {}
 
 func (x *UpdateJobStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_skillsync_protos_Job_job_proto_msgTypes[19]
+	mi := &file_Job_job_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1215,7 +1308,7 @@ func (x *UpdateJobStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJobStatusResponse.ProtoReflect.Descriptor instead.
 func (*UpdateJobStatusResponse) Descriptor() ([]byte, []int) {
-	return file_skillsync_protos_Job_job_proto_rawDescGZIP(), []int{19}
+	return file_Job_job_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *UpdateJobStatusResponse) GetMessage() string {
@@ -1225,12 +1318,117 @@ func (x *UpdateJobStatusResponse) GetMessage() string {
 	return ""
 }
 
-var File_skillsync_protos_Job_job_proto protoreflect.FileDescriptor
+type GetEmployerProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EmployerId    string                 `protobuf:"bytes,1,opt,name=employer_id,json=employerId,proto3" json:"employer_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
 
-const file_skillsync_protos_Job_job_proto_rawDesc = "" +
+func (x *GetEmployerProfileRequest) Reset() {
+	*x = GetEmployerProfileRequest{}
+	mi := &file_Job_job_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetEmployerProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetEmployerProfileRequest) ProtoMessage() {}
+
+func (x *GetEmployerProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetEmployerProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetEmployerProfileRequest) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetEmployerProfileRequest) GetEmployerId() string {
+	if x != nil {
+		return x.EmployerId
+	}
+	return ""
+}
+
+type EmployerProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *EmployerProfile       `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	Error         string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmployerProfileResponse) Reset() {
+	*x = EmployerProfileResponse{}
+	mi := &file_Job_job_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmployerProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmployerProfileResponse) ProtoMessage() {}
+
+func (x *EmployerProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmployerProfileResponse.ProtoReflect.Descriptor instead.
+func (*EmployerProfileResponse) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *EmployerProfileResponse) GetProfile() *EmployerProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *EmployerProfileResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+var File_Job_job_proto protoreflect.FileDescriptor
+
+const file_Job_job_proto_rawDesc = "" +
 	"\n" +
-	"\x1eskillsync-protos/Job/job.proto\x12\n" +
-	"jobservice\"\xec\x02\n" +
+	"\rJob/job.proto\x12\n" +
+	"jobservice\"\xc6\x01\n" +
+	"\x0fEmployerProfile\x12!\n" +
+	"\fcompany_name\x18\x01 \x01(\tR\vcompanyName\x12\x1a\n" +
+	"\bindustry\x18\x02 \x01(\tR\bindustry\x12\x18\n" +
+	"\awebsite\x18\x03 \x01(\tR\awebsite\x12\x1a\n" +
+	"\blocation\x18\x04 \x01(\tR\blocation\x12\x1f\n" +
+	"\vis_verified\x18\x05 \x01(\bR\n" +
+	"isVerified\x12\x1d\n" +
+	"\n" +
+	"is_trusted\x18\x06 \x01(\bR\tisTrusted\"\xb4\x03\n" +
 	"\x03Job\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1f\n" +
 	"\vemployer_id\x18\x02 \x01(\tR\n" +
@@ -1246,7 +1444,8 @@ const file_skillsync_protos_Job_job_proto_rawDesc = "" +
 	"\blocation\x18\t \x01(\tR\blocation\x12/\n" +
 	"\x13experience_required\x18\n" +
 	" \x01(\x05R\x12experienceRequired\x12\x16\n" +
-	"\x06status\x18\v \x01(\tR\x06status\"Y\n" +
+	"\x06status\x18\v \x01(\tR\x06status\x12F\n" +
+	"\x10employer_profile\x18\f \x01(\v2\x1b.jobservice.EmployerProfileR\x0femployerProfile\"Y\n" +
 	"\bJobSkill\x12\x15\n" +
 	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x14\n" +
 	"\x05skill\x18\x02 \x01(\tR\x05skill\x12 \n" +
@@ -1320,7 +1519,15 @@ const file_skillsync_protos_Job_job_proto_rawDesc = "" +
 	"\vemployer_id\x18\x03 \x01(\tR\n" +
 	"employerId\"3\n" +
 	"\x17UpdateJobStatusResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xad\x05\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"<\n" +
+	"\x19GetEmployerProfileRequest\x12\x1f\n" +
+	"\vemployer_id\x18\x01 \x01(\tR\n" +
+	"employerId\"f\n" +
+	"\x17EmployerProfileResponse\x125\n" +
+	"\aprofile\x18\x01 \x01(\v2\x1b.jobservice.EmployerProfileR\aprofile\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2s\n" +
+	"\x0fEmployerService\x12`\n" +
+	"\x12GetEmployerProfile\x12%.jobservice.GetEmployerProfileRequest\x1a#.jobservice.EmployerProfileResponse2\xad\x05\n" +
 	"\n" +
 	"JobService\x12B\n" +
 	"\aPostJob\x12\x1a.jobservice.PostJobRequest\x1a\x1b.jobservice.PostJobResponse\x12B\n" +
@@ -1335,90 +1542,97 @@ const file_skillsync_protos_Job_job_proto_rawDesc = "" +
 	"\fAddJobSkills\x12\x1f.jobservice.AddJobSkillsRequest\x1a .jobservice.AddJobSkillsResponseB\rZ\v./gen/jobpbb\x06proto3"
 
 var (
-	file_skillsync_protos_Job_job_proto_rawDescOnce sync.Once
-	file_skillsync_protos_Job_job_proto_rawDescData []byte
+	file_Job_job_proto_rawDescOnce sync.Once
+	file_Job_job_proto_rawDescData []byte
 )
 
-func file_skillsync_protos_Job_job_proto_rawDescGZIP() []byte {
-	file_skillsync_protos_Job_job_proto_rawDescOnce.Do(func() {
-		file_skillsync_protos_Job_job_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_skillsync_protos_Job_job_proto_rawDesc), len(file_skillsync_protos_Job_job_proto_rawDesc)))
+func file_Job_job_proto_rawDescGZIP() []byte {
+	file_Job_job_proto_rawDescOnce.Do(func() {
+		file_Job_job_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_Job_job_proto_rawDesc), len(file_Job_job_proto_rawDesc)))
 	})
-	return file_skillsync_protos_Job_job_proto_rawDescData
+	return file_Job_job_proto_rawDescData
 }
 
-var file_skillsync_protos_Job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
-var file_skillsync_protos_Job_job_proto_goTypes = []any{
-	(*Job)(nil),                             // 0: jobservice.Job
-	(*JobSkill)(nil),                        // 1: jobservice.JobSkill
-	(*JobSkills)(nil),                       // 2: jobservice.JobSkills
-	(*Application)(nil),                     // 3: jobservice.Application
-	(*PostJobRequest)(nil),                  // 4: jobservice.PostJobRequest
-	(*PostJobResponse)(nil),                 // 5: jobservice.PostJobResponse
-	(*GetJobsRequest)(nil),                  // 6: jobservice.GetJobsRequest
-	(*GetJobsResponse)(nil),                 // 7: jobservice.GetJobsResponse
-	(*GetJobByIdRequest)(nil),               // 8: jobservice.GetJobByIdRequest
-	(*GetJobByIdResponse)(nil),              // 9: jobservice.GetJobByIdResponse
-	(*ApplyToJobRequest)(nil),               // 10: jobservice.ApplyToJobRequest
-	(*ApplyToJobResponse)(nil),              // 11: jobservice.ApplyToJobResponse
-	(*GetApplicationsRequest)(nil),          // 12: jobservice.GetApplicationsRequest
-	(*GetApplicationsResponse)(nil),         // 13: jobservice.GetApplicationsResponse
-	(*UpdateApplicationStatusRequest)(nil),  // 14: jobservice.UpdateApplicationStatusRequest
-	(*UpdateApplicationStatusResponse)(nil), // 15: jobservice.UpdateApplicationStatusResponse
-	(*AddJobSkillsRequest)(nil),             // 16: jobservice.AddJobSkillsRequest
-	(*AddJobSkillsResponse)(nil),            // 17: jobservice.AddJobSkillsResponse
-	(*UpdateJobStatusRequest)(nil),          // 18: jobservice.UpdateJobStatusRequest
-	(*UpdateJobStatusResponse)(nil),         // 19: jobservice.UpdateJobStatusResponse
+var file_Job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_Job_job_proto_goTypes = []any{
+	(*EmployerProfile)(nil),                 // 0: jobservice.EmployerProfile
+	(*Job)(nil),                             // 1: jobservice.Job
+	(*JobSkill)(nil),                        // 2: jobservice.JobSkill
+	(*JobSkills)(nil),                       // 3: jobservice.JobSkills
+	(*Application)(nil),                     // 4: jobservice.Application
+	(*PostJobRequest)(nil),                  // 5: jobservice.PostJobRequest
+	(*PostJobResponse)(nil),                 // 6: jobservice.PostJobResponse
+	(*GetJobsRequest)(nil),                  // 7: jobservice.GetJobsRequest
+	(*GetJobsResponse)(nil),                 // 8: jobservice.GetJobsResponse
+	(*GetJobByIdRequest)(nil),               // 9: jobservice.GetJobByIdRequest
+	(*GetJobByIdResponse)(nil),              // 10: jobservice.GetJobByIdResponse
+	(*ApplyToJobRequest)(nil),               // 11: jobservice.ApplyToJobRequest
+	(*ApplyToJobResponse)(nil),              // 12: jobservice.ApplyToJobResponse
+	(*GetApplicationsRequest)(nil),          // 13: jobservice.GetApplicationsRequest
+	(*GetApplicationsResponse)(nil),         // 14: jobservice.GetApplicationsResponse
+	(*UpdateApplicationStatusRequest)(nil),  // 15: jobservice.UpdateApplicationStatusRequest
+	(*UpdateApplicationStatusResponse)(nil), // 16: jobservice.UpdateApplicationStatusResponse
+	(*AddJobSkillsRequest)(nil),             // 17: jobservice.AddJobSkillsRequest
+	(*AddJobSkillsResponse)(nil),            // 18: jobservice.AddJobSkillsResponse
+	(*UpdateJobStatusRequest)(nil),          // 19: jobservice.UpdateJobStatusRequest
+	(*UpdateJobStatusResponse)(nil),         // 20: jobservice.UpdateJobStatusResponse
+	(*GetEmployerProfileRequest)(nil),       // 21: jobservice.GetEmployerProfileRequest
+	(*EmployerProfileResponse)(nil),         // 22: jobservice.EmployerProfileResponse
 }
-var file_skillsync_protos_Job_job_proto_depIdxs = []int32{
-	1,  // 0: jobservice.Job.required_skills:type_name -> jobservice.JobSkill
-	1,  // 1: jobservice.JobSkills.skills:type_name -> jobservice.JobSkill
-	1,  // 2: jobservice.PostJobRequest.required_skills:type_name -> jobservice.JobSkill
-	0,  // 3: jobservice.GetJobsResponse.jobs:type_name -> jobservice.Job
-	0,  // 4: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
-	3,  // 5: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.Application
-	4,  // 6: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
-	6,  // 7: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
-	8,  // 8: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
-	18, // 9: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
-	10, // 10: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
-	12, // 11: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
-	14, // 12: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
-	16, // 13: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
-	5,  // 14: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
-	7,  // 15: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
-	9,  // 16: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
-	19, // 17: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
-	11, // 18: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
-	13, // 19: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
-	15, // 20: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
-	17, // 21: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
-	14, // [14:22] is the sub-list for method output_type
-	6,  // [6:14] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+var file_Job_job_proto_depIdxs = []int32{
+	2,  // 0: jobservice.Job.required_skills:type_name -> jobservice.JobSkill
+	0,  // 1: jobservice.Job.employer_profile:type_name -> jobservice.EmployerProfile
+	2,  // 2: jobservice.JobSkills.skills:type_name -> jobservice.JobSkill
+	2,  // 3: jobservice.PostJobRequest.required_skills:type_name -> jobservice.JobSkill
+	1,  // 4: jobservice.GetJobsResponse.jobs:type_name -> jobservice.Job
+	1,  // 5: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
+	4,  // 6: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.Application
+	0,  // 7: jobservice.EmployerProfileResponse.profile:type_name -> jobservice.EmployerProfile
+	21, // 8: jobservice.EmployerService.GetEmployerProfile:input_type -> jobservice.GetEmployerProfileRequest
+	5,  // 9: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
+	7,  // 10: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
+	9,  // 11: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
+	19, // 12: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
+	11, // 13: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
+	13, // 14: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
+	15, // 15: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
+	17, // 16: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
+	22, // 17: jobservice.EmployerService.GetEmployerProfile:output_type -> jobservice.EmployerProfileResponse
+	6,  // 18: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
+	8,  // 19: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
+	10, // 20: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
+	20, // 21: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
+	12, // 22: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
+	14, // 23: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
+	16, // 24: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
+	18, // 25: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
+	17, // [17:26] is the sub-list for method output_type
+	8,  // [8:17] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
-func init() { file_skillsync_protos_Job_job_proto_init() }
-func file_skillsync_protos_Job_job_proto_init() {
-	if File_skillsync_protos_Job_job_proto != nil {
+func init() { file_Job_job_proto_init() }
+func file_Job_job_proto_init() {
+	if File_Job_job_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_skillsync_protos_Job_job_proto_rawDesc), len(file_skillsync_protos_Job_job_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Job_job_proto_rawDesc), len(file_Job_job_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   23,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
-		GoTypes:           file_skillsync_protos_Job_job_proto_goTypes,
-		DependencyIndexes: file_skillsync_protos_Job_job_proto_depIdxs,
-		MessageInfos:      file_skillsync_protos_Job_job_proto_msgTypes,
+		GoTypes:           file_Job_job_proto_goTypes,
+		DependencyIndexes: file_Job_job_proto_depIdxs,
+		MessageInfos:      file_Job_job_proto_msgTypes,
 	}.Build()
-	File_skillsync_protos_Job_job_proto = out.File
-	file_skillsync_protos_Job_job_proto_goTypes = nil
-	file_skillsync_protos_Job_job_proto_depIdxs = nil
+	File_Job_job_proto = out.File
+	file_Job_job_proto_goTypes = nil
+	file_Job_job_proto_depIdxs = nil
 }
