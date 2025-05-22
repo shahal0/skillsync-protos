@@ -4,7 +4,12 @@ package jobservice;
 
 option go_package = "./gen/jobpb";
 
-import "google/protobuf/timestamp.proto";
+// JobStatus defines possible status values for a job
+enum JobStatus {
+  OPEN = 0;
+  CLOSED = 1;
+  DRAFT = 2;
+}
 
 // Job message - comprehensive definition matching your model
 message Job {
@@ -13,13 +18,12 @@ message Job {
   string title = 3;
   string description = 4;
   string category = 5;
-  repeated JobSkill required_skills = 6;
+  repeated JobSkill required_skills = 6; // Skills are included in the job response
   int64 salary_min = 7;
   int64 salary_max = 8;
   string location = 9;
   int32 experience_required = 10;
-  string status = 11;
-  google.protobuf.Timestamp created_at = 12;
+  JobStatus status = 11;
 }
 
 // JobSkill message - matching your model
@@ -29,14 +33,18 @@ message JobSkill {
   string proficiency = 3; // e.g., Beginner, Intermediate, Expert
 }
 
+// JobSkills represents a collection of skills for a job
+message JobSkills {
+  repeated JobSkill skills = 1;
+}
+
 // Application message - matching your model
 message Application {
   uint64 id = 1; // Changed from string to uint64
   uint64 job_id = 2; // Changed from string to uint64
   string candidate_id = 3;
   string status = 4; // Applied, Viewed, Shortlisted, Rejected
-  google.protobuf.Timestamp applied_at = 5;
-  string resume_url = 6; // Optional field for resume URL
+  string resume_url = 5; // Optional field for resume URL
 }
 
 // PostJob request/response
@@ -62,14 +70,11 @@ message GetJobsRequest {
   string category = 1; // Optional category filter
   string keyword = 2;  // Optional keyword search
   string location = 3; // Optional location filter
-  string experience_required = 4; // Optional experience required filter
+  int32 experience_required = 4; // Optional experience required filter (in years)
 }
 
 message GetJobsResponse {
   repeated Job jobs = 1;
-  int32 total_count = 2;
-  int32 page = 3;
-  int32 total_pages = 4;
 }
 
 // GetJobById request/response
@@ -99,13 +104,10 @@ message GetApplicationsRequest {
   uint64 job_id = 1; // Changed from string to uint64 - For employer to view applications for a job
   string candidate_id = 2; // For candidate to view their applications
   string status = 3; // Filter by status
-  int32 page = 4;
-  int32 limit = 5;
 }
 
 message GetApplicationsResponse {
   repeated Application applications = 1;
-  int32 total_count = 2;
 }
 
 // UpdateApplicationStatus request/response
@@ -121,9 +123,8 @@ message UpdateApplicationStatusResponse {
 
 // AddJobSkills request/response
 message AddJobSkillsRequest {
-  string job_id = 1; // Using string to match Go implementation
-  string skill = 2;       // Single skill name
-  string proficiency = 3; // Skill proficiency level
+  uint64 job_id = 1; // Changed to uint64 to match Job ID type
+  repeated JobSkill skills = 2; // Multiple skills can be added at once
 }
 
 message AddJobSkillsResponse {
