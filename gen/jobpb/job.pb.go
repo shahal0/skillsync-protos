@@ -21,56 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// JobStatus defines possible status values for a job
-type JobStatus int32
-
-const (
-	JobStatus_OPEN   JobStatus = 0
-	JobStatus_CLOSED JobStatus = 1
-	JobStatus_DRAFT  JobStatus = 2
-)
-
-// Enum value maps for JobStatus.
-var (
-	JobStatus_name = map[int32]string{
-		0: "OPEN",
-		1: "CLOSED",
-		2: "DRAFT",
-	}
-	JobStatus_value = map[string]int32{
-		"OPEN":   0,
-		"CLOSED": 1,
-		"DRAFT":  2,
-	}
-)
-
-func (x JobStatus) Enum() *JobStatus {
-	p := new(JobStatus)
-	*p = x
-	return p
-}
-
-func (x JobStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (JobStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_Job_job_proto_enumTypes[0].Descriptor()
-}
-
-func (JobStatus) Type() protoreflect.EnumType {
-	return &file_Job_job_proto_enumTypes[0]
-}
-
-func (x JobStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use JobStatus.Descriptor instead.
-func (JobStatus) EnumDescriptor() ([]byte, []int) {
-	return file_Job_job_proto_rawDescGZIP(), []int{0}
-}
-
 // Job message - comprehensive definition matching your model
 type Job struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
@@ -84,7 +34,7 @@ type Job struct {
 	SalaryMax          int64                  `protobuf:"varint,8,opt,name=salary_max,json=salaryMax,proto3" json:"salary_max,omitempty"`
 	Location           string                 `protobuf:"bytes,9,opt,name=location,proto3" json:"location,omitempty"`
 	ExperienceRequired int32                  `protobuf:"varint,10,opt,name=experience_required,json=experienceRequired,proto3" json:"experience_required,omitempty"`
-	Status             JobStatus              `protobuf:"varint,11,opt,name=status,proto3,enum=jobservice.JobStatus" json:"status,omitempty"`
+	Status             string                 `protobuf:"bytes,11,opt,name=status,proto3" json:"status,omitempty"` // Possible values: OPEN, CLOSED, DRAFT
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -189,11 +139,11 @@ func (x *Job) GetExperienceRequired() int32 {
 	return 0
 }
 
-func (x *Job) GetStatus() JobStatus {
+func (x *Job) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
-	return JobStatus_OPEN
+	return ""
 }
 
 // JobSkill message - matching your model
@@ -1167,7 +1117,7 @@ var File_Job_job_proto protoreflect.FileDescriptor
 const file_Job_job_proto_rawDesc = "" +
 	"\n" +
 	"\rJob/job.proto\x12\n" +
-	"jobservice\"\x83\x03\n" +
+	"jobservice\"\xec\x02\n" +
 	"\x03Job\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1f\n" +
 	"\vemployer_id\x18\x02 \x01(\tR\n" +
@@ -1182,8 +1132,8 @@ const file_Job_job_proto_rawDesc = "" +
 	"salary_max\x18\b \x01(\x03R\tsalaryMax\x12\x1a\n" +
 	"\blocation\x18\t \x01(\tR\blocation\x12/\n" +
 	"\x13experience_required\x18\n" +
-	" \x01(\x05R\x12experienceRequired\x12-\n" +
-	"\x06status\x18\v \x01(\x0e2\x15.jobservice.JobStatusR\x06status\"Y\n" +
+	" \x01(\x05R\x12experienceRequired\x12\x16\n" +
+	"\x06status\x18\v \x01(\tR\x06status\"Y\n" +
 	"\bJobSkill\x12\x15\n" +
 	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x14\n" +
 	"\x05skill\x18\x02 \x01(\tR\x05skill\x12 \n" +
@@ -1249,12 +1199,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12,\n" +
 	"\x06skills\x18\x02 \x03(\v2\x14.jobservice.JobSkillR\x06skills\"0\n" +
 	"\x14AddJobSkillsResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage*,\n" +
-	"\tJobStatus\x12\b\n" +
-	"\x04OPEN\x10\x00\x12\n" +
-	"\n" +
-	"\x06CLOSED\x10\x01\x12\t\n" +
-	"\x05DRAFT\x10\x022\xd1\x04\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xd1\x04\n" +
 	"\n" +
 	"JobService\x12B\n" +
 	"\aPostJob\x12\x1a.jobservice.PostJobRequest\x1a\x1b.jobservice.PostJobResponse\x12B\n" +
@@ -1279,57 +1224,54 @@ func file_Job_job_proto_rawDescGZIP() []byte {
 	return file_Job_job_proto_rawDescData
 }
 
-var file_Job_job_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_Job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_Job_job_proto_goTypes = []any{
-	(JobStatus)(0),                          // 0: jobservice.JobStatus
-	(*Job)(nil),                             // 1: jobservice.Job
-	(*JobSkill)(nil),                        // 2: jobservice.JobSkill
-	(*JobSkills)(nil),                       // 3: jobservice.JobSkills
-	(*Application)(nil),                     // 4: jobservice.Application
-	(*PostJobRequest)(nil),                  // 5: jobservice.PostJobRequest
-	(*PostJobResponse)(nil),                 // 6: jobservice.PostJobResponse
-	(*GetJobsRequest)(nil),                  // 7: jobservice.GetJobsRequest
-	(*GetJobsResponse)(nil),                 // 8: jobservice.GetJobsResponse
-	(*GetJobByIdRequest)(nil),               // 9: jobservice.GetJobByIdRequest
-	(*GetJobByIdResponse)(nil),              // 10: jobservice.GetJobByIdResponse
-	(*ApplyToJobRequest)(nil),               // 11: jobservice.ApplyToJobRequest
-	(*ApplyToJobResponse)(nil),              // 12: jobservice.ApplyToJobResponse
-	(*GetApplicationsRequest)(nil),          // 13: jobservice.GetApplicationsRequest
-	(*GetApplicationsResponse)(nil),         // 14: jobservice.GetApplicationsResponse
-	(*UpdateApplicationStatusRequest)(nil),  // 15: jobservice.UpdateApplicationStatusRequest
-	(*UpdateApplicationStatusResponse)(nil), // 16: jobservice.UpdateApplicationStatusResponse
-	(*AddJobSkillsRequest)(nil),             // 17: jobservice.AddJobSkillsRequest
-	(*AddJobSkillsResponse)(nil),            // 18: jobservice.AddJobSkillsResponse
+	(*Job)(nil),                             // 0: jobservice.Job
+	(*JobSkill)(nil),                        // 1: jobservice.JobSkill
+	(*JobSkills)(nil),                       // 2: jobservice.JobSkills
+	(*Application)(nil),                     // 3: jobservice.Application
+	(*PostJobRequest)(nil),                  // 4: jobservice.PostJobRequest
+	(*PostJobResponse)(nil),                 // 5: jobservice.PostJobResponse
+	(*GetJobsRequest)(nil),                  // 6: jobservice.GetJobsRequest
+	(*GetJobsResponse)(nil),                 // 7: jobservice.GetJobsResponse
+	(*GetJobByIdRequest)(nil),               // 8: jobservice.GetJobByIdRequest
+	(*GetJobByIdResponse)(nil),              // 9: jobservice.GetJobByIdResponse
+	(*ApplyToJobRequest)(nil),               // 10: jobservice.ApplyToJobRequest
+	(*ApplyToJobResponse)(nil),              // 11: jobservice.ApplyToJobResponse
+	(*GetApplicationsRequest)(nil),          // 12: jobservice.GetApplicationsRequest
+	(*GetApplicationsResponse)(nil),         // 13: jobservice.GetApplicationsResponse
+	(*UpdateApplicationStatusRequest)(nil),  // 14: jobservice.UpdateApplicationStatusRequest
+	(*UpdateApplicationStatusResponse)(nil), // 15: jobservice.UpdateApplicationStatusResponse
+	(*AddJobSkillsRequest)(nil),             // 16: jobservice.AddJobSkillsRequest
+	(*AddJobSkillsResponse)(nil),            // 17: jobservice.AddJobSkillsResponse
 }
 var file_Job_job_proto_depIdxs = []int32{
-	2,  // 0: jobservice.Job.required_skills:type_name -> jobservice.JobSkill
-	0,  // 1: jobservice.Job.status:type_name -> jobservice.JobStatus
-	2,  // 2: jobservice.JobSkills.skills:type_name -> jobservice.JobSkill
-	2,  // 3: jobservice.PostJobRequest.required_skills:type_name -> jobservice.JobSkill
-	1,  // 4: jobservice.GetJobsResponse.jobs:type_name -> jobservice.Job
-	1,  // 5: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
-	4,  // 6: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.Application
-	2,  // 7: jobservice.AddJobSkillsRequest.skills:type_name -> jobservice.JobSkill
-	5,  // 8: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
-	7,  // 9: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
-	9,  // 10: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
-	11, // 11: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
-	13, // 12: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
-	15, // 13: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
-	17, // 14: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
-	6,  // 15: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
-	8,  // 16: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
-	10, // 17: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
-	12, // 18: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
-	14, // 19: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
-	16, // 20: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
-	18, // 21: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
-	15, // [15:22] is the sub-list for method output_type
-	8,  // [8:15] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	1,  // 0: jobservice.Job.required_skills:type_name -> jobservice.JobSkill
+	1,  // 1: jobservice.JobSkills.skills:type_name -> jobservice.JobSkill
+	1,  // 2: jobservice.PostJobRequest.required_skills:type_name -> jobservice.JobSkill
+	0,  // 3: jobservice.GetJobsResponse.jobs:type_name -> jobservice.Job
+	0,  // 4: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
+	3,  // 5: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.Application
+	1,  // 6: jobservice.AddJobSkillsRequest.skills:type_name -> jobservice.JobSkill
+	4,  // 7: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
+	6,  // 8: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
+	8,  // 9: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
+	10, // 10: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
+	12, // 11: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
+	14, // 12: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
+	16, // 13: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
+	5,  // 14: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
+	7,  // 15: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
+	9,  // 16: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
+	11, // 17: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
+	13, // 18: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
+	15, // 19: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
+	17, // 20: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
+	14, // [14:21] is the sub-list for method output_type
+	7,  // [7:14] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_Job_job_proto_init() }
@@ -1342,14 +1284,13 @@ func file_Job_job_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Job_job_proto_rawDesc), len(file_Job_job_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_Job_job_proto_goTypes,
 		DependencyIndexes: file_Job_job_proto_depIdxs,
-		EnumInfos:         file_Job_job_proto_enumTypes,
 		MessageInfos:      file_Job_job_proto_msgTypes,
 	}.Build()
 	File_Job_job_proto = out.File

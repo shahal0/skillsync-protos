@@ -4,12 +4,8 @@ package jobservice;
 
 option go_package = "./gen/jobpb";
 
-// JobStatus defines possible status values for a job
-enum JobStatus {
-  OPEN = 0;
-  CLOSED = 1;
-  DRAFT = 2;
-}
+// Job status values
+// Possible values: OPEN, CLOSED, DRAFT
 
 // Job message - comprehensive definition matching your model
 message Job {
@@ -23,7 +19,7 @@ message Job {
   int64 salary_max = 8;
   string location = 9;
   int32 experience_required = 10;
-  JobStatus status = 11;
+  string status = 11; // Possible values: OPEN, CLOSED, DRAFT
 }
 
 // JobSkill message - matching your model
