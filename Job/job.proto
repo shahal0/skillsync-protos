@@ -127,18 +127,30 @@ message AddJobSkillsResponse {
   string message = 1;
 }
 
+// UpdateJobStatus request/response
+message UpdateJobStatusRequest {
+    string job_id = 1;
+    string status = 2;  // OPEN, IN_PROGRESS, COMPLETED, CANCELLED
+    string employer_id = 3;  // Will be extracted from token
+}
+
+message UpdateJobStatusResponse {
+    string message = 1;
+}
+
 // Service definition
 service JobService {
-  // Core job operations
-  rpc PostJob(PostJobRequest) returns (PostJobResponse);
-  rpc GetJobs(GetJobsRequest) returns (GetJobsResponse);
-  rpc GetJobById(GetJobByIdRequest) returns (GetJobByIdResponse);
-  
-  // Application operations
-  rpc ApplyToJob(ApplyToJobRequest) returns (ApplyToJobResponse);
-  rpc GetApplications(GetApplicationsRequest) returns (GetApplicationsResponse);
-  rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (UpdateApplicationStatusResponse);
-  
-  // Skills operations
-  rpc AddJobSkills(AddJobSkillsRequest) returns (AddJobSkillsResponse);
+    // Core job operations
+    rpc PostJob(PostJobRequest) returns (PostJobResponse);
+    rpc GetJobs(GetJobsRequest) returns (GetJobsResponse);
+    rpc GetJobById(GetJobByIdRequest) returns (GetJobByIdResponse);
+    rpc UpdateJobStatus(UpdateJobStatusRequest) returns (UpdateJobStatusResponse);
+    
+    // Application operations
+    rpc ApplyToJob(ApplyToJobRequest) returns (ApplyToJobResponse);
+    rpc GetApplications(GetApplicationsRequest) returns (GetApplicationsResponse);
+    rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (UpdateApplicationStatusResponse);
+    
+    // Skills operations
+    rpc AddJobSkills(AddJobSkillsRequest) returns (AddJobSkillsResponse);
 }
