@@ -62,6 +62,7 @@ message GetJobsRequest {
   string category = 1; // Optional category filter
   string keyword = 2;  // Optional keyword search
   string location = 3; // Optional location filter
+  string experience_required = 4; // Optional experience required filter
 }
 
 message GetJobsResponse {

@@ -464,12 +464,13 @@ func (x *PostJobResponse) GetMessage() string {
 
 // GetJobs request/response with filters
 type GetJobsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"` // Optional category filter
-	Keyword       string                 `protobuf:"bytes,2,opt,name=keyword,proto3" json:"keyword,omitempty"`   // Optional keyword search
-	Location      string                 `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"` // Optional location filter
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Category           string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`                                               // Optional category filter
+	Keyword            string                 `protobuf:"bytes,2,opt,name=keyword,proto3" json:"keyword,omitempty"`                                                 // Optional keyword search
+	Location           string                 `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`                                               // Optional location filter
+	ExperienceRequired string                 `protobuf:"bytes,4,opt,name=experience_required,json=experienceRequired,proto3" json:"experience_required,omitempty"` // Optional experience required filter
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GetJobsRequest) Reset() {
@@ -519,6 +520,13 @@ func (x *GetJobsRequest) GetKeyword() string {
 func (x *GetJobsRequest) GetLocation() string {
 	if x != nil {
 		return x.Location
+	}
+	return ""
+}
+
+func (x *GetJobsRequest) GetExperienceRequired() string {
+	if x != nil {
+		return x.ExperienceRequired
 	}
 	return ""
 }
@@ -1184,11 +1192,12 @@ const file_Job_job_proto_rawDesc = "" +
 	"employerId\"B\n" +
 	"\x0fPostJobResponse\x12\x15\n" +
 	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"b\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x93\x01\n" +
 	"\x0eGetJobsRequest\x12\x1a\n" +
 	"\bcategory\x18\x01 \x01(\tR\bcategory\x12\x18\n" +
 	"\akeyword\x18\x02 \x01(\tR\akeyword\x12\x1a\n" +
-	"\blocation\x18\x03 \x01(\tR\blocation\"\x8c\x01\n" +
+	"\blocation\x18\x03 \x01(\tR\blocation\x12/\n" +
+	"\x13experience_required\x18\x04 \x01(\tR\x12experienceRequired\"\x8c\x01\n" +
 	"\x0fGetJobsResponse\x12#\n" +
 	"\x04jobs\x18\x01 \x03(\v2\x0f.jobservice.JobR\x04jobs\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
