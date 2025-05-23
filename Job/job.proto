@@ -67,6 +67,16 @@ message Application {
   string resume_url = 5; // Optional field for resume URL
 }
 
+// ApplicationResponse message - matching your Go model with Job object
+message ApplicationResponse {
+  uint64 id = 1;
+  Job job = 2; // Contains the full Job object instead of just job_id
+  string candidate_id = 3;
+  string status = 4; // Applied, Viewed, Shortlisted, Rejected
+  string resume_url = 5; // Optional field for resume URL
+  string applied_at = 6; // Timestamp when the application was submitted
+}
+
 // PostJob request/response
 message PostJobRequest {
   string title = 1;
@@ -126,7 +136,16 @@ message GetApplicationsRequest {
 }
 
 message GetApplicationsResponse {
-  repeated Application applications = 1;
+  repeated ApplicationResponse applications = 1;
+}
+
+// GetApplication request/response
+message GetApplicationRequest {
+  uint64 application_id = 1;
+}
+
+message GetApplicationResponse {
+  ApplicationResponse application = 1;
 }
 
 // UpdateApplicationStatus request/response
@@ -187,6 +206,7 @@ service JobService {
     // Application operations
     rpc ApplyToJob(ApplyToJobRequest) returns (ApplyToJobResponse);
     rpc GetApplications(GetApplicationsRequest) returns (GetApplicationsResponse);
+    rpc GetApplication(GetApplicationRequest) returns (GetApplicationResponse);
     rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (UpdateApplicationStatusResponse);
     
     // Skills operations
