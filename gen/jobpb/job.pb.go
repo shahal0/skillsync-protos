@@ -1606,6 +1606,219 @@ func (x *UpdateJobStatusResponse) GetMessage() string {
 	return ""
 }
 
+// FilterApplications request/response
+type FilterApplicationsRequest struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	JobId           uint64                 `protobuf:"varint,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                              // Job ID to filter applications for
+	EmployerId      string                 `protobuf:"bytes,2,opt,name=employer_id,json=employerId,proto3" json:"employer_id,omitempty"`                // Will be extracted from token
+	MinExperience   int32                  `protobuf:"varint,3,opt,name=min_experience,json=minExperience,proto3" json:"min_experience,omitempty"`      // Minimum years of experience
+	RequiredSkills  []string               `protobuf:"bytes,4,rep,name=required_skills,json=requiredSkills,proto3" json:"required_skills,omitempty"`    // Must-have skills
+	PreferredSkills []string               `protobuf:"bytes,5,rep,name=preferred_skills,json=preferredSkills,proto3" json:"preferred_skills,omitempty"` // Nice-to-have skills
+	Limit           int32                  `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`                                           // Maximum number of results to return
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *FilterApplicationsRequest) Reset() {
+	*x = FilterApplicationsRequest{}
+	mi := &file_Job_job_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FilterApplicationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FilterApplicationsRequest) ProtoMessage() {}
+
+func (x *FilterApplicationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FilterApplicationsRequest.ProtoReflect.Descriptor instead.
+func (*FilterApplicationsRequest) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *FilterApplicationsRequest) GetJobId() uint64 {
+	if x != nil {
+		return x.JobId
+	}
+	return 0
+}
+
+func (x *FilterApplicationsRequest) GetEmployerId() string {
+	if x != nil {
+		return x.EmployerId
+	}
+	return ""
+}
+
+func (x *FilterApplicationsRequest) GetMinExperience() int32 {
+	if x != nil {
+		return x.MinExperience
+	}
+	return 0
+}
+
+func (x *FilterApplicationsRequest) GetRequiredSkills() []string {
+	if x != nil {
+		return x.RequiredSkills
+	}
+	return nil
+}
+
+func (x *FilterApplicationsRequest) GetPreferredSkills() []string {
+	if x != nil {
+		return x.PreferredSkills
+	}
+	return nil
+}
+
+func (x *FilterApplicationsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type RankedApplication struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Application    *ApplicationResponse   `protobuf:"bytes,1,opt,name=application,proto3" json:"application,omitempty"`                               // The application with job details
+	RelevanceScore float64                `protobuf:"fixed64,2,opt,name=relevance_score,json=relevanceScore,proto3" json:"relevance_score,omitempty"` // Score from 0-100 indicating relevance
+	MatchingSkills []string               `protobuf:"bytes,3,rep,name=matching_skills,json=matchingSkills,proto3" json:"matching_skills,omitempty"`   // Skills that matched job requirements
+	MissingSkills  []string               `protobuf:"bytes,4,rep,name=missing_skills,json=missingSkills,proto3" json:"missing_skills,omitempty"`      // Skills that were required but missing
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RankedApplication) Reset() {
+	*x = RankedApplication{}
+	mi := &file_Job_job_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RankedApplication) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RankedApplication) ProtoMessage() {}
+
+func (x *RankedApplication) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RankedApplication.ProtoReflect.Descriptor instead.
+func (*RankedApplication) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *RankedApplication) GetApplication() *ApplicationResponse {
+	if x != nil {
+		return x.Application
+	}
+	return nil
+}
+
+func (x *RankedApplication) GetRelevanceScore() float64 {
+	if x != nil {
+		return x.RelevanceScore
+	}
+	return 0
+}
+
+func (x *RankedApplication) GetMatchingSkills() []string {
+	if x != nil {
+		return x.MatchingSkills
+	}
+	return nil
+}
+
+func (x *RankedApplication) GetMissingSkills() []string {
+	if x != nil {
+		return x.MissingSkills
+	}
+	return nil
+}
+
+type FilterApplicationsResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	RankedApplications []*RankedApplication   `protobuf:"bytes,1,rep,name=ranked_applications,json=rankedApplications,proto3" json:"ranked_applications,omitempty"` // Applications sorted by relevance
+	TotalApplications  int32                  `protobuf:"varint,2,opt,name=total_applications,json=totalApplications,proto3" json:"total_applications,omitempty"`   // Total number of applications for this job
+	Message            string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`                                                 // Success or error message
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *FilterApplicationsResponse) Reset() {
+	*x = FilterApplicationsResponse{}
+	mi := &file_Job_job_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FilterApplicationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FilterApplicationsResponse) ProtoMessage() {}
+
+func (x *FilterApplicationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_Job_job_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FilterApplicationsResponse.ProtoReflect.Descriptor instead.
+func (*FilterApplicationsResponse) Descriptor() ([]byte, []int) {
+	return file_Job_job_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *FilterApplicationsResponse) GetRankedApplications() []*RankedApplication {
+	if x != nil {
+		return x.RankedApplications
+	}
+	return nil
+}
+
+func (x *FilterApplicationsResponse) GetTotalApplications() int32 {
+	if x != nil {
+		return x.TotalApplications
+	}
+	return 0
+}
+
+func (x *FilterApplicationsResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type GetEmployerProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	EmployerId    string                 `protobuf:"bytes,1,opt,name=employer_id,json=employerId,proto3" json:"employer_id,omitempty"`
@@ -1615,7 +1828,7 @@ type GetEmployerProfileRequest struct {
 
 func (x *GetEmployerProfileRequest) Reset() {
 	*x = GetEmployerProfileRequest{}
-	mi := &file_Job_job_proto_msgTypes[26]
+	mi := &file_Job_job_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1627,7 +1840,7 @@ func (x *GetEmployerProfileRequest) String() string {
 func (*GetEmployerProfileRequest) ProtoMessage() {}
 
 func (x *GetEmployerProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_Job_job_proto_msgTypes[26]
+	mi := &file_Job_job_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1640,7 +1853,7 @@ func (x *GetEmployerProfileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetEmployerProfileRequest.ProtoReflect.Descriptor instead.
 func (*GetEmployerProfileRequest) Descriptor() ([]byte, []int) {
-	return file_Job_job_proto_rawDescGZIP(), []int{26}
+	return file_Job_job_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetEmployerProfileRequest) GetEmployerId() string {
@@ -1660,7 +1873,7 @@ type EmployerProfileResponse struct {
 
 func (x *EmployerProfileResponse) Reset() {
 	*x = EmployerProfileResponse{}
-	mi := &file_Job_job_proto_msgTypes[27]
+	mi := &file_Job_job_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1672,7 +1885,7 @@ func (x *EmployerProfileResponse) String() string {
 func (*EmployerProfileResponse) ProtoMessage() {}
 
 func (x *EmployerProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_Job_job_proto_msgTypes[27]
+	mi := &file_Job_job_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1685,7 +1898,7 @@ func (x *EmployerProfileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmployerProfileResponse.ProtoReflect.Descriptor instead.
 func (*EmployerProfileResponse) Descriptor() ([]byte, []int) {
-	return file_Job_job_proto_rawDescGZIP(), []int{27}
+	return file_Job_job_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *EmployerProfileResponse) GetProfile() *EmployerProfile {
@@ -1827,7 +2040,24 @@ const file_Job_job_proto_rawDesc = "" +
 	"\vemployer_id\x18\x03 \x01(\tR\n" +
 	"employerId\"3\n" +
 	"\x17UpdateJobStatusResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"<\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xe4\x01\n" +
+	"\x19FilterApplicationsRequest\x12\x15\n" +
+	"\x06job_id\x18\x01 \x01(\x04R\x05jobId\x12\x1f\n" +
+	"\vemployer_id\x18\x02 \x01(\tR\n" +
+	"employerId\x12%\n" +
+	"\x0emin_experience\x18\x03 \x01(\x05R\rminExperience\x12'\n" +
+	"\x0frequired_skills\x18\x04 \x03(\tR\x0erequiredSkills\x12)\n" +
+	"\x10preferred_skills\x18\x05 \x03(\tR\x0fpreferredSkills\x12\x14\n" +
+	"\x05limit\x18\x06 \x01(\x05R\x05limit\"\xcf\x01\n" +
+	"\x11RankedApplication\x12A\n" +
+	"\vapplication\x18\x01 \x01(\v2\x1f.jobservice.ApplicationResponseR\vapplication\x12'\n" +
+	"\x0frelevance_score\x18\x02 \x01(\x01R\x0erelevanceScore\x12'\n" +
+	"\x0fmatching_skills\x18\x03 \x03(\tR\x0ematchingSkills\x12%\n" +
+	"\x0emissing_skills\x18\x04 \x03(\tR\rmissingSkills\"\xb5\x01\n" +
+	"\x1aFilterApplicationsResponse\x12N\n" +
+	"\x13ranked_applications\x18\x01 \x03(\v2\x1d.jobservice.RankedApplicationR\x12rankedApplications\x12-\n" +
+	"\x12total_applications\x18\x02 \x01(\x05R\x11totalApplications\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\"<\n" +
 	"\x19GetEmployerProfileRequest\x12\x1f\n" +
 	"\vemployer_id\x18\x01 \x01(\tR\n" +
 	"employerId\"f\n" +
@@ -1835,7 +2065,7 @@ const file_Job_job_proto_rawDesc = "" +
 	"\aprofile\x18\x01 \x01(\v2\x1b.jobservice.EmployerProfileR\aprofile\x12\x14\n" +
 	"\x05error\x18\x02 \x01(\tR\x05error2s\n" +
 	"\x0fEmployerService\x12`\n" +
-	"\x12GetEmployerProfile\x12%.jobservice.GetEmployerProfileRequest\x1a#.jobservice.EmployerProfileResponse2\x86\x06\n" +
+	"\x12GetEmployerProfile\x12%.jobservice.GetEmployerProfileRequest\x1a#.jobservice.EmployerProfileResponse2\xeb\x06\n" +
 	"\n" +
 	"JobService\x12B\n" +
 	"\aPostJob\x12\x1a.jobservice.PostJobRequest\x1a\x1b.jobservice.PostJobResponse\x12B\n" +
@@ -1847,7 +2077,8 @@ const file_Job_job_proto_rawDesc = "" +
 	"ApplyToJob\x12\x1d.jobservice.ApplyToJobRequest\x1a\x1e.jobservice.ApplyToJobResponse\x12Z\n" +
 	"\x0fGetApplications\x12\".jobservice.GetApplicationsRequest\x1a#.jobservice.GetApplicationsResponse\x12W\n" +
 	"\x0eGetApplication\x12!.jobservice.GetApplicationRequest\x1a\".jobservice.GetApplicationResponse\x12r\n" +
-	"\x17UpdateApplicationStatus\x12*.jobservice.UpdateApplicationStatusRequest\x1a+.jobservice.UpdateApplicationStatusResponse\x12Q\n" +
+	"\x17UpdateApplicationStatus\x12*.jobservice.UpdateApplicationStatusRequest\x1a+.jobservice.UpdateApplicationStatusResponse\x12c\n" +
+	"\x12FilterApplications\x12%.jobservice.FilterApplicationsRequest\x1a&.jobservice.FilterApplicationsResponse\x12Q\n" +
 	"\fAddJobSkills\x12\x1f.jobservice.AddJobSkillsRequest\x1a .jobservice.AddJobSkillsResponseB\rZ\v./gen/jobpbb\x06proto3"
 
 var (
@@ -1862,7 +2093,7 @@ func file_Job_job_proto_rawDescGZIP() []byte {
 	return file_Job_job_proto_rawDescData
 }
 
-var file_Job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_Job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_Job_job_proto_goTypes = []any{
 	(*EmployerDetail)(nil),                  // 0: jobservice.EmployerDetail
 	(*CompanyDetails)(nil),                  // 1: jobservice.CompanyDetails
@@ -1890,8 +2121,11 @@ var file_Job_job_proto_goTypes = []any{
 	(*AddJobSkillsResponse)(nil),            // 23: jobservice.AddJobSkillsResponse
 	(*UpdateJobStatusRequest)(nil),          // 24: jobservice.UpdateJobStatusRequest
 	(*UpdateJobStatusResponse)(nil),         // 25: jobservice.UpdateJobStatusResponse
-	(*GetEmployerProfileRequest)(nil),       // 26: jobservice.GetEmployerProfileRequest
-	(*EmployerProfileResponse)(nil),         // 27: jobservice.EmployerProfileResponse
+	(*FilterApplicationsRequest)(nil),       // 26: jobservice.FilterApplicationsRequest
+	(*RankedApplication)(nil),               // 27: jobservice.RankedApplication
+	(*FilterApplicationsResponse)(nil),      // 28: jobservice.FilterApplicationsResponse
+	(*GetEmployerProfileRequest)(nil),       // 29: jobservice.GetEmployerProfileRequest
+	(*EmployerProfileResponse)(nil),         // 30: jobservice.EmployerProfileResponse
 }
 var file_Job_job_proto_depIdxs = []int32{
 	0,  // 0: jobservice.CompanyDetails.details:type_name -> jobservice.EmployerDetail
@@ -1905,32 +2139,36 @@ var file_Job_job_proto_depIdxs = []int32{
 	3,  // 8: jobservice.GetJobByIdResponse.job:type_name -> jobservice.Job
 	7,  // 9: jobservice.GetApplicationsResponse.applications:type_name -> jobservice.ApplicationResponse
 	7,  // 10: jobservice.GetApplicationResponse.application:type_name -> jobservice.ApplicationResponse
-	2,  // 11: jobservice.EmployerProfileResponse.profile:type_name -> jobservice.EmployerProfile
-	26, // 12: jobservice.EmployerService.GetEmployerProfile:input_type -> jobservice.GetEmployerProfileRequest
-	8,  // 13: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
-	10, // 14: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
-	12, // 15: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
-	24, // 16: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
-	14, // 17: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
-	16, // 18: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
-	18, // 19: jobservice.JobService.GetApplication:input_type -> jobservice.GetApplicationRequest
-	20, // 20: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
-	22, // 21: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
-	27, // 22: jobservice.EmployerService.GetEmployerProfile:output_type -> jobservice.EmployerProfileResponse
-	9,  // 23: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
-	11, // 24: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
-	13, // 25: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
-	25, // 26: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
-	15, // 27: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
-	17, // 28: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
-	19, // 29: jobservice.JobService.GetApplication:output_type -> jobservice.GetApplicationResponse
-	21, // 30: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
-	23, // 31: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
-	22, // [22:32] is the sub-list for method output_type
-	12, // [12:22] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	7,  // 11: jobservice.RankedApplication.application:type_name -> jobservice.ApplicationResponse
+	27, // 12: jobservice.FilterApplicationsResponse.ranked_applications:type_name -> jobservice.RankedApplication
+	2,  // 13: jobservice.EmployerProfileResponse.profile:type_name -> jobservice.EmployerProfile
+	29, // 14: jobservice.EmployerService.GetEmployerProfile:input_type -> jobservice.GetEmployerProfileRequest
+	8,  // 15: jobservice.JobService.PostJob:input_type -> jobservice.PostJobRequest
+	10, // 16: jobservice.JobService.GetJobs:input_type -> jobservice.GetJobsRequest
+	12, // 17: jobservice.JobService.GetJobById:input_type -> jobservice.GetJobByIdRequest
+	24, // 18: jobservice.JobService.UpdateJobStatus:input_type -> jobservice.UpdateJobStatusRequest
+	14, // 19: jobservice.JobService.ApplyToJob:input_type -> jobservice.ApplyToJobRequest
+	16, // 20: jobservice.JobService.GetApplications:input_type -> jobservice.GetApplicationsRequest
+	18, // 21: jobservice.JobService.GetApplication:input_type -> jobservice.GetApplicationRequest
+	20, // 22: jobservice.JobService.UpdateApplicationStatus:input_type -> jobservice.UpdateApplicationStatusRequest
+	26, // 23: jobservice.JobService.FilterApplications:input_type -> jobservice.FilterApplicationsRequest
+	22, // 24: jobservice.JobService.AddJobSkills:input_type -> jobservice.AddJobSkillsRequest
+	30, // 25: jobservice.EmployerService.GetEmployerProfile:output_type -> jobservice.EmployerProfileResponse
+	9,  // 26: jobservice.JobService.PostJob:output_type -> jobservice.PostJobResponse
+	11, // 27: jobservice.JobService.GetJobs:output_type -> jobservice.GetJobsResponse
+	13, // 28: jobservice.JobService.GetJobById:output_type -> jobservice.GetJobByIdResponse
+	25, // 29: jobservice.JobService.UpdateJobStatus:output_type -> jobservice.UpdateJobStatusResponse
+	15, // 30: jobservice.JobService.ApplyToJob:output_type -> jobservice.ApplyToJobResponse
+	17, // 31: jobservice.JobService.GetApplications:output_type -> jobservice.GetApplicationsResponse
+	19, // 32: jobservice.JobService.GetApplication:output_type -> jobservice.GetApplicationResponse
+	21, // 33: jobservice.JobService.UpdateApplicationStatus:output_type -> jobservice.UpdateApplicationStatusResponse
+	28, // 34: jobservice.JobService.FilterApplications:output_type -> jobservice.FilterApplicationsResponse
+	23, // 35: jobservice.JobService.AddJobSkills:output_type -> jobservice.AddJobSkillsResponse
+	25, // [25:36] is the sub-list for method output_type
+	14, // [14:25] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_Job_job_proto_init() }
@@ -1944,7 +2182,7 @@ func file_Job_job_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Job_job_proto_rawDesc), len(file_Job_job_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   28,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

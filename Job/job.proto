@@ -181,6 +181,29 @@ message UpdateJobStatusResponse {
     string message = 1;
 }
 
+// FilterApplications request/response
+message FilterApplicationsRequest {
+    uint64 job_id = 1;  // Job ID to filter applications for
+    string employer_id = 2;  // Will be extracted from token
+    int32 min_experience = 3;  // Minimum years of experience
+    repeated string required_skills = 4;  // Must-have skills
+    repeated string preferred_skills = 5;  // Nice-to-have skills
+    int32 limit = 6;  // Maximum number of results to return
+}
+
+message RankedApplication {
+    ApplicationResponse application = 1;  // The application with job details
+    double relevance_score = 2;  // Score from 0-100 indicating relevance
+    repeated string matching_skills = 3;  // Skills that matched job requirements
+    repeated string missing_skills = 4;  // Skills that were required but missing
+}
+
+message FilterApplicationsResponse {
+    repeated RankedApplication ranked_applications = 1;  // Applications sorted by relevance
+    int32 total_applications = 2;  // Total number of applications for this job
+    string message = 3;  // Success or error message
+}
+
 // Service definition
 // EmployerService defines the RPC methods for employer operations
 service EmployerService {
@@ -208,6 +231,7 @@ service JobService {
     rpc GetApplications(GetApplicationsRequest) returns (GetApplicationsResponse);
     rpc GetApplication(GetApplicationRequest) returns (GetApplicationResponse);
     rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (UpdateApplicationStatusResponse);
+    rpc FilterApplications(FilterApplicationsRequest) returns (FilterApplicationsResponse);
     
     // Skills operations
     rpc AddJobSkills(AddJobSkillsRequest) returns (AddJobSkillsResponse);
