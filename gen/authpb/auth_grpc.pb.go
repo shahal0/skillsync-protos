@@ -42,6 +42,7 @@ const (
 	AuthService_EmployerResetPassword_FullMethodName    = "/authpb.AuthService/EmployerResetPassword"
 	AuthService_EmployerChangePassword_FullMethodName   = "/authpb.AuthService/EmployerChangePassword"
 	AuthService_EmployerProfile_FullMethodName          = "/authpb.AuthService/EmployerProfile"
+	AuthService_EmployerProfileById_FullMethodName      = "/authpb.AuthService/EmployerProfileById"
 	AuthService_EmployerProfileUpdate_FullMethodName    = "/authpb.AuthService/EmployerProfileUpdate"
 	AuthService_EmployerGoogleLogin_FullMethodName      = "/authpb.AuthService/EmployerGoogleLogin"
 	AuthService_EmployerGoogleCallback_FullMethodName   = "/authpb.AuthService/EmployerGoogleCallback"
@@ -77,6 +78,7 @@ type AuthServiceClient interface {
 	EmployerResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	EmployerChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	EmployerProfile(ctx context.Context, in *EmployerProfileRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error)
+	EmployerProfileById(ctx context.Context, in *EmployerProfileByIdRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error)
 	EmployerProfileUpdate(ctx context.Context, in *EmployerProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	EmployerGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	EmployerGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error)
@@ -320,6 +322,16 @@ func (c *authServiceClient) EmployerProfile(ctx context.Context, in *EmployerPro
 	return out, nil
 }
 
+func (c *authServiceClient) EmployerProfileById(ctx context.Context, in *EmployerProfileByIdRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerProfileResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerProfileById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) EmployerProfileUpdate(ctx context.Context, in *EmployerProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GenericResponse)
@@ -380,6 +392,7 @@ type AuthServiceServer interface {
 	EmployerResetPassword(context.Context, *ResetPasswordRequest) (*GenericResponse, error)
 	EmployerChangePassword(context.Context, *ChangePasswordRequest) (*GenericResponse, error)
 	EmployerProfile(context.Context, *EmployerProfileRequest) (*EmployerProfileResponse, error)
+	EmployerProfileById(context.Context, *EmployerProfileByIdRequest) (*EmployerProfileResponse, error)
 	EmployerProfileUpdate(context.Context, *EmployerProfileUpdateRequest) (*GenericResponse, error)
 	EmployerGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error)
 	EmployerGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error)
@@ -461,6 +474,9 @@ func (UnimplementedAuthServiceServer) EmployerChangePassword(context.Context, *C
 }
 func (UnimplementedAuthServiceServer) EmployerProfile(context.Context, *EmployerProfileRequest) (*EmployerProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfile not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerProfileById(context.Context, *EmployerProfileByIdRequest) (*EmployerProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfileById not implemented")
 }
 func (UnimplementedAuthServiceServer) EmployerProfileUpdate(context.Context, *EmployerProfileUpdateRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfileUpdate not implemented")
@@ -906,6 +922,24 @@ func _AuthService_EmployerProfile_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_EmployerProfileById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerProfileByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerProfileById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerProfileById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerProfileById(ctx, req.(*EmployerProfileByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_EmployerProfileUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmployerProfileUpdateRequest)
 	if err := dec(in); err != nil {
@@ -1058,6 +1092,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EmployerProfile",
 			Handler:    _AuthService_EmployerProfile_Handler,
+		},
+		{
+			MethodName: "EmployerProfileById",
+			Handler:    _AuthService_EmployerProfileById_Handler,
 		},
 		{
 			MethodName: "EmployerProfileUpdate",

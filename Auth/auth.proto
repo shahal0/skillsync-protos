@@ -33,6 +33,7 @@ service AuthService {
   rpc EmployerResetPassword(ResetPasswordRequest) returns (GenericResponse);
   rpc EmployerChangePassword(ChangePasswordRequest) returns (GenericResponse);
   rpc EmployerProfile(EmployerProfileRequest) returns (EmployerProfileResponse);
+  rpc EmployerProfileById(EmployerProfileByIdRequest) returns (EmployerProfileResponse);
   rpc EmployerProfileUpdate(EmployerProfileUpdateRequest) returns (GenericResponse);
   rpc EmployerGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
   rpc EmployerGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
@@ -111,6 +112,10 @@ message EmployerLoginResponse {
 
 message EmployerProfileRequest {
   string token = 1;
+}
+
+message EmployerProfileByIdRequest {
+  string employer_id = 1;
 }
 
 message EmployerProfileResponse {
