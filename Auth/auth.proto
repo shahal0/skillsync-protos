@@ -23,6 +23,7 @@ service AuthService {
   rpc CandidateUploadResume(UploadResumeRequest) returns (GenericResponse);
   rpc CandidateGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
   rpc CandidateGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
+  rpc GetCandidateSkills(GetCandidateSkillsRequest) returns (GetCandidateSkillsResponse);
 
   // Employer endpoints
   rpc EmployerSignup(EmployerSignupRequest) returns (EmployerSignupResponse);
@@ -244,4 +245,13 @@ message VerifyTokenRequest {
 message VerifyTokenResponse {
   string user_id = 1;
   string role = 2;
+}
+
+// GetCandidateSkills messages
+message GetCandidateSkillsRequest {
+  string candidate_id = 1;
+}
+
+message GetCandidateSkillsResponse {
+  repeated string skills = 1;
 }

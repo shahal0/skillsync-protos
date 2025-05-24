@@ -2007,6 +2007,95 @@ func (x *VerifyTokenResponse) GetRole() string {
 	return ""
 }
 
+// GetCandidateSkills messages
+type GetCandidateSkillsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CandidateId   string                 `protobuf:"bytes,1,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCandidateSkillsRequest) Reset() {
+	*x = GetCandidateSkillsRequest{}
+	mi := &file_Auth_auth_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCandidateSkillsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCandidateSkillsRequest) ProtoMessage() {}
+
+func (x *GetCandidateSkillsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_Auth_auth_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCandidateSkillsRequest.ProtoReflect.Descriptor instead.
+func (*GetCandidateSkillsRequest) Descriptor() ([]byte, []int) {
+	return file_Auth_auth_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *GetCandidateSkillsRequest) GetCandidateId() string {
+	if x != nil {
+		return x.CandidateId
+	}
+	return ""
+}
+
+type GetCandidateSkillsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Skills        []string               `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCandidateSkillsResponse) Reset() {
+	*x = GetCandidateSkillsResponse{}
+	mi := &file_Auth_auth_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCandidateSkillsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCandidateSkillsResponse) ProtoMessage() {}
+
+func (x *GetCandidateSkillsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_Auth_auth_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCandidateSkillsResponse.ProtoReflect.Descriptor instead.
+func (*GetCandidateSkillsResponse) Descriptor() ([]byte, []int) {
+	return file_Auth_auth_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *GetCandidateSkillsResponse) GetSkills() []string {
+	if x != nil {
+		return x.Skills
+	}
+	return nil
+}
+
 var File_Auth_auth_proto protoreflect.FileDescriptor
 
 const file_Auth_auth_proto_rawDesc = "" +
@@ -2163,7 +2252,11 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"B\n" +
 	"\x13VerifyTokenResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role2\x8c\x11\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role\">\n" +
+	"\x19GetCandidateSkillsRequest\x12!\n" +
+	"\fcandidate_id\x18\x01 \x01(\tR\vcandidateId\"4\n" +
+	"\x1aGetCandidateSkillsResponse\x12\x16\n" +
+	"\x06skills\x18\x01 \x03(\tR\x06skills2\xe9\x11\n" +
 	"\vAuthService\x12F\n" +
 	"\vVerifyToken\x12\x1a.authpb.VerifyTokenRequest\x1a\x1b.authpb.VerifyTokenResponse\x12R\n" +
 	"\x0fCandidateSignup\x12\x1e.authpb.CandidateSignupRequest\x1a\x1f.authpb.CandidateSignupResponse\x12O\n" +
@@ -2179,7 +2272,8 @@ const file_Auth_auth_proto_rawDesc = "" +
 	"\x18CandidateEducationUpdate\x12\x1e.authpb.EducationUpdateRequest\x1a\x17.authpb.GenericResponse\x12M\n" +
 	"\x15CandidateUploadResume\x12\x1b.authpb.UploadResumeRequest\x1a\x17.authpb.GenericResponse\x12H\n" +
 	"\x14CandidateGoogleLogin\x12\x1a.authpb.GoogleLoginRequest\x1a\x14.authpb.AuthResponse\x12N\n" +
-	"\x17CandidateGoogleCallback\x12\x1d.authpb.GoogleCallbackRequest\x1a\x14.authpb.AuthResponse\x12O\n" +
+	"\x17CandidateGoogleCallback\x12\x1d.authpb.GoogleCallbackRequest\x1a\x14.authpb.AuthResponse\x12[\n" +
+	"\x12GetCandidateSkills\x12!.authpb.GetCandidateSkillsRequest\x1a\".authpb.GetCandidateSkillsResponse\x12O\n" +
 	"\x0eEmployerSignup\x12\x1d.authpb.EmployerSignupRequest\x1a\x1e.authpb.EmployerSignupResponse\x12L\n" +
 	"\rEmployerLogin\x12\x1c.authpb.EmployerLoginRequest\x1a\x1d.authpb.EmployerLoginResponse\x12J\n" +
 	"\x13EmployerVerifyEmail\x12\x1a.authpb.VerifyEmailRequest\x1a\x17.authpb.GenericResponse\x12F\n" +
@@ -2205,7 +2299,7 @@ func file_Auth_auth_proto_rawDescGZIP() []byte {
 	return file_Auth_auth_proto_rawDescData
 }
 
-var file_Auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_Auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_Auth_auth_proto_goTypes = []any{
 	(*CandidateSignupRequest)(nil),        // 0: authpb.CandidateSignupRequest
 	(*CandidateSignupResponse)(nil),       // 1: authpb.CandidateSignupResponse
@@ -2238,6 +2332,8 @@ var file_Auth_auth_proto_goTypes = []any{
 	(*ChangePasswordRequest)(nil),         // 28: authpb.ChangePasswordRequest
 	(*VerifyTokenRequest)(nil),            // 29: authpb.VerifyTokenRequest
 	(*VerifyTokenResponse)(nil),           // 30: authpb.VerifyTokenResponse
+	(*GetCandidateSkillsRequest)(nil),     // 31: authpb.GetCandidateSkillsRequest
+	(*GetCandidateSkillsResponse)(nil),    // 32: authpb.GetCandidateSkillsResponse
 }
 var file_Auth_auth_proto_depIdxs = []int32{
 	15, // 0: authpb.CandidateProfileResponse.skills:type_name -> authpb.Skill
@@ -2261,47 +2357,49 @@ var file_Auth_auth_proto_depIdxs = []int32{
 	19, // 18: authpb.AuthService.CandidateUploadResume:input_type -> authpb.UploadResumeRequest
 	20, // 19: authpb.AuthService.CandidateGoogleLogin:input_type -> authpb.GoogleLoginRequest
 	21, // 20: authpb.AuthService.CandidateGoogleCallback:input_type -> authpb.GoogleCallbackRequest
-	6,  // 21: authpb.AuthService.EmployerSignup:input_type -> authpb.EmployerSignupRequest
-	8,  // 22: authpb.AuthService.EmployerLogin:input_type -> authpb.EmployerLoginRequest
-	24, // 23: authpb.AuthService.EmployerVerifyEmail:input_type -> authpb.VerifyEmailRequest
-	25, // 24: authpb.AuthService.EmployerResendOtp:input_type -> authpb.ResendOtpRequest
-	26, // 25: authpb.AuthService.EmployerForgotPassword:input_type -> authpb.ForgotPasswordRequest
-	27, // 26: authpb.AuthService.EmployerResetPassword:input_type -> authpb.ResetPasswordRequest
-	28, // 27: authpb.AuthService.EmployerChangePassword:input_type -> authpb.ChangePasswordRequest
-	10, // 28: authpb.AuthService.EmployerProfile:input_type -> authpb.EmployerProfileRequest
-	11, // 29: authpb.AuthService.EmployerProfileById:input_type -> authpb.EmployerProfileByIdRequest
-	14, // 30: authpb.AuthService.EmployerProfileUpdate:input_type -> authpb.EmployerProfileUpdateRequest
-	20, // 31: authpb.AuthService.EmployerGoogleLogin:input_type -> authpb.GoogleLoginRequest
-	21, // 32: authpb.AuthService.EmployerGoogleCallback:input_type -> authpb.GoogleCallbackRequest
-	30, // 33: authpb.AuthService.VerifyToken:output_type -> authpb.VerifyTokenResponse
-	1,  // 34: authpb.AuthService.CandidateSignup:output_type -> authpb.CandidateSignupResponse
-	3,  // 35: authpb.AuthService.CandidateLogin:output_type -> authpb.CandidateLoginResponse
-	23, // 36: authpb.AuthService.CandidateVerifyEmail:output_type -> authpb.GenericResponse
-	23, // 37: authpb.AuthService.CandidateResendOtp:output_type -> authpb.GenericResponse
-	23, // 38: authpb.AuthService.CandidateForgotPassword:output_type -> authpb.GenericResponse
-	23, // 39: authpb.AuthService.CandidateResetPassword:output_type -> authpb.GenericResponse
-	23, // 40: authpb.AuthService.CandidateChangePassword:output_type -> authpb.GenericResponse
-	5,  // 41: authpb.AuthService.CandidateProfile:output_type -> authpb.CandidateProfileResponse
-	23, // 42: authpb.AuthService.CandidateProfileUpdate:output_type -> authpb.GenericResponse
-	23, // 43: authpb.AuthService.CandidateSkillsUpdate:output_type -> authpb.GenericResponse
-	23, // 44: authpb.AuthService.CandidateEducationUpdate:output_type -> authpb.GenericResponse
-	23, // 45: authpb.AuthService.CandidateUploadResume:output_type -> authpb.GenericResponse
-	22, // 46: authpb.AuthService.CandidateGoogleLogin:output_type -> authpb.AuthResponse
-	22, // 47: authpb.AuthService.CandidateGoogleCallback:output_type -> authpb.AuthResponse
-	7,  // 48: authpb.AuthService.EmployerSignup:output_type -> authpb.EmployerSignupResponse
-	9,  // 49: authpb.AuthService.EmployerLogin:output_type -> authpb.EmployerLoginResponse
-	23, // 50: authpb.AuthService.EmployerVerifyEmail:output_type -> authpb.GenericResponse
-	23, // 51: authpb.AuthService.EmployerResendOtp:output_type -> authpb.GenericResponse
-	23, // 52: authpb.AuthService.EmployerForgotPassword:output_type -> authpb.GenericResponse
-	23, // 53: authpb.AuthService.EmployerResetPassword:output_type -> authpb.GenericResponse
-	23, // 54: authpb.AuthService.EmployerChangePassword:output_type -> authpb.GenericResponse
-	12, // 55: authpb.AuthService.EmployerProfile:output_type -> authpb.EmployerProfileResponse
-	12, // 56: authpb.AuthService.EmployerProfileById:output_type -> authpb.EmployerProfileResponse
-	23, // 57: authpb.AuthService.EmployerProfileUpdate:output_type -> authpb.GenericResponse
-	22, // 58: authpb.AuthService.EmployerGoogleLogin:output_type -> authpb.AuthResponse
-	22, // 59: authpb.AuthService.EmployerGoogleCallback:output_type -> authpb.AuthResponse
-	33, // [33:60] is the sub-list for method output_type
-	6,  // [6:33] is the sub-list for method input_type
+	31, // 21: authpb.AuthService.GetCandidateSkills:input_type -> authpb.GetCandidateSkillsRequest
+	6,  // 22: authpb.AuthService.EmployerSignup:input_type -> authpb.EmployerSignupRequest
+	8,  // 23: authpb.AuthService.EmployerLogin:input_type -> authpb.EmployerLoginRequest
+	24, // 24: authpb.AuthService.EmployerVerifyEmail:input_type -> authpb.VerifyEmailRequest
+	25, // 25: authpb.AuthService.EmployerResendOtp:input_type -> authpb.ResendOtpRequest
+	26, // 26: authpb.AuthService.EmployerForgotPassword:input_type -> authpb.ForgotPasswordRequest
+	27, // 27: authpb.AuthService.EmployerResetPassword:input_type -> authpb.ResetPasswordRequest
+	28, // 28: authpb.AuthService.EmployerChangePassword:input_type -> authpb.ChangePasswordRequest
+	10, // 29: authpb.AuthService.EmployerProfile:input_type -> authpb.EmployerProfileRequest
+	11, // 30: authpb.AuthService.EmployerProfileById:input_type -> authpb.EmployerProfileByIdRequest
+	14, // 31: authpb.AuthService.EmployerProfileUpdate:input_type -> authpb.EmployerProfileUpdateRequest
+	20, // 32: authpb.AuthService.EmployerGoogleLogin:input_type -> authpb.GoogleLoginRequest
+	21, // 33: authpb.AuthService.EmployerGoogleCallback:input_type -> authpb.GoogleCallbackRequest
+	30, // 34: authpb.AuthService.VerifyToken:output_type -> authpb.VerifyTokenResponse
+	1,  // 35: authpb.AuthService.CandidateSignup:output_type -> authpb.CandidateSignupResponse
+	3,  // 36: authpb.AuthService.CandidateLogin:output_type -> authpb.CandidateLoginResponse
+	23, // 37: authpb.AuthService.CandidateVerifyEmail:output_type -> authpb.GenericResponse
+	23, // 38: authpb.AuthService.CandidateResendOtp:output_type -> authpb.GenericResponse
+	23, // 39: authpb.AuthService.CandidateForgotPassword:output_type -> authpb.GenericResponse
+	23, // 40: authpb.AuthService.CandidateResetPassword:output_type -> authpb.GenericResponse
+	23, // 41: authpb.AuthService.CandidateChangePassword:output_type -> authpb.GenericResponse
+	5,  // 42: authpb.AuthService.CandidateProfile:output_type -> authpb.CandidateProfileResponse
+	23, // 43: authpb.AuthService.CandidateProfileUpdate:output_type -> authpb.GenericResponse
+	23, // 44: authpb.AuthService.CandidateSkillsUpdate:output_type -> authpb.GenericResponse
+	23, // 45: authpb.AuthService.CandidateEducationUpdate:output_type -> authpb.GenericResponse
+	23, // 46: authpb.AuthService.CandidateUploadResume:output_type -> authpb.GenericResponse
+	22, // 47: authpb.AuthService.CandidateGoogleLogin:output_type -> authpb.AuthResponse
+	22, // 48: authpb.AuthService.CandidateGoogleCallback:output_type -> authpb.AuthResponse
+	32, // 49: authpb.AuthService.GetCandidateSkills:output_type -> authpb.GetCandidateSkillsResponse
+	7,  // 50: authpb.AuthService.EmployerSignup:output_type -> authpb.EmployerSignupResponse
+	9,  // 51: authpb.AuthService.EmployerLogin:output_type -> authpb.EmployerLoginResponse
+	23, // 52: authpb.AuthService.EmployerVerifyEmail:output_type -> authpb.GenericResponse
+	23, // 53: authpb.AuthService.EmployerResendOtp:output_type -> authpb.GenericResponse
+	23, // 54: authpb.AuthService.EmployerForgotPassword:output_type -> authpb.GenericResponse
+	23, // 55: authpb.AuthService.EmployerResetPassword:output_type -> authpb.GenericResponse
+	23, // 56: authpb.AuthService.EmployerChangePassword:output_type -> authpb.GenericResponse
+	12, // 57: authpb.AuthService.EmployerProfile:output_type -> authpb.EmployerProfileResponse
+	12, // 58: authpb.AuthService.EmployerProfileById:output_type -> authpb.EmployerProfileResponse
+	23, // 59: authpb.AuthService.EmployerProfileUpdate:output_type -> authpb.GenericResponse
+	22, // 60: authpb.AuthService.EmployerGoogleLogin:output_type -> authpb.AuthResponse
+	22, // 61: authpb.AuthService.EmployerGoogleCallback:output_type -> authpb.AuthResponse
+	34, // [34:62] is the sub-list for method output_type
+	6,  // [6:34] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -2318,7 +2416,7 @@ func file_Auth_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Auth_auth_proto_rawDesc), len(file_Auth_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   31,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

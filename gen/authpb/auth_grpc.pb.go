@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: proto/auth.proto
+// source: Auth/auth.proto
 
 package authpb
 
@@ -19,18 +19,71 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Signup_FullMethodName             = "/auth.AuthService/Signup"
-	AuthService_Login_FullMethodName              = "/auth.AuthService/Login"
-	AuthService_GetCandidateSkills_FullMethodName = "/auth.AuthService/GetCandidateSkills"
+	AuthService_VerifyToken_FullMethodName              = "/authpb.AuthService/VerifyToken"
+	AuthService_CandidateSignup_FullMethodName          = "/authpb.AuthService/CandidateSignup"
+	AuthService_CandidateLogin_FullMethodName           = "/authpb.AuthService/CandidateLogin"
+	AuthService_CandidateVerifyEmail_FullMethodName     = "/authpb.AuthService/CandidateVerifyEmail"
+	AuthService_CandidateResendOtp_FullMethodName       = "/authpb.AuthService/CandidateResendOtp"
+	AuthService_CandidateForgotPassword_FullMethodName  = "/authpb.AuthService/CandidateForgotPassword"
+	AuthService_CandidateResetPassword_FullMethodName   = "/authpb.AuthService/CandidateResetPassword"
+	AuthService_CandidateChangePassword_FullMethodName  = "/authpb.AuthService/CandidateChangePassword"
+	AuthService_CandidateProfile_FullMethodName         = "/authpb.AuthService/CandidateProfile"
+	AuthService_CandidateProfileUpdate_FullMethodName   = "/authpb.AuthService/CandidateProfileUpdate"
+	AuthService_CandidateSkillsUpdate_FullMethodName    = "/authpb.AuthService/CandidateSkillsUpdate"
+	AuthService_CandidateEducationUpdate_FullMethodName = "/authpb.AuthService/CandidateEducationUpdate"
+	AuthService_CandidateUploadResume_FullMethodName    = "/authpb.AuthService/CandidateUploadResume"
+	AuthService_CandidateGoogleLogin_FullMethodName     = "/authpb.AuthService/CandidateGoogleLogin"
+	AuthService_CandidateGoogleCallback_FullMethodName  = "/authpb.AuthService/CandidateGoogleCallback"
+	AuthService_GetCandidateSkills_FullMethodName       = "/authpb.AuthService/GetCandidateSkills"
+	AuthService_EmployerSignup_FullMethodName           = "/authpb.AuthService/EmployerSignup"
+	AuthService_EmployerLogin_FullMethodName            = "/authpb.AuthService/EmployerLogin"
+	AuthService_EmployerVerifyEmail_FullMethodName      = "/authpb.AuthService/EmployerVerifyEmail"
+	AuthService_EmployerResendOtp_FullMethodName        = "/authpb.AuthService/EmployerResendOtp"
+	AuthService_EmployerForgotPassword_FullMethodName   = "/authpb.AuthService/EmployerForgotPassword"
+	AuthService_EmployerResetPassword_FullMethodName    = "/authpb.AuthService/EmployerResetPassword"
+	AuthService_EmployerChangePassword_FullMethodName   = "/authpb.AuthService/EmployerChangePassword"
+	AuthService_EmployerProfile_FullMethodName          = "/authpb.AuthService/EmployerProfile"
+	AuthService_EmployerProfileById_FullMethodName      = "/authpb.AuthService/EmployerProfileById"
+	AuthService_EmployerProfileUpdate_FullMethodName    = "/authpb.AuthService/EmployerProfileUpdate"
+	AuthService_EmployerGoogleLogin_FullMethodName      = "/authpb.AuthService/EmployerGoogleLogin"
+	AuthService_EmployerGoogleCallback_FullMethodName   = "/authpb.AuthService/EmployerGoogleCallback"
 )
 
 // AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
-	Signup(ctx context.Context, in *SignupRequest, opts ...grpc.CallOption) (*SignupResponse, error)
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	// Token verification
+	VerifyToken(ctx context.Context, in *VerifyTokenRequest, opts ...grpc.CallOption) (*VerifyTokenResponse, error)
+	// Candidate endpoints
+	CandidateSignup(ctx context.Context, in *CandidateSignupRequest, opts ...grpc.CallOption) (*CandidateSignupResponse, error)
+	CandidateLogin(ctx context.Context, in *CandidateLoginRequest, opts ...grpc.CallOption) (*CandidateLoginResponse, error)
+	CandidateVerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateResendOtp(ctx context.Context, in *ResendOtpRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateProfile(ctx context.Context, in *CandidateProfileRequest, opts ...grpc.CallOption) (*CandidateProfileResponse, error)
+	CandidateProfileUpdate(ctx context.Context, in *CandidateProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateSkillsUpdate(ctx context.Context, in *SkillsUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateEducationUpdate(ctx context.Context, in *EducationUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateUploadResume(ctx context.Context, in *UploadResumeRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	CandidateGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	CandidateGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	GetCandidateSkills(ctx context.Context, in *GetCandidateSkillsRequest, opts ...grpc.CallOption) (*GetCandidateSkillsResponse, error)
+	// Employer endpoints
+	EmployerSignup(ctx context.Context, in *EmployerSignupRequest, opts ...grpc.CallOption) (*EmployerSignupResponse, error)
+	EmployerLogin(ctx context.Context, in *EmployerLoginRequest, opts ...grpc.CallOption) (*EmployerLoginResponse, error)
+	EmployerVerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerResendOtp(ctx context.Context, in *ResendOtpRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerProfile(ctx context.Context, in *EmployerProfileRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error)
+	EmployerProfileById(ctx context.Context, in *EmployerProfileByIdRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error)
+	EmployerProfileUpdate(ctx context.Context, in *EmployerProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	EmployerGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	EmployerGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 }
 
 type authServiceClient struct {
@@ -41,20 +94,150 @@ func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
 	return &authServiceClient{cc}
 }
 
-func (c *authServiceClient) Signup(ctx context.Context, in *SignupRequest, opts ...grpc.CallOption) (*SignupResponse, error) {
+func (c *authServiceClient) VerifyToken(ctx context.Context, in *VerifyTokenRequest, opts ...grpc.CallOption) (*VerifyTokenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SignupResponse)
-	err := c.cc.Invoke(ctx, AuthService_Signup_FullMethodName, in, out, cOpts...)
+	out := new(VerifyTokenResponse)
+	err := c.cc.Invoke(ctx, AuthService_VerifyToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *authServiceClient) CandidateSignup(ctx context.Context, in *CandidateSignupRequest, opts ...grpc.CallOption) (*CandidateSignupResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, AuthService_Login_FullMethodName, in, out, cOpts...)
+	out := new(CandidateSignupResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateSignup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateLogin(ctx context.Context, in *CandidateLoginRequest, opts ...grpc.CallOption) (*CandidateLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CandidateLoginResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateVerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateVerifyEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateResendOtp(ctx context.Context, in *ResendOtpRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateResendOtp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateForgotPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateResetPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateChangePassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateProfile(ctx context.Context, in *CandidateProfileRequest, opts ...grpc.CallOption) (*CandidateProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CandidateProfileResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateProfileUpdate(ctx context.Context, in *CandidateProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateProfileUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateSkillsUpdate(ctx context.Context, in *SkillsUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateSkillsUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateEducationUpdate(ctx context.Context, in *EducationUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateEducationUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateUploadResume(ctx context.Context, in *UploadResumeRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateUploadResume_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateGoogleLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CandidateGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthResponse)
+	err := c.cc.Invoke(ctx, AuthService_CandidateGoogleCallback_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -71,13 +254,161 @@ func (c *authServiceClient) GetCandidateSkills(ctx context.Context, in *GetCandi
 	return out, nil
 }
 
+func (c *authServiceClient) EmployerSignup(ctx context.Context, in *EmployerSignupRequest, opts ...grpc.CallOption) (*EmployerSignupResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerSignupResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerSignup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerLogin(ctx context.Context, in *EmployerLoginRequest, opts ...grpc.CallOption) (*EmployerLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerLoginResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerVerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerVerifyEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerResendOtp(ctx context.Context, in *ResendOtpRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerResendOtp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerForgotPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerResetPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerChangePassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerProfile(ctx context.Context, in *EmployerProfileRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerProfileResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerProfileById(ctx context.Context, in *EmployerProfileByIdRequest, opts ...grpc.CallOption) (*EmployerProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmployerProfileResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerProfileById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerProfileUpdate(ctx context.Context, in *EmployerProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenericResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerProfileUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerGoogleLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) EmployerGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthResponse)
+	err := c.cc.Invoke(ctx, AuthService_EmployerGoogleCallback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
 type AuthServiceServer interface {
-	Signup(context.Context, *SignupRequest) (*SignupResponse, error)
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	// Token verification
+	VerifyToken(context.Context, *VerifyTokenRequest) (*VerifyTokenResponse, error)
+	// Candidate endpoints
+	CandidateSignup(context.Context, *CandidateSignupRequest) (*CandidateSignupResponse, error)
+	CandidateLogin(context.Context, *CandidateLoginRequest) (*CandidateLoginResponse, error)
+	CandidateVerifyEmail(context.Context, *VerifyEmailRequest) (*GenericResponse, error)
+	CandidateResendOtp(context.Context, *ResendOtpRequest) (*GenericResponse, error)
+	CandidateForgotPassword(context.Context, *ForgotPasswordRequest) (*GenericResponse, error)
+	CandidateResetPassword(context.Context, *ResetPasswordRequest) (*GenericResponse, error)
+	CandidateChangePassword(context.Context, *ChangePasswordRequest) (*GenericResponse, error)
+	CandidateProfile(context.Context, *CandidateProfileRequest) (*CandidateProfileResponse, error)
+	CandidateProfileUpdate(context.Context, *CandidateProfileUpdateRequest) (*GenericResponse, error)
+	CandidateSkillsUpdate(context.Context, *SkillsUpdateRequest) (*GenericResponse, error)
+	CandidateEducationUpdate(context.Context, *EducationUpdateRequest) (*GenericResponse, error)
+	CandidateUploadResume(context.Context, *UploadResumeRequest) (*GenericResponse, error)
+	CandidateGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error)
+	CandidateGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error)
 	GetCandidateSkills(context.Context, *GetCandidateSkillsRequest) (*GetCandidateSkillsResponse, error)
+	// Employer endpoints
+	EmployerSignup(context.Context, *EmployerSignupRequest) (*EmployerSignupResponse, error)
+	EmployerLogin(context.Context, *EmployerLoginRequest) (*EmployerLoginResponse, error)
+	EmployerVerifyEmail(context.Context, *VerifyEmailRequest) (*GenericResponse, error)
+	EmployerResendOtp(context.Context, *ResendOtpRequest) (*GenericResponse, error)
+	EmployerForgotPassword(context.Context, *ForgotPasswordRequest) (*GenericResponse, error)
+	EmployerResetPassword(context.Context, *ResetPasswordRequest) (*GenericResponse, error)
+	EmployerChangePassword(context.Context, *ChangePasswordRequest) (*GenericResponse, error)
+	EmployerProfile(context.Context, *EmployerProfileRequest) (*EmployerProfileResponse, error)
+	EmployerProfileById(context.Context, *EmployerProfileByIdRequest) (*EmployerProfileResponse, error)
+	EmployerProfileUpdate(context.Context, *EmployerProfileUpdateRequest) (*GenericResponse, error)
+	EmployerGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error)
+	EmployerGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -88,14 +419,89 @@ type AuthServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAuthServiceServer struct{}
 
-func (UnimplementedAuthServiceServer) Signup(context.Context, *SignupRequest) (*SignupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Signup not implemented")
+func (UnimplementedAuthServiceServer) VerifyToken(context.Context, *VerifyTokenRequest) (*VerifyTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyToken not implemented")
 }
-func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+func (UnimplementedAuthServiceServer) CandidateSignup(context.Context, *CandidateSignupRequest) (*CandidateSignupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateSignup not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateLogin(context.Context, *CandidateLoginRequest) (*CandidateLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateVerifyEmail(context.Context, *VerifyEmailRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateVerifyEmail not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateResendOtp(context.Context, *ResendOtpRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateResendOtp not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateForgotPassword(context.Context, *ForgotPasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateForgotPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateResetPassword(context.Context, *ResetPasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateResetPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateChangePassword(context.Context, *ChangePasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateChangePassword not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateProfile(context.Context, *CandidateProfileRequest) (*CandidateProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateProfile not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateProfileUpdate(context.Context, *CandidateProfileUpdateRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateProfileUpdate not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateSkillsUpdate(context.Context, *SkillsUpdateRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateSkillsUpdate not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateEducationUpdate(context.Context, *EducationUpdateRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateEducationUpdate not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateUploadResume(context.Context, *UploadResumeRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateUploadResume not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateGoogleLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) CandidateGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CandidateGoogleCallback not implemented")
 }
 func (UnimplementedAuthServiceServer) GetCandidateSkills(context.Context, *GetCandidateSkillsRequest) (*GetCandidateSkillsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCandidateSkills not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerSignup(context.Context, *EmployerSignupRequest) (*EmployerSignupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerSignup not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerLogin(context.Context, *EmployerLoginRequest) (*EmployerLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerVerifyEmail(context.Context, *VerifyEmailRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerVerifyEmail not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerResendOtp(context.Context, *ResendOtpRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerResendOtp not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerForgotPassword(context.Context, *ForgotPasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerForgotPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerResetPassword(context.Context, *ResetPasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerResetPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerChangePassword(context.Context, *ChangePasswordRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerChangePassword not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerProfile(context.Context, *EmployerProfileRequest) (*EmployerProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfile not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerProfileById(context.Context, *EmployerProfileByIdRequest) (*EmployerProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfileById not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerProfileUpdate(context.Context, *EmployerProfileUpdateRequest) (*GenericResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerProfileUpdate not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerGoogleLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) EmployerGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmployerGoogleCallback not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -118,38 +524,272 @@ func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
 	s.RegisterService(&AuthService_ServiceDesc, srv)
 }
 
-func _AuthService_Signup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignupRequest)
+func _AuthService_VerifyToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).Signup(ctx, in)
+		return srv.(AuthServiceServer).VerifyToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_Signup_FullMethodName,
+		FullMethod: AuthService_VerifyToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).Signup(ctx, req.(*SignupRequest))
+		return srv.(AuthServiceServer).VerifyToken(ctx, req.(*VerifyTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
+func _AuthService_CandidateSignup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandidateSignupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).Login(ctx, in)
+		return srv.(AuthServiceServer).CandidateSignup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_Login_FullMethodName,
+		FullMethod: AuthService_CandidateSignup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).Login(ctx, req.(*LoginRequest))
+		return srv.(AuthServiceServer).CandidateSignup(ctx, req.(*CandidateSignupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandidateLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateLogin(ctx, req.(*CandidateLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateVerifyEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateVerifyEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateVerifyEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateVerifyEmail(ctx, req.(*VerifyEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateResendOtp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendOtpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateResendOtp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateResendOtp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateResendOtp(ctx, req.(*ResendOtpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateForgotPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForgotPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateForgotPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateForgotPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateForgotPassword(ctx, req.(*ForgotPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateResetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateResetPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateResetPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateResetPassword(ctx, req.(*ResetPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateChangePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateChangePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateChangePassword(ctx, req.(*ChangePasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandidateProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateProfile(ctx, req.(*CandidateProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateProfileUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandidateProfileUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateProfileUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateProfileUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateProfileUpdate(ctx, req.(*CandidateProfileUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateSkillsUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SkillsUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateSkillsUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateSkillsUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateSkillsUpdate(ctx, req.(*SkillsUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateEducationUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EducationUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateEducationUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateEducationUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateEducationUpdate(ctx, req.(*EducationUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateUploadResume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadResumeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateUploadResume(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateUploadResume_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateUploadResume(ctx, req.(*UploadResumeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateGoogleLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateGoogleLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateGoogleLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateGoogleLogin(ctx, req.(*GoogleLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CandidateGoogleCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CandidateGoogleCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CandidateGoogleCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CandidateGoogleCallback(ctx, req.(*GoogleCallbackRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -172,26 +812,342 @@ func _AuthService_GetCandidateSkills_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_EmployerSignup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerSignupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerSignup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerSignup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerSignup(ctx, req.(*EmployerSignupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerLogin(ctx, req.(*EmployerLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerVerifyEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerVerifyEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerVerifyEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerVerifyEmail(ctx, req.(*VerifyEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerResendOtp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendOtpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerResendOtp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerResendOtp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerResendOtp(ctx, req.(*ResendOtpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerForgotPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForgotPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerForgotPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerForgotPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerForgotPassword(ctx, req.(*ForgotPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerResetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerResetPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerResetPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerResetPassword(ctx, req.(*ResetPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerChangePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerChangePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerChangePassword(ctx, req.(*ChangePasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerProfile(ctx, req.(*EmployerProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerProfileById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerProfileByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerProfileById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerProfileById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerProfileById(ctx, req.(*EmployerProfileByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerProfileUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployerProfileUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerProfileUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerProfileUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerProfileUpdate(ctx, req.(*EmployerProfileUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerGoogleLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerGoogleLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerGoogleLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerGoogleLogin(ctx, req.(*GoogleLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_EmployerGoogleCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).EmployerGoogleCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_EmployerGoogleCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).EmployerGoogleCallback(ctx, req.(*GoogleCallbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auth.AuthService",
+	ServiceName: "authpb.AuthService",
 	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Signup",
-			Handler:    _AuthService_Signup_Handler,
+			MethodName: "VerifyToken",
+			Handler:    _AuthService_VerifyToken_Handler,
 		},
 		{
-			MethodName: "Login",
-			Handler:    _AuthService_Login_Handler,
+			MethodName: "CandidateSignup",
+			Handler:    _AuthService_CandidateSignup_Handler,
+		},
+		{
+			MethodName: "CandidateLogin",
+			Handler:    _AuthService_CandidateLogin_Handler,
+		},
+		{
+			MethodName: "CandidateVerifyEmail",
+			Handler:    _AuthService_CandidateVerifyEmail_Handler,
+		},
+		{
+			MethodName: "CandidateResendOtp",
+			Handler:    _AuthService_CandidateResendOtp_Handler,
+		},
+		{
+			MethodName: "CandidateForgotPassword",
+			Handler:    _AuthService_CandidateForgotPassword_Handler,
+		},
+		{
+			MethodName: "CandidateResetPassword",
+			Handler:    _AuthService_CandidateResetPassword_Handler,
+		},
+		{
+			MethodName: "CandidateChangePassword",
+			Handler:    _AuthService_CandidateChangePassword_Handler,
+		},
+		{
+			MethodName: "CandidateProfile",
+			Handler:    _AuthService_CandidateProfile_Handler,
+		},
+		{
+			MethodName: "CandidateProfileUpdate",
+			Handler:    _AuthService_CandidateProfileUpdate_Handler,
+		},
+		{
+			MethodName: "CandidateSkillsUpdate",
+			Handler:    _AuthService_CandidateSkillsUpdate_Handler,
+		},
+		{
+			MethodName: "CandidateEducationUpdate",
+			Handler:    _AuthService_CandidateEducationUpdate_Handler,
+		},
+		{
+			MethodName: "CandidateUploadResume",
+			Handler:    _AuthService_CandidateUploadResume_Handler,
+		},
+		{
+			MethodName: "CandidateGoogleLogin",
+			Handler:    _AuthService_CandidateGoogleLogin_Handler,
+		},
+		{
+			MethodName: "CandidateGoogleCallback",
+			Handler:    _AuthService_CandidateGoogleCallback_Handler,
 		},
 		{
 			MethodName: "GetCandidateSkills",
 			Handler:    _AuthService_GetCandidateSkills_Handler,
 		},
+		{
+			MethodName: "EmployerSignup",
+			Handler:    _AuthService_EmployerSignup_Handler,
+		},
+		{
+			MethodName: "EmployerLogin",
+			Handler:    _AuthService_EmployerLogin_Handler,
+		},
+		{
+			MethodName: "EmployerVerifyEmail",
+			Handler:    _AuthService_EmployerVerifyEmail_Handler,
+		},
+		{
+			MethodName: "EmployerResendOtp",
+			Handler:    _AuthService_EmployerResendOtp_Handler,
+		},
+		{
+			MethodName: "EmployerForgotPassword",
+			Handler:    _AuthService_EmployerForgotPassword_Handler,
+		},
+		{
+			MethodName: "EmployerResetPassword",
+			Handler:    _AuthService_EmployerResetPassword_Handler,
+		},
+		{
+			MethodName: "EmployerChangePassword",
+			Handler:    _AuthService_EmployerChangePassword_Handler,
+		},
+		{
+			MethodName: "EmployerProfile",
+			Handler:    _AuthService_EmployerProfile_Handler,
+		},
+		{
+			MethodName: "EmployerProfileById",
+			Handler:    _AuthService_EmployerProfileById_Handler,
+		},
+		{
+			MethodName: "EmployerProfileUpdate",
+			Handler:    _AuthService_EmployerProfileUpdate_Handler,
+		},
+		{
+			MethodName: "EmployerGoogleLogin",
+			Handler:    _AuthService_EmployerGoogleLogin_Handler,
+		},
+		{
+			MethodName: "EmployerGoogleCallback",
+			Handler:    _AuthService_EmployerGoogleCallback_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/auth.proto",
+	Metadata: "Auth/auth.proto",
 }
