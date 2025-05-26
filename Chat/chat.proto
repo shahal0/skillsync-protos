@@ -26,17 +26,19 @@ service ChatService {
 
 // Message represents a single chat message
 message Message {
-    string id = 1;              // Unique message ID
+    string id = 1;              // Unique message ID (MongoDB ObjectID as hex string)
     string sender_id = 2;        // ID of the user who sent the message
-    string recipient_id = 3;     // ID of the recipient (user or group)
+    string receiver_id = 3;       // ID of the message receiver (was recipient_id)
     string content = 4;          // Message content
-    string status = 5;           // Message status (sent, delivered, read)
-    google.protobuf.Timestamp timestamp = 6;  // Timestamp of when the message was sent
-    string message_type = 7;     // Type of message (text, image, file, etc.)
-    map<string, string> metadata = 8; // Additional metadata (file URLs, etc.)
-    google.protobuf.Timestamp updated_at = 9;  // Timestamp of when the message was last updated
-    string job_id = 10;          // ID of the job associated with this message (for job applications)
-    bool is_broadcast = 11;      // Whether this message was broadcast to multiple recipients
+    string status = 5;            // Message status (sent, delivered, read)
+    google.protobuf.Timestamp created_at = 6;  // When the message was created
+    string message_type = 7;      // Type of message (text, image, file, etc.)
+    google.protobuf.Timestamp updated_at = 8;  // When the message was last updated
+    string job_id = 9;            // ID of the job associated with this message (for job applications)
+    bool is_broadcast = 10;       // Whether this message was broadcast to multiple recipients
+    
+    // Additional metadata for the message (file URLs, etc.)
+    map<string, string> metadata = 11; 
 }
 
 // Request to send a message
