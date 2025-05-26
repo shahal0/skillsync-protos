@@ -4,6 +4,8 @@ package chatpb;
 
 option go_package = "./gen/chatpb;chatpb";
 
+import "google/protobuf/timestamp.proto";
+
 // ChatService handles all chat-related operations
 service ChatService {
     // Send a direct message from one user to another
@@ -29,9 +31,12 @@ message Message {
     string recipient_id = 3;     // ID of the recipient (user or group)
     string content = 4;          // Message content
     string status = 5;           // Message status (sent, delivered, read)
-    int64 timestamp = 6;         // Unix timestamp of when the message was sent
+    google.protobuf.Timestamp timestamp = 6;  // Timestamp of when the message was sent
     string message_type = 7;     // Type of message (text, image, file, etc.)
     map<string, string> metadata = 8; // Additional metadata (file URLs, etc.)
+    google.protobuf.Timestamp updated_at = 9;  // Timestamp of when the message was last updated
+    string job_id = 10;          // ID of the job associated with this message (for job applications)
+    bool is_broadcast = 11;      // Whether this message was broadcast to multiple recipients
 }
 
 // Request to send a message
@@ -47,7 +52,7 @@ message SendMessageRequest {
 message SendMessageResponse {
     string message_id = 1;       // ID of the sent message
     string status = 2;           // Status of the operation
-    int64 timestamp = 3;         // Timestamp when the message was stored
+    google.protobuf.Timestamp timestamp = 3;  // Timestamp when the message was stored
 }
 
 // Request to get messages between users
@@ -56,7 +61,8 @@ message GetMessagesRequest {
     string other_user_id = 2;    // ID of the other user in the conversation
     int32 page = 3;              // Page number for pagination (1-based)
     int32 limit = 4;             // Number of messages per page
-    int64 before_timestamp = 5;   // Optional: get messages before this timestamp
+    google.protobuf.Timestamp before_timestamp = 5;  // Optional: get messages before this timestamp
+    string job_id = 6;           // Optional: filter messages by job ID
 }
 
 // Response containing messages
@@ -103,8 +109,8 @@ message Conversation {
     string id = 1;                  // Unique conversation ID
     repeated string participant_ids = 2; // List of participant user IDs
     Message last_message = 3;       // The most recent message in the conversation
-    int64 unread_count = 4;         // Number of unread messages
-    int64 updated_at = 5;           // Timestamp of last update
+    int32 unread_count = 4;         // Number of unread messages
+    google.protobuf.Timestamp updated_at = 5;  // Timestamp of last update
     map<string, string> metadata = 6; // Additional conversation metadata
 }
 
