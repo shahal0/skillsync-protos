@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,26 +20,30 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChatService_SendMessage_FullMethodName          = "/chatpb.ChatService/SendMessage"
-	ChatService_GetConversation_FullMethodName      = "/chatpb.ChatService/GetConversation"
-	ChatService_GetUserChats_FullMethodName         = "/chatpb.ChatService/GetUserChats"
-	ChatService_SendNotification_FullMethodName     = "/chatpb.ChatService/SendNotification"
-	ChatService_GetUserNotifications_FullMethodName = "/chatpb.ChatService/GetUserNotifications"
-	ChatService_MarkNotificationRead_FullMethodName = "/chatpb.ChatService/MarkNotificationRead"
+	ChatService_SendMessage_FullMethodName         = "/chat.ChatService/SendMessage"
+	ChatService_GetMessages_FullMethodName         = "/chat.ChatService/GetMessages"
+	ChatService_BroadcastMessage_FullMethodName    = "/chat.ChatService/BroadcastMessage"
+	ChatService_UpdateMessageStatus_FullMethodName = "/chat.ChatService/UpdateMessageStatus"
+	ChatService_GetConversations_FullMethodName    = "/chat.ChatService/GetConversations"
+	ChatService_StreamMessages_FullMethodName      = "/chat.ChatService/StreamMessages"
 )
 
 // ChatServiceClient is the client API for ChatService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServiceClient interface {
-	// Chat operations
+	// Send a message to a specific user
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
-	GetConversation(ctx context.Context, in *GetConversationRequest, opts ...grpc.CallOption) (*GetConversationResponse, error)
-	GetUserChats(ctx context.Context, in *GetUserChatsRequest, opts ...grpc.CallOption) (*GetUserChatsResponse, error)
-	// Notification operations
-	SendNotification(ctx context.Context, in *SendNotificationRequest, opts ...grpc.CallOption) (*SendNotificationResponse, error)
-	GetUserNotifications(ctx context.Context, in *GetUserNotificationsRequest, opts ...grpc.CallOption) (*GetUserNotificationsResponse, error)
-	MarkNotificationRead(ctx context.Context, in *MarkNotificationReadRequest, opts ...grpc.CallOption) (*MarkNotificationReadResponse, error)
+	// Get messages between two users, optionally filtered by job
+	GetMessages(ctx context.Context, in *GetMessagesRequest, opts ...grpc.CallOption) (*GetMessagesResponse, error)
+	// Broadcast a message to all shortlisted candidates for a job
+	BroadcastMessage(ctx context.Context, in *BroadcastMessageRequest, opts ...grpc.CallOption) (*BroadcastMessageResponse, error)
+	// Update message status (sent, delivered, read)
+	UpdateMessageStatus(ctx context.Context, in *UpdateMessageStatusRequest, opts ...grpc.CallOption) (*UpdateMessageStatusResponse, error)
+	// Get all conversations for a user
+	GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error)
+	// Stream messages in real-time
+	StreamMessages(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Message], error)
 }
 
 type chatServiceClient struct {
@@ -59,68 +64,81 @@ func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequ
 	return out, nil
 }
 
-func (c *chatServiceClient) GetConversation(ctx context.Context, in *GetConversationRequest, opts ...grpc.CallOption) (*GetConversationResponse, error) {
+func (c *chatServiceClient) GetMessages(ctx context.Context, in *GetMessagesRequest, opts ...grpc.CallOption) (*GetMessagesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetConversationResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetConversation_FullMethodName, in, out, cOpts...)
+	out := new(GetMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetMessages_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chatServiceClient) GetUserChats(ctx context.Context, in *GetUserChatsRequest, opts ...grpc.CallOption) (*GetUserChatsResponse, error) {
+func (c *chatServiceClient) BroadcastMessage(ctx context.Context, in *BroadcastMessageRequest, opts ...grpc.CallOption) (*BroadcastMessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserChatsResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUserChats_FullMethodName, in, out, cOpts...)
+	out := new(BroadcastMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_BroadcastMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chatServiceClient) SendNotification(ctx context.Context, in *SendNotificationRequest, opts ...grpc.CallOption) (*SendNotificationResponse, error) {
+func (c *chatServiceClient) UpdateMessageStatus(ctx context.Context, in *UpdateMessageStatusRequest, opts ...grpc.CallOption) (*UpdateMessageStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SendNotificationResponse)
-	err := c.cc.Invoke(ctx, ChatService_SendNotification_FullMethodName, in, out, cOpts...)
+	out := new(UpdateMessageStatusResponse)
+	err := c.cc.Invoke(ctx, ChatService_UpdateMessageStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chatServiceClient) GetUserNotifications(ctx context.Context, in *GetUserNotificationsRequest, opts ...grpc.CallOption) (*GetUserNotificationsResponse, error) {
+func (c *chatServiceClient) GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserNotificationsResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUserNotifications_FullMethodName, in, out, cOpts...)
+	out := new(GetConversationsResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetConversations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chatServiceClient) MarkNotificationRead(ctx context.Context, in *MarkNotificationReadRequest, opts ...grpc.CallOption) (*MarkNotificationReadResponse, error) {
+func (c *chatServiceClient) StreamMessages(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Message], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MarkNotificationReadResponse)
-	err := c.cc.Invoke(ctx, ChatService_MarkNotificationRead_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[0], ChatService_StreamMessages_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &grpc.GenericClientStream[emptypb.Empty, Message]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ChatService_StreamMessagesClient = grpc.ServerStreamingClient[Message]
 
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
 type ChatServiceServer interface {
-	// Chat operations
+	// Send a message to a specific user
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
-	GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error)
-	GetUserChats(context.Context, *GetUserChatsRequest) (*GetUserChatsResponse, error)
-	// Notification operations
-	SendNotification(context.Context, *SendNotificationRequest) (*SendNotificationResponse, error)
-	GetUserNotifications(context.Context, *GetUserNotificationsRequest) (*GetUserNotificationsResponse, error)
-	MarkNotificationRead(context.Context, *MarkNotificationReadRequest) (*MarkNotificationReadResponse, error)
+	// Get messages between two users, optionally filtered by job
+	GetMessages(context.Context, *GetMessagesRequest) (*GetMessagesResponse, error)
+	// Broadcast a message to all shortlisted candidates for a job
+	BroadcastMessage(context.Context, *BroadcastMessageRequest) (*BroadcastMessageResponse, error)
+	// Update message status (sent, delivered, read)
+	UpdateMessageStatus(context.Context, *UpdateMessageStatusRequest) (*UpdateMessageStatusResponse, error)
+	// Get all conversations for a user
+	GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error)
+	// Stream messages in real-time
+	StreamMessages(*emptypb.Empty, grpc.ServerStreamingServer[Message]) error
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -134,20 +152,20 @@ type UnimplementedChatServiceServer struct{}
 func (UnimplementedChatServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
-func (UnimplementedChatServiceServer) GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConversation not implemented")
+func (UnimplementedChatServiceServer) GetMessages(context.Context, *GetMessagesRequest) (*GetMessagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMessages not implemented")
 }
-func (UnimplementedChatServiceServer) GetUserChats(context.Context, *GetUserChatsRequest) (*GetUserChatsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserChats not implemented")
+func (UnimplementedChatServiceServer) BroadcastMessage(context.Context, *BroadcastMessageRequest) (*BroadcastMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BroadcastMessage not implemented")
 }
-func (UnimplementedChatServiceServer) SendNotification(context.Context, *SendNotificationRequest) (*SendNotificationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendNotification not implemented")
+func (UnimplementedChatServiceServer) UpdateMessageStatus(context.Context, *UpdateMessageStatusRequest) (*UpdateMessageStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMessageStatus not implemented")
 }
-func (UnimplementedChatServiceServer) GetUserNotifications(context.Context, *GetUserNotificationsRequest) (*GetUserNotificationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserNotifications not implemented")
+func (UnimplementedChatServiceServer) GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConversations not implemented")
 }
-func (UnimplementedChatServiceServer) MarkNotificationRead(context.Context, *MarkNotificationReadRequest) (*MarkNotificationReadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MarkNotificationRead not implemented")
+func (UnimplementedChatServiceServer) StreamMessages(*emptypb.Empty, grpc.ServerStreamingServer[Message]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamMessages not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -188,101 +206,94 @@ func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetConversation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConversationRequest)
+func _ChatService_GetMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMessagesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetConversation(ctx, in)
+		return srv.(ChatServiceServer).GetMessages(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetConversation_FullMethodName,
+		FullMethod: ChatService_GetMessages_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetConversation(ctx, req.(*GetConversationRequest))
+		return srv.(ChatServiceServer).GetMessages(ctx, req.(*GetMessagesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetUserChats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserChatsRequest)
+func _ChatService_BroadcastMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BroadcastMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetUserChats(ctx, in)
+		return srv.(ChatServiceServer).BroadcastMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetUserChats_FullMethodName,
+		FullMethod: ChatService_BroadcastMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetUserChats(ctx, req.(*GetUserChatsRequest))
+		return srv.(ChatServiceServer).BroadcastMessage(ctx, req.(*BroadcastMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_SendNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendNotificationRequest)
+func _ChatService_UpdateMessageStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMessageStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).SendNotification(ctx, in)
+		return srv.(ChatServiceServer).UpdateMessageStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_SendNotification_FullMethodName,
+		FullMethod: ChatService_UpdateMessageStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).SendNotification(ctx, req.(*SendNotificationRequest))
+		return srv.(ChatServiceServer).UpdateMessageStatus(ctx, req.(*UpdateMessageStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetUserNotifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserNotificationsRequest)
+func _ChatService_GetConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConversationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetUserNotifications(ctx, in)
+		return srv.(ChatServiceServer).GetConversations(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetUserNotifications_FullMethodName,
+		FullMethod: ChatService_GetConversations_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetUserNotifications(ctx, req.(*GetUserNotificationsRequest))
+		return srv.(ChatServiceServer).GetConversations(ctx, req.(*GetConversationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_MarkNotificationRead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarkNotificationReadRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _ChatService_StreamMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(emptypb.Empty)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).MarkNotificationRead(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_MarkNotificationRead_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).MarkNotificationRead(ctx, req.(*MarkNotificationReadRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(ChatServiceServer).StreamMessages(m, &grpc.GenericServerStream[emptypb.Empty, Message]{ServerStream: stream})
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ChatService_StreamMessagesServer = grpc.ServerStreamingServer[Message]
 
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chatpb.ChatService",
+	ServiceName: "chat.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -290,26 +301,28 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_SendMessage_Handler,
 		},
 		{
-			MethodName: "GetConversation",
-			Handler:    _ChatService_GetConversation_Handler,
+			MethodName: "GetMessages",
+			Handler:    _ChatService_GetMessages_Handler,
 		},
 		{
-			MethodName: "GetUserChats",
-			Handler:    _ChatService_GetUserChats_Handler,
+			MethodName: "BroadcastMessage",
+			Handler:    _ChatService_BroadcastMessage_Handler,
 		},
 		{
-			MethodName: "SendNotification",
-			Handler:    _ChatService_SendNotification_Handler,
+			MethodName: "UpdateMessageStatus",
+			Handler:    _ChatService_UpdateMessageStatus_Handler,
 		},
 		{
-			MethodName: "GetUserNotifications",
-			Handler:    _ChatService_GetUserNotifications_Handler,
-		},
-		{
-			MethodName: "MarkNotificationRead",
-			Handler:    _ChatService_MarkNotificationRead_Handler,
+			MethodName: "GetConversations",
+			Handler:    _ChatService_GetConversations_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "StreamMessages",
+			Handler:       _ChatService_StreamMessages_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "chat-notification/chat.proto",
 }
