@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package = "github.com/skillsync/skillsync-protos/gen/notificationpb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+enum NotificationType {
+    MESSAGE = 0;
+    SHORTLISTED = 1;
+    APPLICATION_UPDATE = 2;
+    SYSTEM = 3;
+}
+
+message Notification {
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    string message = 4;
+    bool read = 5;
+    google.protobuf.Timestamp created_at = 6;
+    NotificationType type = 7;
+    map<string, string> metadata = 8; // Additional data like job_id, sender_id, etc.
+}
+
+message CreateNotificationRequest {
+    string user_id = 1;
+    string title = 2;
+    string message = 3;
+    NotificationType type = 4;
+    map<string, string> metadata = 5;
+}
+
+message CreateNotificationResponse {
+    string notification_id = 1;
+    bool success = 2;
+}
+
+message GetNotificationsRequest {
+    string user_id = 1;
+    bool unread_only = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+}
+
+message GetNotificationsResponse {
+    repeated Notification notifications = 1;
+    int32 total = 2;
+}
+
+message MarkAsReadRequest {
+    string notification_id = 1;
+}
+
+message MarkAsReadResponse {
+    bool success = 1;
+}
+
+message MarkAllAsReadRequest {
+    string user_id = 1;
+}
+
+message MarkAllAsReadResponse {
+    int32 updated_count = 1;
+    bool success = 2;
+}
+
+service NotificationService {
+    // Create a new notification
+    rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse);
+    
+    // Get notifications for a user
+    rpc GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse);
+    
+    // Mark a notification as read
+    rpc MarkAsRead(MarkAsReadRequest) returns (MarkAsReadResponse);
+    
+    // Mark all notifications as read for a user
+    rpc MarkAllAsRead(MarkAllAsReadRequest) returns (MarkAllAsReadResponse);
+    
+    // Stream notifications in real-time
+    rpc StreamNotifications(google.protobuf.Empty) returns (stream Notification);
+}
