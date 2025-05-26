@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package chatpb;
+
+option go_package = "./gen/chatpb;chatpb";
+
+// ChatService handles all chat-related operations
+service ChatService {
+    // Send a direct message from one user to another
+    rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+    
+    // Get messages between two users
+    rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+    
+    // Broadcast a message to multiple recipients (e.g., job shortlist)
+    rpc BroadcastMessage(BroadcastMessageRequest) returns (BroadcastMessageResponse);
+    
+    // Update the status of a message (e.g., delivered, read)
+    rpc UpdateMessageStatus(UpdateMessageStatusRequest) returns (UpdateMessageStatusResponse);
+    
+    // Get all conversations for a user
+    rpc GetConversations(GetConversationsRequest) returns (GetConversationsResponse);
+}
+
+// Message represents a single chat message
+message Message {
+    string id = 1;              // Unique message ID
+    string sender_id = 2;        // ID of the user who sent the message
+    string recipient_id = 3;     // ID of the recipient (user or group)
+    string content = 4;          // Message content
+    string status = 5;           // Message status (sent, delivered, read)
+    int64 timestamp = 6;         // Unix timestamp of when the message was sent
+    string message_type = 7;     // Type of message (text, image, file, etc.)
+    map<string, string> metadata = 8; // Additional metadata (file URLs, etc.)
+}
+
+// Request to send a message
+message SendMessageRequest {
+    string sender_id = 1;        // ID of the message sender
+    string recipient_id = 2;      // ID of the recipient (user or group)
+    string content = 3;          // Message content
+    string message_type = 4;      // Type of message (text, image, file, etc.)
+    map<string, string> metadata = 5; // Additional metadata
+}
+
+// Response after sending a message
+message SendMessageResponse {
+    string message_id = 1;       // ID of the sent message
+    string status = 2;           // Status of the operation
+    int64 timestamp = 3;         // Timestamp when the message was stored
+}
+
+// Request to get messages between users
+message GetMessagesRequest {
+    string user_id = 1;          // ID of the current user
+    string other_user_id = 2;    // ID of the other user in the conversation
+    int32 page = 3;              // Page number for pagination (1-based)
+    int32 limit = 4;             // Number of messages per page
+    int64 before_timestamp = 5;   // Optional: get messages before this timestamp
+}
+
+// Response containing messages
+message GetMessagesResponse {
+    repeated Message messages = 1; // List of messages
+    int32 total = 2;              // Total number of messages
+    int32 page = 3;               // Current page number
+    int32 limit = 4;              // Number of messages per page
+}
+
+// Request to broadcast a message to multiple recipients
+message BroadcastMessageRequest {
+    string sender_id = 1;        // ID of the sender (usually an employer)
+    repeated string recipient_ids = 2; // List of recipient IDs
+    string content = 3;          // Message content
+    string message_type = 4;      // Type of message
+    map<string, string> metadata = 5; // Additional metadata
+}
+
+// Response after broadcasting a message
+message BroadcastMessageResponse {
+    int32 success_count = 1;     // Number of successful deliveries
+    int32 failure_count = 2;      // Number of failed deliveries
+    repeated string failed_recipients = 3; // List of recipient IDs that failed
+    string status = 4;            // Overall status
+}
+
+// Request to update message status
+message UpdateMessageStatusRequest {
+    string message_id = 1;       // ID of the message to update
+    string status = 2;            // New status (e.g., "delivered", "read")
+    string user_id = 3;          // ID of the user updating the status
+}
+
+// Response after updating message status
+message UpdateMessageStatusResponse {
+    bool success = 1;            // Whether the update was successful
+    string message = 2;           // Status message
+    string message_id = 3;        // ID of the updated message
+}
+
+// Conversation represents a chat conversation between users
+message Conversation {
+    string id = 1;                  // Unique conversation ID
+    repeated string participant_ids = 2; // List of participant user IDs
+    Message last_message = 3;       // The most recent message in the conversation
+    int64 unread_count = 4;         // Number of unread messages
+    int64 updated_at = 5;           // Timestamp of last update
+    map<string, string> metadata = 6; // Additional conversation metadata
+}
+
+// Request to get user's conversations
+message GetConversationsRequest {
+    string user_id = 1;          // ID of the user
+    int32 page = 2;               // Page number for pagination
+    int32 limit = 3;              // Number of conversations per page
+}
+
+// Response containing user's conversations
+message GetConversationsResponse {
+    repeated Conversation conversations = 1; // List of conversations
+    int32 total = 2;              // Total number of conversations
+    int32 page = 3;               // Current page number
+    int32 limit = 4;              // Number of conversations per page
+}

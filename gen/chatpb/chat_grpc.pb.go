@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: chat-notification/chat.proto
+// source: Chat/chat.proto
 
 package chatpb
 
@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,30 +19,29 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChatService_SendMessage_FullMethodName         = "/chat.ChatService/SendMessage"
-	ChatService_GetMessages_FullMethodName         = "/chat.ChatService/GetMessages"
-	ChatService_BroadcastMessage_FullMethodName    = "/chat.ChatService/BroadcastMessage"
-	ChatService_UpdateMessageStatus_FullMethodName = "/chat.ChatService/UpdateMessageStatus"
-	ChatService_GetConversations_FullMethodName    = "/chat.ChatService/GetConversations"
-	ChatService_StreamMessages_FullMethodName      = "/chat.ChatService/StreamMessages"
+	ChatService_SendMessage_FullMethodName         = "/chatpb.ChatService/SendMessage"
+	ChatService_GetMessages_FullMethodName         = "/chatpb.ChatService/GetMessages"
+	ChatService_BroadcastMessage_FullMethodName    = "/chatpb.ChatService/BroadcastMessage"
+	ChatService_UpdateMessageStatus_FullMethodName = "/chatpb.ChatService/UpdateMessageStatus"
+	ChatService_GetConversations_FullMethodName    = "/chatpb.ChatService/GetConversations"
 )
 
 // ChatServiceClient is the client API for ChatService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// ChatService handles all chat-related operations
 type ChatServiceClient interface {
-	// Send a message to a specific user
+	// Send a direct message from one user to another
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
-	// Get messages between two users, optionally filtered by job
+	// Get messages between two users
 	GetMessages(ctx context.Context, in *GetMessagesRequest, opts ...grpc.CallOption) (*GetMessagesResponse, error)
-	// Broadcast a message to all shortlisted candidates for a job
+	// Broadcast a message to multiple recipients (e.g., job shortlist)
 	BroadcastMessage(ctx context.Context, in *BroadcastMessageRequest, opts ...grpc.CallOption) (*BroadcastMessageResponse, error)
-	// Update message status (sent, delivered, read)
+	// Update the status of a message (e.g., delivered, read)
 	UpdateMessageStatus(ctx context.Context, in *UpdateMessageStatusRequest, opts ...grpc.CallOption) (*UpdateMessageStatusResponse, error)
 	// Get all conversations for a user
 	GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error)
-	// Stream messages in real-time
-	StreamMessages(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Message], error)
 }
 
 type chatServiceClient struct {
@@ -104,41 +102,22 @@ func (c *chatServiceClient) GetConversations(ctx context.Context, in *GetConvers
 	return out, nil
 }
 
-func (c *chatServiceClient) StreamMessages(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Message], error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[0], ChatService_StreamMessages_FullMethodName, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &grpc.GenericClientStream[emptypb.Empty, Message]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ChatService_StreamMessagesClient = grpc.ServerStreamingClient[Message]
-
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
+//
+// ChatService handles all chat-related operations
 type ChatServiceServer interface {
-	// Send a message to a specific user
+	// Send a direct message from one user to another
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
-	// Get messages between two users, optionally filtered by job
+	// Get messages between two users
 	GetMessages(context.Context, *GetMessagesRequest) (*GetMessagesResponse, error)
-	// Broadcast a message to all shortlisted candidates for a job
+	// Broadcast a message to multiple recipients (e.g., job shortlist)
 	BroadcastMessage(context.Context, *BroadcastMessageRequest) (*BroadcastMessageResponse, error)
-	// Update message status (sent, delivered, read)
+	// Update the status of a message (e.g., delivered, read)
 	UpdateMessageStatus(context.Context, *UpdateMessageStatusRequest) (*UpdateMessageStatusResponse, error)
 	// Get all conversations for a user
 	GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error)
-	// Stream messages in real-time
-	StreamMessages(*emptypb.Empty, grpc.ServerStreamingServer[Message]) error
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -163,9 +142,6 @@ func (UnimplementedChatServiceServer) UpdateMessageStatus(context.Context, *Upda
 }
 func (UnimplementedChatServiceServer) GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConversations not implemented")
-}
-func (UnimplementedChatServiceServer) StreamMessages(*emptypb.Empty, grpc.ServerStreamingServer[Message]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamMessages not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -278,22 +254,11 @@ func _ChatService_GetConversations_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_StreamMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ChatServiceServer).StreamMessages(m, &grpc.GenericServerStream[emptypb.Empty, Message]{ServerStream: stream})
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ChatService_StreamMessagesServer = grpc.ServerStreamingServer[Message]
-
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chat.ChatService",
+	ServiceName: "chatpb.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -317,12 +282,6 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_GetConversations_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "StreamMessages",
-			Handler:       _ChatService_StreamMessages_Handler,
-			ServerStreams: true,
-		},
-	},
-	Metadata: "chat-notification/chat.proto",
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "Chat/chat.proto",
 }
