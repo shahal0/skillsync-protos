@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/shahal0/skillsync/skillsync-protos/chat";
+
+import "google/protobuf/timestamp.proto";
+
+// MessageType represents the type of message
+enum MessageType {
+  TEXT = 0;
+  INTERVIEW_INVITE = 1;
+  DOCUMENT_REQUEST = 2;
+  BROADCAST = 3;
+}
+
+// MessageStatus represents the status of a message
+enum MessageStatus {
+  SENT = 0;
+  DELIVERED = 1;
+  READ = 2;
+}
+
+// Message represents a chat message
+message Message {
+  string id = 1;
+  string conversation_id = 2;
+  string sender_id = 3;
+  string content = 4;
+  MessageType message_type = 5;
+  MessageStatus status = 6;
+  google.protobuf.Timestamp sent_at = 7;
+  google.protobuf.Timestamp read_at = 8;
+  map<string, string> metadata = 9;
+}
+
+// Conversation represents a chat conversation
+message Conversation {
+  string id = 1;
+  string job_id = 2;
+  string employer_id = 3;
+  string candidate_id = 4;
+  string job_title = 5;
+  string status = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  Message last_message = 9;
+  int32 unread_count = 10;
+}
+
+// StartConversationRequest is the request to start a new conversation
+message StartConversationRequest {
+  string job_id = 1;
+  string employer_id = 2;
+  string candidate_id = 3;
+  string job_title = 4;
+}
+
+// StartConversationResponse is the response for starting a new conversation
+message StartConversationResponse {
+  Conversation conversation = 1;
+}
+
+// SendMessageRequest is the request to send a message
+message SendMessageRequest {
+  string conversation_id = 1;
+  string sender_id = 2;
+  string content = 3;
+  MessageType message_type = 4;
+  map<string, string> metadata = 5;
+}
+
+// SendMessageResponse is the response for sending a message
+message SendMessageResponse {
+  Message message = 1;
+}
+
+// GetConversationRequest is the request to get a conversation
+message GetConversationRequest {
+  string conversation_id = 1;
+  string user_id = 2;
+}
+
+// GetConversationResponse is the response for getting a conversation
+message GetConversationResponse {
+  Conversation conversation = 1;
+}
+
+// ListConversationsRequest is the request to list conversations
+message ListConversationsRequest {
+  string user_id = 1;
+  int32 page = 2;
+  int32 limit = 3;
+}
+
+// ListConversationsResponse is the response for listing conversations
+message ListConversationsResponse {
+  repeated Conversation conversations = 1;
+  int32 total = 2;
+}
+
+// ListMessagesRequest is the request to list messages
+message ListMessagesRequest {
+  string conversation_id = 1;
+  string user_id = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+// ListMessagesResponse is the response for listing messages
+message ListMessagesResponse {
+  repeated Message messages = 1;
+  int32 total = 2;
+}
+
+// MarkMessagesAsReadRequest is the request to mark messages as read
+message MarkMessagesAsReadRequest {
+  repeated string message_ids = 1;
+  string user_id = 2;
+}
+
+// MarkMessagesAsReadResponse is the response for marking messages as read
+message MarkMessagesAsReadResponse {
+  int64 count = 1;
+}
+
+// GetUnreadCountRequest is the request to get the unread message count
+message GetUnreadCountRequest {
+  string user_id = 1;
+}
+
+// GetUnreadCountResponse is the response for getting the unread message count
+message GetUnreadCountResponse {
+  int64 count = 1;
+}
+
+// ChatService is the service for chat operations
+service ChatService {
+  // Start a new conversation
+  rpc StartConversation(StartConversationRequest) returns (StartConversationResponse);
+  
+  // Send a message in a conversation
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  
+  // Get a conversation by ID
+  rpc GetConversation(GetConversationRequest) returns (GetConversationResponse);
+  
+  // List conversations for a user
+  rpc ListConversations(ListConversationsRequest) returns (ListConversationsResponse);
+  
+  // List messages in a conversation
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse);
+  
+  // Mark messages as read
+  rpc MarkMessagesAsRead(MarkMessagesAsReadRequest) returns (MarkMessagesAsReadResponse);
+  
+  // Get unread message count for a user
+  rpc GetUnreadCount(GetUnreadCountRequest) returns (GetUnreadCountResponse);
+}

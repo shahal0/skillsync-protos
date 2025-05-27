@@ -2,16 +2,15 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: skillsync-protos/chat-notification/notification.proto
+// source: chat/notification.proto
 
-package notificationpb
+package notification
 
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,27 +19,32 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NotificationService_CreateNotification_FullMethodName  = "/notification.NotificationService/CreateNotification"
-	NotificationService_GetNotifications_FullMethodName    = "/notification.NotificationService/GetNotifications"
-	NotificationService_MarkAsRead_FullMethodName          = "/notification.NotificationService/MarkAsRead"
-	NotificationService_MarkAllAsRead_FullMethodName       = "/notification.NotificationService/MarkAllAsRead"
-	NotificationService_StreamNotifications_FullMethodName = "/notification.NotificationService/StreamNotifications"
+	NotificationService_CreateNotification_FullMethodName = "/notification.NotificationService/CreateNotification"
+	NotificationService_GetNotification_FullMethodName    = "/notification.NotificationService/GetNotification"
+	NotificationService_ListNotifications_FullMethodName  = "/notification.NotificationService/ListNotifications"
+	NotificationService_MarkAsRead_FullMethodName         = "/notification.NotificationService/MarkAsRead"
+	NotificationService_MarkAllAsRead_FullMethodName      = "/notification.NotificationService/MarkAllAsRead"
+	NotificationService_GetUnreadCount_FullMethodName     = "/notification.NotificationService/GetUnreadCount"
 )
 
 // NotificationServiceClient is the client API for NotificationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// NotificationService is the service for notification operations
 type NotificationServiceClient interface {
 	// Create a new notification
 	CreateNotification(ctx context.Context, in *CreateNotificationRequest, opts ...grpc.CallOption) (*CreateNotificationResponse, error)
-	// Get notifications for a user
-	GetNotifications(ctx context.Context, in *GetNotificationsRequest, opts ...grpc.CallOption) (*GetNotificationsResponse, error)
+	// Get a notification by ID
+	GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*GetNotificationResponse, error)
+	// List notifications for a user
+	ListNotifications(ctx context.Context, in *ListNotificationsRequest, opts ...grpc.CallOption) (*ListNotificationsResponse, error)
 	// Mark a notification as read
 	MarkAsRead(ctx context.Context, in *MarkAsReadRequest, opts ...grpc.CallOption) (*MarkAsReadResponse, error)
 	// Mark all notifications as read for a user
 	MarkAllAsRead(ctx context.Context, in *MarkAllAsReadRequest, opts ...grpc.CallOption) (*MarkAllAsReadResponse, error)
-	// Stream notifications in real-time
-	StreamNotifications(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Notification], error)
+	// Get unread notification count for a user
+	GetUnreadCount(ctx context.Context, in *GetUnreadCountRequest, opts ...grpc.CallOption) (*GetUnreadCountResponse, error)
 }
 
 type notificationServiceClient struct {
@@ -61,10 +65,20 @@ func (c *notificationServiceClient) CreateNotification(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *notificationServiceClient) GetNotifications(ctx context.Context, in *GetNotificationsRequest, opts ...grpc.CallOption) (*GetNotificationsResponse, error) {
+func (c *notificationServiceClient) GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*GetNotificationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetNotificationsResponse)
-	err := c.cc.Invoke(ctx, NotificationService_GetNotifications_FullMethodName, in, out, cOpts...)
+	out := new(GetNotificationResponse)
+	err := c.cc.Invoke(ctx, NotificationService_GetNotification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notificationServiceClient) ListNotifications(ctx context.Context, in *ListNotificationsRequest, opts ...grpc.CallOption) (*ListNotificationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListNotificationsResponse)
+	err := c.cc.Invoke(ctx, NotificationService_ListNotifications_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,39 +105,34 @@ func (c *notificationServiceClient) MarkAllAsRead(ctx context.Context, in *MarkA
 	return out, nil
 }
 
-func (c *notificationServiceClient) StreamNotifications(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Notification], error) {
+func (c *notificationServiceClient) GetUnreadCount(ctx context.Context, in *GetUnreadCountRequest, opts ...grpc.CallOption) (*GetUnreadCountResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &NotificationService_ServiceDesc.Streams[0], NotificationService_StreamNotifications_FullMethodName, cOpts...)
+	out := new(GetUnreadCountResponse)
+	err := c.cc.Invoke(ctx, NotificationService_GetUnreadCount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[emptypb.Empty, Notification]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	return out, nil
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type NotificationService_StreamNotificationsClient = grpc.ServerStreamingClient[Notification]
 
 // NotificationServiceServer is the server API for NotificationService service.
 // All implementations must embed UnimplementedNotificationServiceServer
 // for forward compatibility.
+//
+// NotificationService is the service for notification operations
 type NotificationServiceServer interface {
 	// Create a new notification
 	CreateNotification(context.Context, *CreateNotificationRequest) (*CreateNotificationResponse, error)
-	// Get notifications for a user
-	GetNotifications(context.Context, *GetNotificationsRequest) (*GetNotificationsResponse, error)
+	// Get a notification by ID
+	GetNotification(context.Context, *GetNotificationRequest) (*GetNotificationResponse, error)
+	// List notifications for a user
+	ListNotifications(context.Context, *ListNotificationsRequest) (*ListNotificationsResponse, error)
 	// Mark a notification as read
 	MarkAsRead(context.Context, *MarkAsReadRequest) (*MarkAsReadResponse, error)
 	// Mark all notifications as read for a user
 	MarkAllAsRead(context.Context, *MarkAllAsReadRequest) (*MarkAllAsReadResponse, error)
-	// Stream notifications in real-time
-	StreamNotifications(*emptypb.Empty, grpc.ServerStreamingServer[Notification]) error
+	// Get unread notification count for a user
+	GetUnreadCount(context.Context, *GetUnreadCountRequest) (*GetUnreadCountResponse, error)
 	mustEmbedUnimplementedNotificationServiceServer()
 }
 
@@ -137,8 +146,11 @@ type UnimplementedNotificationServiceServer struct{}
 func (UnimplementedNotificationServiceServer) CreateNotification(context.Context, *CreateNotificationRequest) (*CreateNotificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNotification not implemented")
 }
-func (UnimplementedNotificationServiceServer) GetNotifications(context.Context, *GetNotificationsRequest) (*GetNotificationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetNotifications not implemented")
+func (UnimplementedNotificationServiceServer) GetNotification(context.Context, *GetNotificationRequest) (*GetNotificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNotification not implemented")
+}
+func (UnimplementedNotificationServiceServer) ListNotifications(context.Context, *ListNotificationsRequest) (*ListNotificationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNotifications not implemented")
 }
 func (UnimplementedNotificationServiceServer) MarkAsRead(context.Context, *MarkAsReadRequest) (*MarkAsReadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkAsRead not implemented")
@@ -146,8 +158,8 @@ func (UnimplementedNotificationServiceServer) MarkAsRead(context.Context, *MarkA
 func (UnimplementedNotificationServiceServer) MarkAllAsRead(context.Context, *MarkAllAsReadRequest) (*MarkAllAsReadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkAllAsRead not implemented")
 }
-func (UnimplementedNotificationServiceServer) StreamNotifications(*emptypb.Empty, grpc.ServerStreamingServer[Notification]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamNotifications not implemented")
+func (UnimplementedNotificationServiceServer) GetUnreadCount(context.Context, *GetUnreadCountRequest) (*GetUnreadCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnreadCount not implemented")
 }
 func (UnimplementedNotificationServiceServer) mustEmbedUnimplementedNotificationServiceServer() {}
 func (UnimplementedNotificationServiceServer) testEmbeddedByValue()                             {}
@@ -188,20 +200,38 @@ func _NotificationService_CreateNotification_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _NotificationService_GetNotifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetNotificationsRequest)
+func _NotificationService_GetNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNotificationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NotificationServiceServer).GetNotifications(ctx, in)
+		return srv.(NotificationServiceServer).GetNotification(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: NotificationService_GetNotifications_FullMethodName,
+		FullMethod: NotificationService_GetNotification_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotificationServiceServer).GetNotifications(ctx, req.(*GetNotificationsRequest))
+		return srv.(NotificationServiceServer).GetNotification(ctx, req.(*GetNotificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NotificationService_ListNotifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNotificationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotificationServiceServer).ListNotifications(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NotificationService_ListNotifications_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotificationServiceServer).ListNotifications(ctx, req.(*ListNotificationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -242,16 +272,23 @@ func _NotificationService_MarkAllAsRead_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _NotificationService_StreamNotifications_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _NotificationService_GetUnreadCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUnreadCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(NotificationServiceServer).StreamNotifications(m, &grpc.GenericServerStream[emptypb.Empty, Notification]{ServerStream: stream})
+	if interceptor == nil {
+		return srv.(NotificationServiceServer).GetUnreadCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NotificationService_GetUnreadCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotificationServiceServer).GetUnreadCount(ctx, req.(*GetUnreadCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type NotificationService_StreamNotificationsServer = grpc.ServerStreamingServer[Notification]
 
 // NotificationService_ServiceDesc is the grpc.ServiceDesc for NotificationService service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -265,8 +302,12 @@ var NotificationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _NotificationService_CreateNotification_Handler,
 		},
 		{
-			MethodName: "GetNotifications",
-			Handler:    _NotificationService_GetNotifications_Handler,
+			MethodName: "GetNotification",
+			Handler:    _NotificationService_GetNotification_Handler,
+		},
+		{
+			MethodName: "ListNotifications",
+			Handler:    _NotificationService_ListNotifications_Handler,
 		},
 		{
 			MethodName: "MarkAsRead",
@@ -276,13 +317,11 @@ var NotificationService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "MarkAllAsRead",
 			Handler:    _NotificationService_MarkAllAsRead_Handler,
 		},
-	},
-	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamNotifications",
-			Handler:       _NotificationService_StreamNotifications_Handler,
-			ServerStreams: true,
+			MethodName: "GetUnreadCount",
+			Handler:    _NotificationService_GetUnreadCount_Handler,
 		},
 	},
-	Metadata: "skillsync-protos/chat-notification/notification.proto",
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "chat/notification.proto",
 }
