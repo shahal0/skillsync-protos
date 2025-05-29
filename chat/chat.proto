@@ -16,20 +16,28 @@ enum MessageType {
 
 // MessageStatus represents the status of a message
 enum MessageStatus {
-  SENT = 0;
-  DELIVERED = 1;
-  READ = 2;
+  MESSAGE_STATUS_UNSPECIFIED = 0;
+  SENT = 1;
+  DELIVERED = 2;
+  READ = 3;
+}
+
+// SenderRole represents the role of the message sender
+enum SenderRole {
+  ROLE_UNSPECIFIED = 0;
+  EMPLOYER = 1;
+  CANDIDATE = 2;
 }
 
 // Message represents a chat message
 message Message {
   string id = 1;
   string conversation_id = 2;
-  string sender = 3;  // "employer" or "candidate"
-  string receiver_id = 4;
-  string sent_time = 5;  // Formatted time string
-  google.protobuf.Timestamp sent_at = 6;
-  // Removed unused fields to match requirements
+  string sender_id = 3;      // The ID of the sender
+  SenderRole sender_role = 4; // The role of the sender (employer/candidate)
+  string receiver_id = 5;    // The ID of the receiver
+  string sent_time = 6;      // Formatted time string (HH:MM:SS)
+  MessageStatus status = 7;  // Status of the message (sent/delivered/read)
 }
 
 // Conversation represents a chat conversation
