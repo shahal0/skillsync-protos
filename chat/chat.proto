@@ -25,15 +25,11 @@ enum MessageStatus {
 message Message {
   string id = 1;
   string conversation_id = 2;
-  string sender_id = 3;
-  string receiver_id = 4;  // Added receiver_id
-  string sender_role = 5;  // Will be either "candidate" or "employer"
-  string content = 6;
-  MessageType message_type = 7;
-  MessageStatus status = 8;
-  google.protobuf.Timestamp sent_at = 9;
-  google.protobuf.Timestamp read_at = 10;
-  // Removed metadata field as per requirements
+  string sender = 3;  // "employer" or "candidate"
+  string receiver_id = 4;
+  string sent_time = 5;  // Formatted time string
+  google.protobuf.Timestamp sent_at = 6;
+  // Removed unused fields to match requirements
 }
 
 // Conversation represents a chat conversation

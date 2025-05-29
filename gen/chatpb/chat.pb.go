@@ -130,14 +130,10 @@ type Message struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	ConversationId string                 `protobuf:"bytes,2,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
-	SenderId       string                 `protobuf:"bytes,3,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
-	ReceiverId     string                 `protobuf:"bytes,4,opt,name=receiver_id,json=receiverId,proto3" json:"receiver_id,omitempty"` // Added receiver_id
-	SenderRole     string                 `protobuf:"bytes,5,opt,name=sender_role,json=senderRole,proto3" json:"sender_role,omitempty"` // Will be either "candidate" or "employer"
-	Content        string                 `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`
-	MessageType    MessageType            `protobuf:"varint,7,opt,name=message_type,json=messageType,proto3,enum=chat.MessageType" json:"message_type,omitempty"`
-	Status         MessageStatus          `protobuf:"varint,8,opt,name=status,proto3,enum=chat.MessageStatus" json:"status,omitempty"`
-	SentAt         *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=sent_at,json=sentAt,proto3" json:"sent_at,omitempty"`
-	ReadAt         *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=read_at,json=readAt,proto3" json:"read_at,omitempty"` // Removed metadata field as per requirements
+	Sender         string                 `protobuf:"bytes,3,opt,name=sender,proto3" json:"sender,omitempty"` // "employer" or "candidate"
+	ReceiverId     string                 `protobuf:"bytes,4,opt,name=receiver_id,json=receiverId,proto3" json:"receiver_id,omitempty"`
+	SentTime       string                 `protobuf:"bytes,5,opt,name=sent_time,json=sentTime,proto3" json:"sent_time,omitempty"` // Formatted time string
+	SentAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=sent_at,json=sentAt,proto3" json:"sent_at,omitempty"`       // Removed unused fields to match requirements
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -186,9 +182,9 @@ func (x *Message) GetConversationId() string {
 	return ""
 }
 
-func (x *Message) GetSenderId() string {
+func (x *Message) GetSender() string {
 	if x != nil {
-		return x.SenderId
+		return x.Sender
 	}
 	return ""
 }
@@ -200,44 +196,16 @@ func (x *Message) GetReceiverId() string {
 	return ""
 }
 
-func (x *Message) GetSenderRole() string {
+func (x *Message) GetSentTime() string {
 	if x != nil {
-		return x.SenderRole
+		return x.SentTime
 	}
 	return ""
-}
-
-func (x *Message) GetContent() string {
-	if x != nil {
-		return x.Content
-	}
-	return ""
-}
-
-func (x *Message) GetMessageType() MessageType {
-	if x != nil {
-		return x.MessageType
-	}
-	return MessageType_TEXT
-}
-
-func (x *Message) GetStatus() MessageStatus {
-	if x != nil {
-		return x.Status
-	}
-	return MessageStatus_SENT
 }
 
 func (x *Message) GetSentAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.SentAt
-	}
-	return nil
-}
-
-func (x *Message) GetReadAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ReadAt
 	}
 	return nil
 }
@@ -1122,21 +1090,15 @@ var File_chat_proto protoreflect.FileDescriptor
 const file_chat_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"chat.proto\x12\x04chat\x1a\x1fgoogle/protobuf/timestamp.proto\"\x88\x03\n" +
+	"chat.proto\x12\x04chat\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcd\x01\n" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
-	"\x0fconversation_id\x18\x02 \x01(\tR\x0econversationId\x12\x1b\n" +
-	"\tsender_id\x18\x03 \x01(\tR\bsenderId\x12\x1f\n" +
+	"\x0fconversation_id\x18\x02 \x01(\tR\x0econversationId\x12\x16\n" +
+	"\x06sender\x18\x03 \x01(\tR\x06sender\x12\x1f\n" +
 	"\vreceiver_id\x18\x04 \x01(\tR\n" +
-	"receiverId\x12\x1f\n" +
-	"\vsender_role\x18\x05 \x01(\tR\n" +
-	"senderRole\x12\x18\n" +
-	"\acontent\x18\x06 \x01(\tR\acontent\x124\n" +
-	"\fmessage_type\x18\a \x01(\x0e2\x11.chat.MessageTypeR\vmessageType\x12+\n" +
-	"\x06status\x18\b \x01(\x0e2\x13.chat.MessageStatusR\x06status\x123\n" +
-	"\asent_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\x06sentAt\x123\n" +
-	"\aread_at\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\x06readAt\"\xf9\x02\n" +
+	"receiverId\x12\x1b\n" +
+	"\tsent_time\x18\x05 \x01(\tR\bsentTime\x123\n" +
+	"\asent_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x06sentAt\"\xf9\x02\n" +
 	"\fConversation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06job_id\x18\x02 \x01(\tR\x05jobId\x12\x1f\n" +
@@ -1256,39 +1218,36 @@ var file_chat_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),      // 19: google.protobuf.Timestamp
 }
 var file_chat_proto_depIdxs = []int32{
-	0,  // 0: chat.Message.message_type:type_name -> chat.MessageType
-	1,  // 1: chat.Message.status:type_name -> chat.MessageStatus
-	19, // 2: chat.Message.sent_at:type_name -> google.protobuf.Timestamp
-	19, // 3: chat.Message.read_at:type_name -> google.protobuf.Timestamp
-	19, // 4: chat.Conversation.created_at:type_name -> google.protobuf.Timestamp
-	19, // 5: chat.Conversation.updated_at:type_name -> google.protobuf.Timestamp
-	2,  // 6: chat.Conversation.last_message:type_name -> chat.Message
-	3,  // 7: chat.StartConversationResponse.conversation:type_name -> chat.Conversation
-	0,  // 8: chat.SendMessageRequest.message_type:type_name -> chat.MessageType
-	18, // 9: chat.SendMessageRequest.metadata:type_name -> chat.SendMessageRequest.MetadataEntry
-	2,  // 10: chat.SendMessageResponse.message:type_name -> chat.Message
-	3,  // 11: chat.GetConversationResponse.conversation:type_name -> chat.Conversation
-	3,  // 12: chat.ListConversationsResponse.conversations:type_name -> chat.Conversation
-	2,  // 13: chat.ListMessagesResponse.messages:type_name -> chat.Message
-	4,  // 14: chat.ChatService.StartConversation:input_type -> chat.StartConversationRequest
-	6,  // 15: chat.ChatService.SendMessage:input_type -> chat.SendMessageRequest
-	8,  // 16: chat.ChatService.GetConversation:input_type -> chat.GetConversationRequest
-	10, // 17: chat.ChatService.ListConversations:input_type -> chat.ListConversationsRequest
-	12, // 18: chat.ChatService.ListMessages:input_type -> chat.ListMessagesRequest
-	14, // 19: chat.ChatService.MarkMessagesAsRead:input_type -> chat.MarkMessagesAsReadRequest
-	16, // 20: chat.ChatService.GetUnreadCount:input_type -> chat.GetUnreadCountRequest
-	5,  // 21: chat.ChatService.StartConversation:output_type -> chat.StartConversationResponse
-	7,  // 22: chat.ChatService.SendMessage:output_type -> chat.SendMessageResponse
-	9,  // 23: chat.ChatService.GetConversation:output_type -> chat.GetConversationResponse
-	11, // 24: chat.ChatService.ListConversations:output_type -> chat.ListConversationsResponse
-	13, // 25: chat.ChatService.ListMessages:output_type -> chat.ListMessagesResponse
-	15, // 26: chat.ChatService.MarkMessagesAsRead:output_type -> chat.MarkMessagesAsReadResponse
-	17, // 27: chat.ChatService.GetUnreadCount:output_type -> chat.GetUnreadCountResponse
-	21, // [21:28] is the sub-list for method output_type
-	14, // [14:21] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	19, // 0: chat.Message.sent_at:type_name -> google.protobuf.Timestamp
+	19, // 1: chat.Conversation.created_at:type_name -> google.protobuf.Timestamp
+	19, // 2: chat.Conversation.updated_at:type_name -> google.protobuf.Timestamp
+	2,  // 3: chat.Conversation.last_message:type_name -> chat.Message
+	3,  // 4: chat.StartConversationResponse.conversation:type_name -> chat.Conversation
+	0,  // 5: chat.SendMessageRequest.message_type:type_name -> chat.MessageType
+	18, // 6: chat.SendMessageRequest.metadata:type_name -> chat.SendMessageRequest.MetadataEntry
+	2,  // 7: chat.SendMessageResponse.message:type_name -> chat.Message
+	3,  // 8: chat.GetConversationResponse.conversation:type_name -> chat.Conversation
+	3,  // 9: chat.ListConversationsResponse.conversations:type_name -> chat.Conversation
+	2,  // 10: chat.ListMessagesResponse.messages:type_name -> chat.Message
+	4,  // 11: chat.ChatService.StartConversation:input_type -> chat.StartConversationRequest
+	6,  // 12: chat.ChatService.SendMessage:input_type -> chat.SendMessageRequest
+	8,  // 13: chat.ChatService.GetConversation:input_type -> chat.GetConversationRequest
+	10, // 14: chat.ChatService.ListConversations:input_type -> chat.ListConversationsRequest
+	12, // 15: chat.ChatService.ListMessages:input_type -> chat.ListMessagesRequest
+	14, // 16: chat.ChatService.MarkMessagesAsRead:input_type -> chat.MarkMessagesAsReadRequest
+	16, // 17: chat.ChatService.GetUnreadCount:input_type -> chat.GetUnreadCountRequest
+	5,  // 18: chat.ChatService.StartConversation:output_type -> chat.StartConversationResponse
+	7,  // 19: chat.ChatService.SendMessage:output_type -> chat.SendMessageResponse
+	9,  // 20: chat.ChatService.GetConversation:output_type -> chat.GetConversationResponse
+	11, // 21: chat.ChatService.ListConversations:output_type -> chat.ListConversationsResponse
+	13, // 22: chat.ChatService.ListMessages:output_type -> chat.ListMessagesResponse
+	15, // 23: chat.ChatService.MarkMessagesAsRead:output_type -> chat.MarkMessagesAsReadResponse
+	17, // 24: chat.ChatService.GetUnreadCount:output_type -> chat.GetUnreadCountResponse
+	18, // [18:25] is the sub-list for method output_type
+	11, // [11:18] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_chat_proto_init() }
