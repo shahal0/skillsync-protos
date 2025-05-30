@@ -24,6 +24,7 @@ service AuthService {
   rpc CandidateGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
   rpc CandidateGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
   rpc GetCandidateSkills(GetCandidateSkillsRequest) returns (GetCandidateSkillsResponse);
+  rpc GetCandidatesWithPagination(GetCandidatesRequest) returns (GetCandidatesResponse); // New paginated endpoint
 
   // Employer endpoints
   rpc EmployerSignup(EmployerSignupRequest) returns (EmployerSignupResponse);
@@ -38,6 +39,7 @@ service AuthService {
   rpc EmployerProfileUpdate(EmployerProfileUpdateRequest) returns (GenericResponse);
   rpc EmployerGoogleLogin(GoogleLoginRequest) returns (AuthResponse);
   rpc EmployerGoogleCallback(GoogleCallbackRequest) returns (AuthResponse);
+  rpc GetEmployersWithPagination(GetEmployersRequest) returns (GetEmployersResponse); // New paginated endpoint
 }
 
 // Candidate messages
@@ -254,4 +256,44 @@ message GetCandidateSkillsRequest {
 
 message GetCandidateSkillsResponse {
   repeated string skills = 1;
+}
+
+// Pagination messages
+message PaginationRequest {
+  int32 page = 1; // 1-based page number
+  int32 limit = 2; // Number of items per page
+}
+
+message PaginationResponse {
+  int32 total_count = 1; // Total number of items
+  int32 page = 2; // Current page number
+  int32 limit = 3; // Number of items per page
+  int32 total_pages = 4; // Total number of pages
+}
+
+// GetCandidates with pagination messages
+message GetCandidatesRequest {
+  PaginationRequest pagination = 1;
+  string keyword = 2; // Optional search keyword
+  string skill = 3; // Optional skill filter
+  string location = 4; // Optional location filter
+  int32 min_experience = 5; // Optional minimum experience filter
+}
+
+message GetCandidatesResponse {
+  repeated CandidateProfileResponse candidates = 1;
+  PaginationResponse pagination = 2;
+}
+
+// GetEmployers with pagination messages
+message GetEmployersRequest {
+  PaginationRequest pagination = 1;
+  string keyword = 2; // Optional search keyword
+  string industry = 3; // Optional industry filter
+  string location = 4; // Optional location filter
+}
+
+message GetEmployersResponse {
+  repeated EmployerProfileResponse employers = 1;
+  PaginationResponse pagination = 2;
 }

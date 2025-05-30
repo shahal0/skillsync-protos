@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: auth.proto
+// source: Auth/auth.proto
 
 package authpb
 
@@ -19,34 +19,36 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_VerifyToken_FullMethodName              = "/authpb.AuthService/VerifyToken"
-	AuthService_CandidateSignup_FullMethodName          = "/authpb.AuthService/CandidateSignup"
-	AuthService_CandidateLogin_FullMethodName           = "/authpb.AuthService/CandidateLogin"
-	AuthService_CandidateVerifyEmail_FullMethodName     = "/authpb.AuthService/CandidateVerifyEmail"
-	AuthService_CandidateResendOtp_FullMethodName       = "/authpb.AuthService/CandidateResendOtp"
-	AuthService_CandidateForgotPassword_FullMethodName  = "/authpb.AuthService/CandidateForgotPassword"
-	AuthService_CandidateResetPassword_FullMethodName   = "/authpb.AuthService/CandidateResetPassword"
-	AuthService_CandidateChangePassword_FullMethodName  = "/authpb.AuthService/CandidateChangePassword"
-	AuthService_CandidateProfile_FullMethodName         = "/authpb.AuthService/CandidateProfile"
-	AuthService_CandidateProfileUpdate_FullMethodName   = "/authpb.AuthService/CandidateProfileUpdate"
-	AuthService_CandidateSkillsUpdate_FullMethodName    = "/authpb.AuthService/CandidateSkillsUpdate"
-	AuthService_CandidateEducationUpdate_FullMethodName = "/authpb.AuthService/CandidateEducationUpdate"
-	AuthService_CandidateUploadResume_FullMethodName    = "/authpb.AuthService/CandidateUploadResume"
-	AuthService_CandidateGoogleLogin_FullMethodName     = "/authpb.AuthService/CandidateGoogleLogin"
-	AuthService_CandidateGoogleCallback_FullMethodName  = "/authpb.AuthService/CandidateGoogleCallback"
-	AuthService_GetCandidateSkills_FullMethodName       = "/authpb.AuthService/GetCandidateSkills"
-	AuthService_EmployerSignup_FullMethodName           = "/authpb.AuthService/EmployerSignup"
-	AuthService_EmployerLogin_FullMethodName            = "/authpb.AuthService/EmployerLogin"
-	AuthService_EmployerVerifyEmail_FullMethodName      = "/authpb.AuthService/EmployerVerifyEmail"
-	AuthService_EmployerResendOtp_FullMethodName        = "/authpb.AuthService/EmployerResendOtp"
-	AuthService_EmployerForgotPassword_FullMethodName   = "/authpb.AuthService/EmployerForgotPassword"
-	AuthService_EmployerResetPassword_FullMethodName    = "/authpb.AuthService/EmployerResetPassword"
-	AuthService_EmployerChangePassword_FullMethodName   = "/authpb.AuthService/EmployerChangePassword"
-	AuthService_EmployerProfile_FullMethodName          = "/authpb.AuthService/EmployerProfile"
-	AuthService_EmployerProfileById_FullMethodName      = "/authpb.AuthService/EmployerProfileById"
-	AuthService_EmployerProfileUpdate_FullMethodName    = "/authpb.AuthService/EmployerProfileUpdate"
-	AuthService_EmployerGoogleLogin_FullMethodName      = "/authpb.AuthService/EmployerGoogleLogin"
-	AuthService_EmployerGoogleCallback_FullMethodName   = "/authpb.AuthService/EmployerGoogleCallback"
+	AuthService_VerifyToken_FullMethodName                 = "/authpb.AuthService/VerifyToken"
+	AuthService_CandidateSignup_FullMethodName             = "/authpb.AuthService/CandidateSignup"
+	AuthService_CandidateLogin_FullMethodName              = "/authpb.AuthService/CandidateLogin"
+	AuthService_CandidateVerifyEmail_FullMethodName        = "/authpb.AuthService/CandidateVerifyEmail"
+	AuthService_CandidateResendOtp_FullMethodName          = "/authpb.AuthService/CandidateResendOtp"
+	AuthService_CandidateForgotPassword_FullMethodName     = "/authpb.AuthService/CandidateForgotPassword"
+	AuthService_CandidateResetPassword_FullMethodName      = "/authpb.AuthService/CandidateResetPassword"
+	AuthService_CandidateChangePassword_FullMethodName     = "/authpb.AuthService/CandidateChangePassword"
+	AuthService_CandidateProfile_FullMethodName            = "/authpb.AuthService/CandidateProfile"
+	AuthService_CandidateProfileUpdate_FullMethodName      = "/authpb.AuthService/CandidateProfileUpdate"
+	AuthService_CandidateSkillsUpdate_FullMethodName       = "/authpb.AuthService/CandidateSkillsUpdate"
+	AuthService_CandidateEducationUpdate_FullMethodName    = "/authpb.AuthService/CandidateEducationUpdate"
+	AuthService_CandidateUploadResume_FullMethodName       = "/authpb.AuthService/CandidateUploadResume"
+	AuthService_CandidateGoogleLogin_FullMethodName        = "/authpb.AuthService/CandidateGoogleLogin"
+	AuthService_CandidateGoogleCallback_FullMethodName     = "/authpb.AuthService/CandidateGoogleCallback"
+	AuthService_GetCandidateSkills_FullMethodName          = "/authpb.AuthService/GetCandidateSkills"
+	AuthService_GetCandidatesWithPagination_FullMethodName = "/authpb.AuthService/GetCandidatesWithPagination"
+	AuthService_EmployerSignup_FullMethodName              = "/authpb.AuthService/EmployerSignup"
+	AuthService_EmployerLogin_FullMethodName               = "/authpb.AuthService/EmployerLogin"
+	AuthService_EmployerVerifyEmail_FullMethodName         = "/authpb.AuthService/EmployerVerifyEmail"
+	AuthService_EmployerResendOtp_FullMethodName           = "/authpb.AuthService/EmployerResendOtp"
+	AuthService_EmployerForgotPassword_FullMethodName      = "/authpb.AuthService/EmployerForgotPassword"
+	AuthService_EmployerResetPassword_FullMethodName       = "/authpb.AuthService/EmployerResetPassword"
+	AuthService_EmployerChangePassword_FullMethodName      = "/authpb.AuthService/EmployerChangePassword"
+	AuthService_EmployerProfile_FullMethodName             = "/authpb.AuthService/EmployerProfile"
+	AuthService_EmployerProfileById_FullMethodName         = "/authpb.AuthService/EmployerProfileById"
+	AuthService_EmployerProfileUpdate_FullMethodName       = "/authpb.AuthService/EmployerProfileUpdate"
+	AuthService_EmployerGoogleLogin_FullMethodName         = "/authpb.AuthService/EmployerGoogleLogin"
+	AuthService_EmployerGoogleCallback_FullMethodName      = "/authpb.AuthService/EmployerGoogleCallback"
+	AuthService_GetEmployersWithPagination_FullMethodName  = "/authpb.AuthService/GetEmployersWithPagination"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -71,6 +73,7 @@ type AuthServiceClient interface {
 	CandidateGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	CandidateGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	GetCandidateSkills(ctx context.Context, in *GetCandidateSkillsRequest, opts ...grpc.CallOption) (*GetCandidateSkillsResponse, error)
+	GetCandidatesWithPagination(ctx context.Context, in *GetCandidatesRequest, opts ...grpc.CallOption) (*GetCandidatesResponse, error)
 	// Employer endpoints
 	EmployerSignup(ctx context.Context, in *EmployerSignupRequest, opts ...grpc.CallOption) (*EmployerSignupResponse, error)
 	EmployerLogin(ctx context.Context, in *EmployerLoginRequest, opts ...grpc.CallOption) (*EmployerLoginResponse, error)
@@ -84,6 +87,7 @@ type AuthServiceClient interface {
 	EmployerProfileUpdate(ctx context.Context, in *EmployerProfileUpdateRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	EmployerGoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	EmployerGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	GetEmployersWithPagination(ctx context.Context, in *GetEmployersRequest, opts ...grpc.CallOption) (*GetEmployersResponse, error)
 }
 
 type authServiceClient struct {
@@ -254,6 +258,16 @@ func (c *authServiceClient) GetCandidateSkills(ctx context.Context, in *GetCandi
 	return out, nil
 }
 
+func (c *authServiceClient) GetCandidatesWithPagination(ctx context.Context, in *GetCandidatesRequest, opts ...grpc.CallOption) (*GetCandidatesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCandidatesResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetCandidatesWithPagination_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) EmployerSignup(ctx context.Context, in *EmployerSignupRequest, opts ...grpc.CallOption) (*EmployerSignupResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(EmployerSignupResponse)
@@ -374,6 +388,16 @@ func (c *authServiceClient) EmployerGoogleCallback(ctx context.Context, in *Goog
 	return out, nil
 }
 
+func (c *authServiceClient) GetEmployersWithPagination(ctx context.Context, in *GetEmployersRequest, opts ...grpc.CallOption) (*GetEmployersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetEmployersResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetEmployersWithPagination_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -396,6 +420,7 @@ type AuthServiceServer interface {
 	CandidateGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error)
 	CandidateGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error)
 	GetCandidateSkills(context.Context, *GetCandidateSkillsRequest) (*GetCandidateSkillsResponse, error)
+	GetCandidatesWithPagination(context.Context, *GetCandidatesRequest) (*GetCandidatesResponse, error)
 	// Employer endpoints
 	EmployerSignup(context.Context, *EmployerSignupRequest) (*EmployerSignupResponse, error)
 	EmployerLogin(context.Context, *EmployerLoginRequest) (*EmployerLoginResponse, error)
@@ -409,6 +434,7 @@ type AuthServiceServer interface {
 	EmployerProfileUpdate(context.Context, *EmployerProfileUpdateRequest) (*GenericResponse, error)
 	EmployerGoogleLogin(context.Context, *GoogleLoginRequest) (*AuthResponse, error)
 	EmployerGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error)
+	GetEmployersWithPagination(context.Context, *GetEmployersRequest) (*GetEmployersResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -467,6 +493,9 @@ func (UnimplementedAuthServiceServer) CandidateGoogleCallback(context.Context, *
 func (UnimplementedAuthServiceServer) GetCandidateSkills(context.Context, *GetCandidateSkillsRequest) (*GetCandidateSkillsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCandidateSkills not implemented")
 }
+func (UnimplementedAuthServiceServer) GetCandidatesWithPagination(context.Context, *GetCandidatesRequest) (*GetCandidatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCandidatesWithPagination not implemented")
+}
 func (UnimplementedAuthServiceServer) EmployerSignup(context.Context, *EmployerSignupRequest) (*EmployerSignupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmployerSignup not implemented")
 }
@@ -502,6 +531,9 @@ func (UnimplementedAuthServiceServer) EmployerGoogleLogin(context.Context, *Goog
 }
 func (UnimplementedAuthServiceServer) EmployerGoogleCallback(context.Context, *GoogleCallbackRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmployerGoogleCallback not implemented")
+}
+func (UnimplementedAuthServiceServer) GetEmployersWithPagination(context.Context, *GetEmployersRequest) (*GetEmployersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEmployersWithPagination not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -812,6 +844,24 @@ func _AuthService_GetCandidateSkills_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetCandidatesWithPagination_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCandidatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetCandidatesWithPagination(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetCandidatesWithPagination_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetCandidatesWithPagination(ctx, req.(*GetCandidatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_EmployerSignup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmployerSignupRequest)
 	if err := dec(in); err != nil {
@@ -1028,6 +1078,24 @@ func _AuthService_EmployerGoogleCallback_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetEmployersWithPagination_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEmployersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetEmployersWithPagination(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetEmployersWithPagination_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetEmployersWithPagination(ctx, req.(*GetEmployersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1100,6 +1168,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_GetCandidateSkills_Handler,
 		},
 		{
+			MethodName: "GetCandidatesWithPagination",
+			Handler:    _AuthService_GetCandidatesWithPagination_Handler,
+		},
+		{
 			MethodName: "EmployerSignup",
 			Handler:    _AuthService_EmployerSignup_Handler,
 		},
@@ -1147,7 +1219,11 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "EmployerGoogleCallback",
 			Handler:    _AuthService_EmployerGoogleCallback_Handler,
 		},
+		{
+			MethodName: "GetEmployersWithPagination",
+			Handler:    _AuthService_GetEmployersWithPagination_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "auth.proto",
+	Metadata: "Auth/auth.proto",
 }
