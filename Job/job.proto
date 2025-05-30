@@ -101,10 +101,15 @@ message GetJobsRequest {
   string keyword = 2;  // Optional keyword search
   string location = 3; // Optional location filter
   int32 experience_required = 4; // Optional experience required filter (in years)
+  int32 page = 5; // Page number (1-based)
+  int32 limit = 6; // Number of items per page
 }
 
 message GetJobsResponse {
   repeated Job jobs = 1;
+  int32 total_count = 2; // Total number of jobs matching the filters
+  int32 page = 3; // Current page number
+  int32 total_pages = 4; // Total number of pages
 }
 
 // GetJobById request/response
@@ -133,10 +138,15 @@ message GetApplicationsRequest {
   uint64 job_id = 1; // For employer to view applications for a job
   string candidate_id = 2; // For candidate to view their applications
   string status = 3; // Filter by status
+  int32 page = 4; // Page number (1-based)
+  int32 limit = 5; // Number of items per page
 }
 
 message GetApplicationsResponse {
   repeated ApplicationResponse applications = 1;
+  int32 total_count = 2; // Total number of applications matching the filters
+  int32 page = 3; // Current page number
+  int32 total_pages = 4; // Total number of pages
 }
 
 // GetApplication request/response
