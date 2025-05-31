@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: chat.proto
+// source: chat/chat.proto
 
-package chat
+package chatpb
 
 import (
 	context "context"
@@ -19,35 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChatService_StartConversation_FullMethodName  = "/chat.ChatService/StartConversation"
-	ChatService_SendMessage_FullMethodName        = "/chat.ChatService/SendMessage"
-	ChatService_GetConversation_FullMethodName    = "/chat.ChatService/GetConversation"
-	ChatService_ListConversations_FullMethodName  = "/chat.ChatService/ListConversations"
-	ChatService_ListMessages_FullMethodName       = "/chat.ChatService/ListMessages"
-	ChatService_MarkMessagesAsRead_FullMethodName = "/chat.ChatService/MarkMessagesAsRead"
-	ChatService_GetUnreadCount_FullMethodName     = "/chat.ChatService/GetUnreadCount"
+	ChatService_SendMessage_FullMethodName      = "/chatpb.ChatService/SendMessage"
+	ChatService_BroadcastMessage_FullMethodName = "/chatpb.ChatService/BroadcastMessage"
+	ChatService_GetChatHistory_FullMethodName   = "/chatpb.ChatService/GetChatHistory"
 )
 
 // ChatServiceClient is the client API for ChatService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// ChatService is the service for chat operations
 type ChatServiceClient interface {
-	// Start a new conversation
-	StartConversation(ctx context.Context, in *StartConversationRequest, opts ...grpc.CallOption) (*StartConversationResponse, error)
-	// Send a message in a conversation
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
-	// Get a conversation by ID
-	GetConversation(ctx context.Context, in *GetConversationRequest, opts ...grpc.CallOption) (*GetConversationResponse, error)
-	// List conversations for a user
-	ListConversations(ctx context.Context, in *ListConversationsRequest, opts ...grpc.CallOption) (*ListConversationsResponse, error)
-	// List messages in a conversation
-	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*ListMessagesResponse, error)
-	// Mark messages as read
-	MarkMessagesAsRead(ctx context.Context, in *MarkMessagesAsReadRequest, opts ...grpc.CallOption) (*MarkMessagesAsReadResponse, error)
-	// Get unread message count for a user
-	GetUnreadCount(ctx context.Context, in *GetUnreadCountRequest, opts ...grpc.CallOption) (*GetUnreadCountResponse, error)
+	BroadcastMessage(ctx context.Context, in *BroadcastMessageRequest, opts ...grpc.CallOption) (*BroadcastMessageResponse, error)
+	GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error)
 }
 
 type chatServiceClient struct {
@@ -56,16 +39,6 @@ type chatServiceClient struct {
 
 func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
-}
-
-func (c *chatServiceClient) StartConversation(ctx context.Context, in *StartConversationRequest, opts ...grpc.CallOption) (*StartConversationResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StartConversationResponse)
-	err := c.cc.Invoke(ctx, ChatService_StartConversation_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
@@ -78,50 +51,20 @@ func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequ
 	return out, nil
 }
 
-func (c *chatServiceClient) GetConversation(ctx context.Context, in *GetConversationRequest, opts ...grpc.CallOption) (*GetConversationResponse, error) {
+func (c *chatServiceClient) BroadcastMessage(ctx context.Context, in *BroadcastMessageRequest, opts ...grpc.CallOption) (*BroadcastMessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetConversationResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetConversation_FullMethodName, in, out, cOpts...)
+	out := new(BroadcastMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_BroadcastMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chatServiceClient) ListConversations(ctx context.Context, in *ListConversationsRequest, opts ...grpc.CallOption) (*ListConversationsResponse, error) {
+func (c *chatServiceClient) GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListConversationsResponse)
-	err := c.cc.Invoke(ctx, ChatService_ListConversations_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*ListMessagesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListMessagesResponse)
-	err := c.cc.Invoke(ctx, ChatService_ListMessages_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) MarkMessagesAsRead(ctx context.Context, in *MarkMessagesAsReadRequest, opts ...grpc.CallOption) (*MarkMessagesAsReadResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MarkMessagesAsReadResponse)
-	err := c.cc.Invoke(ctx, ChatService_MarkMessagesAsRead_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) GetUnreadCount(ctx context.Context, in *GetUnreadCountRequest, opts ...grpc.CallOption) (*GetUnreadCountResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUnreadCountResponse)
-	err := c.cc.Invoke(ctx, ChatService_GetUnreadCount_FullMethodName, in, out, cOpts...)
+	out := new(GetChatHistoryResponse)
+	err := c.cc.Invoke(ctx, ChatService_GetChatHistory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -131,23 +74,10 @@ func (c *chatServiceClient) GetUnreadCount(ctx context.Context, in *GetUnreadCou
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
-//
-// ChatService is the service for chat operations
 type ChatServiceServer interface {
-	// Start a new conversation
-	StartConversation(context.Context, *StartConversationRequest) (*StartConversationResponse, error)
-	// Send a message in a conversation
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
-	// Get a conversation by ID
-	GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error)
-	// List conversations for a user
-	ListConversations(context.Context, *ListConversationsRequest) (*ListConversationsResponse, error)
-	// List messages in a conversation
-	ListMessages(context.Context, *ListMessagesRequest) (*ListMessagesResponse, error)
-	// Mark messages as read
-	MarkMessagesAsRead(context.Context, *MarkMessagesAsReadRequest) (*MarkMessagesAsReadResponse, error)
-	// Get unread message count for a user
-	GetUnreadCount(context.Context, *GetUnreadCountRequest) (*GetUnreadCountResponse, error)
+	BroadcastMessage(context.Context, *BroadcastMessageRequest) (*BroadcastMessageResponse, error)
+	GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -158,26 +88,14 @@ type ChatServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedChatServiceServer struct{}
 
-func (UnimplementedChatServiceServer) StartConversation(context.Context, *StartConversationRequest) (*StartConversationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartConversation not implemented")
-}
 func (UnimplementedChatServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
-func (UnimplementedChatServiceServer) GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConversation not implemented")
+func (UnimplementedChatServiceServer) BroadcastMessage(context.Context, *BroadcastMessageRequest) (*BroadcastMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BroadcastMessage not implemented")
 }
-func (UnimplementedChatServiceServer) ListConversations(context.Context, *ListConversationsRequest) (*ListConversationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListConversations not implemented")
-}
-func (UnimplementedChatServiceServer) ListMessages(context.Context, *ListMessagesRequest) (*ListMessagesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
-}
-func (UnimplementedChatServiceServer) MarkMessagesAsRead(context.Context, *MarkMessagesAsReadRequest) (*MarkMessagesAsReadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MarkMessagesAsRead not implemented")
-}
-func (UnimplementedChatServiceServer) GetUnreadCount(context.Context, *GetUnreadCountRequest) (*GetUnreadCountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUnreadCount not implemented")
+func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatHistory not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -200,24 +118,6 @@ func RegisterChatServiceServer(s grpc.ServiceRegistrar, srv ChatServiceServer) {
 	s.RegisterService(&ChatService_ServiceDesc, srv)
 }
 
-func _ChatService_StartConversation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartConversationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).StartConversation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_StartConversation_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).StartConversation(ctx, req.(*StartConversationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendMessageRequest)
 	if err := dec(in); err != nil {
@@ -236,92 +136,38 @@ func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetConversation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConversationRequest)
+func _ChatService_BroadcastMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BroadcastMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetConversation(ctx, in)
+		return srv.(ChatServiceServer).BroadcastMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_GetConversation_FullMethodName,
+		FullMethod: ChatService_BroadcastMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetConversation(ctx, req.(*GetConversationRequest))
+		return srv.(ChatServiceServer).BroadcastMessage(ctx, req.(*BroadcastMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_ListConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListConversationsRequest)
+func _ChatService_GetChatHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChatHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).ListConversations(ctx, in)
+		return srv.(ChatServiceServer).GetChatHistory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChatService_ListConversations_FullMethodName,
+		FullMethod: ChatService_GetChatHistory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).ListConversations(ctx, req.(*ListConversationsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_ListMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListMessagesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).ListMessages(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_ListMessages_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).ListMessages(ctx, req.(*ListMessagesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_MarkMessagesAsRead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarkMessagesAsReadRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).MarkMessagesAsRead(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_MarkMessagesAsRead_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).MarkMessagesAsRead(ctx, req.(*MarkMessagesAsReadRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_GetUnreadCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUnreadCountRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).GetUnreadCount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ChatService_GetUnreadCount_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetUnreadCount(ctx, req.(*GetUnreadCountRequest))
+		return srv.(ChatServiceServer).GetChatHistory(ctx, req.(*GetChatHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -330,38 +176,22 @@ func _ChatService_GetUnreadCount_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chat.ChatService",
+	ServiceName: "chatpb.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "StartConversation",
-			Handler:    _ChatService_StartConversation_Handler,
-		},
 		{
 			MethodName: "SendMessage",
 			Handler:    _ChatService_SendMessage_Handler,
 		},
 		{
-			MethodName: "GetConversation",
-			Handler:    _ChatService_GetConversation_Handler,
+			MethodName: "BroadcastMessage",
+			Handler:    _ChatService_BroadcastMessage_Handler,
 		},
 		{
-			MethodName: "ListConversations",
-			Handler:    _ChatService_ListConversations_Handler,
-		},
-		{
-			MethodName: "ListMessages",
-			Handler:    _ChatService_ListMessages_Handler,
-		},
-		{
-			MethodName: "MarkMessagesAsRead",
-			Handler:    _ChatService_MarkMessagesAsRead_Handler,
-		},
-		{
-			MethodName: "GetUnreadCount",
-			Handler:    _ChatService_GetUnreadCount_Handler,
+			MethodName: "GetChatHistory",
+			Handler:    _ChatService_GetChatHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "chat.proto",
+	Metadata: "chat/chat.proto",
 }

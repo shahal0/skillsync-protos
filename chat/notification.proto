@@ -1,120 +1,35 @@
 syntax = "proto3";
 
-package notification;
+package notificationpb;
 
-option go_package = "github.com/shahal0/skillsync/skillsync-protos/notification";
+option go_package = "./gen/notificationpb;notificationpb";
 
-import "google/protobuf/timestamp.proto";
-
-// NotificationType represents the type of notification
-enum NotificationType {
-  NEW_MESSAGE = 0;
-  INTERVIEW_SCHEDULED = 1;
-  APPLICATION_UPDATE = 2;
-  GENERAL = 3;
-}
-
-// Notification represents a user notification
 message Notification {
   string id = 1;
   string user_id = 2;
   string title = 3;
-  string message = 4;
-  NotificationType type = 5;
-  bool is_read = 6;
-  string reference_id = 7; // Could reference message_id, job_id, etc.
-  google.protobuf.Timestamp created_at = 8;
-  map<string, string> metadata = 9;
+  string body = 4;
+  bool is_read = 5;
+  int64 timestamp = 6;
 }
 
-// CreateNotificationRequest is the request to create a notification
-message CreateNotificationRequest {
+message GetNotificationsRequest {
   string user_id = 1;
-  string title = 2;
-  string message = 3;
-  NotificationType type = 4;
-  string reference_id = 5;
-  map<string, string> metadata = 6;
 }
 
-// CreateNotificationResponse is the response for creating a notification
-message CreateNotificationResponse {
-  Notification notification = 1;
-}
-
-// GetNotificationRequest is the request to get a notification
-message GetNotificationRequest {
-  string notification_id = 1;
-  string user_id = 2;
-}
-
-// GetNotificationResponse is the response for getting a notification
-message GetNotificationResponse {
-  Notification notification = 1;
-}
-
-// ListNotificationsRequest is the request to list notifications
-message ListNotificationsRequest {
-  string user_id = 1;
-  bool unread_only = 2;
-  int32 page = 3;
-  int32 limit = 4;
-}
-
-// ListNotificationsResponse is the response for listing notifications
-message ListNotificationsResponse {
+message GetNotificationsResponse {
   repeated Notification notifications = 1;
-  int32 total = 2;
 }
 
-// MarkAsReadRequest is the request to mark a notification as read
-message MarkAsReadRequest {
+message MarkReadRequest {
   string notification_id = 1;
-  string user_id = 2;
 }
 
-// MarkAsReadResponse is the response for marking a notification as read
-message MarkAsReadResponse {
+message MarkReadResponse {
   bool success = 1;
 }
 
-// MarkAllAsReadRequest is the request to mark all notifications as read
-message MarkAllAsReadRequest {
-  string user_id = 1;
-}
-
-// MarkAllAsReadResponse is the response for marking all notifications as read
-message MarkAllAsReadResponse {
-  int64 count = 1;
-}
-
-// GetUnreadCountRequest is the request to get the unread notification count
-message GetUnreadCountRequest {
-  string user_id = 1;
-}
-
-// GetUnreadCountResponse is the response for getting the unread notification count
-message GetUnreadCountResponse {
-  int64 count = 1;
-}
-
-// NotificationService is the service for notification operations
 service NotificationService {
-  // Create a new notification
-  rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse);
-  
-  // Get a notification by ID
-  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
-  
-  // List notifications for a user
-  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
-  
-  // Mark a notification as read
-  rpc MarkAsRead(MarkAsReadRequest) returns (MarkAsReadResponse);
-  
-  // Mark all notifications as read for a user
-  rpc MarkAllAsRead(MarkAllAsReadRequest) returns (MarkAllAsReadResponse);
-  
-  // Get unread notification count for a user
-  rpc GetUnreadCount(GetUnreadCountRequest) returns (GetUnreadCountResponse);
+  rpc GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse);
+  rpc MarkNotificationRead(MarkReadRequest) returns (MarkReadResponse);
 }
