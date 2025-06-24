@@ -4,36 +4,198 @@ package auth;
 
 option go_package = "./gen/authpb";
 
-service AuthService {
-    rpc Signup (SignupRequest) returns (SignupResponse);
-    rpc Login (LoginRequest) returns (LoginResponse);
-    rpc GetCandidateSkills (GetCandidateSkillsRequest) returns (GetCandidateSkillsResponse);
+// Generic response messages
+message GenericResponse {
+    string message = 1;
 }
 
-message SignupRequest {
+message TokenResponse {
+    string token = 1;
+    string message = 2;
+    string id = 3;
+}
+
+// ===================================
+// Common Messages
+// ===================================
+
+message ResendOtpRequest {
+    string email = 1;
+}
+
+message ForgotPasswordRequest {
+    string email = 1;
+}
+
+message ResetPasswordRequest {
+    string token = 1;
+    string new_password = 2;
+}
+
+message ChangePasswordRequest {
+    string old_password = 1;
+    string new_password = 2;
+}
+
+message GoogleLoginRequest {
+    string redirect_url = 1;
+}
+
+message GoogleCallbackRequest {
+    string code = 1;
+}
+
+// ===================================
+// Candidate Messages
+// ===================================
+
+message CandidateSignupRequest {
     string name = 1;
     string email = 2;
     string password = 3;
 }
 
-message SignupResponse {
-    string message = 1;
-}
-
-message LoginRequest {
+message CandidateLoginRequest {
     string email = 1;
     string password = 2;
 }
 
-message LoginResponse {
-    string token = 1;
+message CandidateVerifyEmailRequest {
+    string email = 1;
+    string otp = 2;
+}
+
+message Education {
+    string institution = 1;
+    string degree = 2;
+    string field_of_study = 3;
+    string start_date = 4;
+    string end_date = 5;
+}
+
+message Skill {
+    string name = 1;
+    string proficiency = 2;
+}
+
+message CandidateProfile {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string address = 5;
+    repeated Skill skills = 6;
+    repeated Education education = 7;
+    string resume_url = 8;
+}
+
+message CandidateProfileRequest {}
+
+message CandidateProfileResponse {
+    CandidateProfile profile = 1;
+}
+
+message CandidateProfileUpdateRequest {
+    string name = 1;
+    string phone = 2;
+    string address = 3;
+}
+
+message SkillsUpdateRequest {
+    repeated Skill skills = 1;
+}
+
+message EducationUpdateRequest {
+    repeated Education education = 1;
+}
+
+message UploadResumeRequest {
+    bytes resume_data = 1;
+    string file_name = 2;
+}
+
+message UploadResumeResponse {
+    string url = 1;
     string message = 2;
 }
 
-message GetCandidateSkillsRequest {
-    string candidate_id = 1;
+// ===================================
+// Employer Messages
+// ===================================
+
+message EmployerSignupRequest {
+    string company_name = 1;
+    string email = 2;
+    string password = 3;
 }
 
-message GetCandidateSkillsResponse {
-    repeated string skills = 1;
+message EmployerLoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message EmployerVerifyEmailRequest {
+    string email = 1;
+    string otp = 2;
+}
+
+message EmployerProfile {
+    string id = 1;
+    string company_name = 2;
+    string email = 3;
+    string industry = 4;
+    string website = 5;
+    string location = 6;
+}
+
+message EmployerProfileRequest {}
+
+message EmployerProfileResponse {
+    EmployerProfile profile = 1;
+}
+
+message EmployerProfileUpdateRequest {
+    string company_name = 1;
+    string industry = 2;
+    string website = 3;
+    string location = 4;
+}
+
+// ===================================
+// AuthService Definition
+// ===================================
+
+service AuthService {
+    // --- Candidate Public Routes ---
+    rpc CandidateSignup(CandidateSignupRequest) returns (GenericResponse);
+    rpc CandidateLogin(CandidateLoginRequest) returns (TokenResponse);
+    rpc CandidateVerifyEmail(CandidateVerifyEmailRequest) returns (TokenResponse);
+    rpc CandidateResendOtp(ResendOtpRequest) returns (GenericResponse);
+    rpc CandidateForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
+    rpc CandidateResetPassword(ResetPasswordRequest) returns (GenericResponse);
+    rpc CandidateGoogleLogin(GoogleLoginRequest) returns (GenericResponse);
+    rpc CandidateGoogleCallback(GoogleCallbackRequest) returns (TokenResponse);
+
+    // --- Candidate Protected Routes ---
+    rpc CandidateChangePassword(ChangePasswordRequest) returns (GenericResponse);
+    rpc CandidateProfile(CandidateProfileRequest) returns (CandidateProfileResponse);
+    rpc CandidateProfileUpdate(CandidateProfileUpdateRequest) returns (GenericResponse);
+    rpc CandidateSkillsUpdate(SkillsUpdateRequest) returns (GenericResponse);
+    rpc CandidateEducationUpdate(EducationUpdateRequest) returns (GenericResponse);
+    rpc CandidateUploadResume(UploadResumeRequest) returns (UploadResumeResponse);
+
+    // --- Employer Public Routes ---
+    rpc EmployerSignup(EmployerSignupRequest) returns (GenericResponse);
+    rpc EmployerLogin(EmployerLoginRequest) returns (TokenResponse);
+    rpc EmployerVerifyEmail(EmployerVerifyEmailRequest) returns (TokenResponse);
+    rpc EmployerResendOtp(ResendOtpRequest) returns (GenericResponse);
+    rpc EmployerForgotPassword(ForgotPasswordRequest) returns (GenericResponse);
+    rpc EmployerResetPassword(ResetPasswordRequest) returns (GenericResponse);
+    rpc EmployerGoogleLogin(GoogleLoginRequest) returns (GenericResponse);
+    rpc EmployerGoogleCallback(GoogleCallbackRequest) returns (TokenResponse);
+
+    // --- Employer Protected Routes ---
+    rpc EmployerChangePassword(ChangePasswordRequest) returns (GenericResponse);
+    rpc EmployerProfile(EmployerProfileRequest) returns (EmployerProfileResponse);
+    rpc EmployerProfileUpdate(EmployerProfileUpdateRequest) returns (GenericResponse);
 }
